@@ -1,0 +1,27 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backstage-app
+  description: An example of a Backstage application.
+  # Example for optional annotations
+  # annotations:
+  #   github.com/project-slug: backstage/backstage
+  #   backstage.io/techdocs-ref: dir:.
+spec:
+  type: website
+  owner: john@example.com
+  lifecycle: experimental
+
+kind: Group
+metadata:
+  name: Rocket
+  description: Equipo Rocket con acceso a Backstage
+spec:
+  type: team
+  profile:
+    displayName: Team Rocket
+  children: []
+  members:
+    - user:github/diediazping
+    - user:github/bcocbo
+
