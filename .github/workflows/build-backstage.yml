@@ -13,7 +13,7 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  ECR_REPOSITORY: backstage
+  ECR_REPOSITORY: backstage-auth
 
 jobs:
   build-and-push:
@@ -79,8 +79,7 @@ jobs:
         cd manifests-repo
         NEW_TAG=$(echo "${{ needs.build-and-push.outputs.image-tag }}" | grep "main-" | head -1)
         sed -i "s|image: .*backstage.*|image: $NEW_TAG|g" manifests/base/backstage-deployment.yaml
-       
-
+      
     - name: Commit and push changes
       run: |
         cd manifests-repo
