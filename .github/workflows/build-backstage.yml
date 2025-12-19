@@ -69,7 +69,7 @@ jobs:
     - name: Checkout manifests repo
       uses: actions/checkout@v4
       with:
-        repository: bcocbo/backstage-k8s-manifests
+        repository: bcocbo/backstage-k8s-manifests-auth
         token: ${{ secrets.MANIFESTS_REPO_TOKEN }}  
         path: manifests-repo
 
