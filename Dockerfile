@@ -25,6 +25,7 @@ WORKDIR /app/backstage-app
 RUN yarn --cwd ./packages/backend add pg
 RUN yarn --cwd ./packages/app add @backstage/plugin-kubernetes
 RUN yarn --cwd ./packages/backend add @backstage/plugin-kubernetes-backend
+RUN yarn --cwd ./packages/backend add @backstage/plugin-auth-backend-module-github-provider
 RUN yarn install --immutable --network-timeout 600000
 
 
