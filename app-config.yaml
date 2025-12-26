@@ -79,7 +79,7 @@ techdocs:
 
 auth:
   # see https://backstage.io/docs/auth/ to learn about auth providers
-  environment: production
+  
   providers:
     # See https://backstage.io/docs/auth/guest/provider
     # guest: {}
@@ -90,6 +90,12 @@ auth:
         signIn:
           resolvers:
             - resolver: usernameMatchingUserEntityName
+      development:
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+        signIn:
+          resolvers:
+            - resolver: usernameMatchingUserEntityName      
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
