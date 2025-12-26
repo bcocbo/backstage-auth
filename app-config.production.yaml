@@ -30,7 +30,22 @@ backend:
 
 auth:
   providers:
-    guest: {}
+    # See https://backstage.io/docs/auth/guest/provider
+    # guest: {}
+    github:
+      prodution:
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+        signIn:
+          resolvers:
+            - resolver: usernameMatchingUserEntityName
+      development:
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+        signIn:
+          resolvers:
+            - resolver: usernameMatchingUserEntityName      
+
 
 catalog:
   # Overrides the default list locations from app-config.yaml as these contain example data.
