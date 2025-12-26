@@ -1,11 +1,11 @@
 app:
   title: Scaffolded Backstage App
-  baseUrl: http://localhost:3000
+  baseUrl: https://apps.pocarqnube.com
   listen:
     host: 0.0.0.0 # Added line, and now it's working
 
 organization:
-  name: My Company
+  name: Rockets
 
 backend:
   # Used for enabling authentication, secret is shared by all backend plugins
@@ -18,7 +18,7 @@ backend:
     providers:
       guest: {}
     dangerouslyDisableDefaultAuthPolicy: true  
-  baseUrl: http://localhost:7007
+  baseUrl: https://apps.pocarqnube.com
   listen:
     port: 7007
     # Uncomment the following host directive to bind to specific interfaces
@@ -28,9 +28,9 @@ backend:
     # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
   cors:
-    origin: 
-      - http://localhost:3000
-      - http://localhost:7007
+    origin: https://apps.pocarqnube.com 
+    
+
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
   # This is for local development only, it is not recommended to use this in production
@@ -83,7 +83,7 @@ auth:
     # See https://backstage.io/docs/auth/guest/provider
     # guest: {}
     github:
-      development:
+      prodution:
         clientId: ${AUTH_GITHUB_CLIENT_ID}
         clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
         signIn:
