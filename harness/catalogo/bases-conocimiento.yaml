@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: kb-politicas-internas
+  title: Base de conocimiento Políticas internas
+  description: Documentos de políticas internas indexados para consulta (ficticio)
+  tags: [base-conocimiento, rag]
+spec:
+  type: knowledge-base
+  owner: group:guests
+  system: harness-poc

@@ -1,0 +1,27 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: modelo-razonamiento-general
+  title: Modelo de razonamiento general
+  description: Modelo grande para tareas de razonamiento de varios pasos (ficticio)
+  tags: [modelo, llm]
+  labels:
+    harness.poc/proveedor: llm-gateway
+spec:
+  type: llm-model
+  owner: group:guests
+  system: harness-poc
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: modelo-ligero-rapido
+  title: Modelo ligero y rápido
+  description: Modelo pequeño para clasificación y respuestas cortas (ficticio)
+  tags: [modelo, llm]
+  labels:
+    harness.poc/proveedor: llm-gateway
+spec:
+  type: llm-model
+  owner: group:guests
+  system: harness-poc

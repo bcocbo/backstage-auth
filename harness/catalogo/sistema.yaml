@@ -1,0 +1,8 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: harness-poc
+  title: Harness PoC
+  description: Agentes, MCPs, skills, bases de conocimiento y modelos de ejemplo de la PoC Agent Harness
+spec:
+  owner: group:guests

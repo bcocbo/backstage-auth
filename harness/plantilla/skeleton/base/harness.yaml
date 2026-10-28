@@ -1,0 +1,39 @@
+# Manifiesto del harness externo del agente: qué piezas usa y por dónde pasa cada una.
+# Generado por la plantilla "Agente con Harness" (PoC). Controles de la fase 01 del roadmap.
+apiVersion: harness.poc/v1alpha1
+kind: AgentHarness
+metadata:
+  name: ${{ values.nombre }}
+  owner: ${{ values.owner }}
+spec:
+  tipoAgente: ${{ values.tipoAgente }}
+  runtime: ${{ values.runtime }}
+  modelo:
+    ref: ${{ values.modelo }}
+    via: llm-gateway
+  mcps:
+{%- for mcp in values.mcps %}
+    - ref: api:${{ mcp.metadata.namespace }}/${{ mcp.metadata.name }}
+      scope: ${{ mcp.metadata.labels['harness.poc/scope'] }}
+      via: mcp-gateway
+{%- endfor %}
+  skills:
+{%- for ref in values.skills %}
+    - ref: ${{ ref }}
+{%- else %} []
+{%- endfor %}
+  basesConocimiento:
+{%- for ref in values.basesConocimiento %}
+    - ref: ${{ ref }}
+{%- else %} []
+{%- endfor %}
+  agentes:
+{%- for ref in values.agentes %}
+    - ref: ${{ ref }}
+{%- else %} []
+{%- endfor %}
+  controles:
+    identidad: propia               # ver blueprint-accesos.yaml
+    minimoAcceso: true              # solo los scopes de los MCPs elegidos
+    trazas: habilitadas
+    aprobacionHumana: acciones-de-escritura

@@ -1,0 +1,196 @@
+# Plantilla "Agente con Harness" (PoC Agent Harness).
+# Arma un agente con piezas del catálogo y genera un repo con su harness.yaml y su blueprint de accesos.
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: agente-con-harness
+  title: Agente con Harness
+  description: Arma un agente pro-code o low-code con modelos, MCPs, skills, bases de conocimiento y agentes del catálogo, y genera su repo con harness y blueprint de accesos
+  tags: [agente, harness, poc]
+spec:
+  owner: group:guests
+  type: agent
+
+  parameters:
+    - title: Datos del agente
+      required: [nombre, descripcion, owner]
+      properties:
+        nombre:
+          title: Nombre
+          type: string
+          description: Nombre único en minúsculas y guiones (ej. agente-cobranza)
+          pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+          ui:autofocus: true
+        descripcion:
+          title: Propósito
+          type: string
+          description: Qué hace el agente, en una frase
+        owner:
+          title: Equipo dueño
+          type: string
+          ui:field: OwnerPicker
+          ui:options:
+            catalogFilter:
+              kind: Group
+
+    - title: Tipo de agente
+      required: [tipoAgente]
+      properties:
+        tipoAgente:
+          title: Tipo de agente
+          type: string
+          enum: [pro-code, low-code]
+          enumNames: ['Pro-code (código, ej. LangGraph)', 'Low-code (plataforma visual, ej. n8n)']
+          default: pro-code
+          ui:widget: radio
+      dependencies:
+        tipoAgente:
+          oneOf:
+            - properties:
+                tipoAgente:
+                  const: pro-code
+                runtime:
+                  title: Framework
+                  type: string
+                  enum: [langgraph, sdk-propio]
+                  enumNames: ['LangGraph', 'SDK propio']
+                  default: langgraph
+            - properties:
+                tipoAgente:
+                  const: low-code
+                runtime:
+                  title: Plataforma
+                  type: string
+                  enum: [n8n]
+                  enumNames: ['n8n']
+                  default: n8n
+
+    - title: Piezas del catálogo
+      required: [modelo, mcps]
+      properties:
+        modelo:
+          title: Modelo
+          type: string
+          description: Modelo que usará el agente (a través del LLM Gateway)
+          ui:field: EntityPicker
+          ui:options:
+            allowArbitraryValues: false
+            catalogFilter:
+              kind: Resource
+              spec.type: llm-model
+        mcps:
+          title: MCPs
+          type: array
+          minItems: 1
+          description: Herramientas a las que el agente tendrá acceso (a través del MCP Gateway)
+          ui:field: MultiEntityPicker
+          ui:options:
+            catalogFilter:
+              kind: API
+              spec.type: mcp
+        skills:
+          title: Skills
+          type: array
+          ui:field: MultiEntityPicker
+          ui:options:
+            catalogFilter:
+              kind: Resource
+              spec.type: skill
+        basesConocimiento:
+          title: Bases de conocimiento
+          type: array
+          ui:field: MultiEntityPicker
+          ui:options:
+            catalogFilter:
+              kind: Resource
+              spec.type: knowledge-base
+        agentes:
+          title: Otros agentes que puede invocar
+          type: array
+          ui:field: MultiEntityPicker
+          ui:options:
+            catalogFilter:
+              kind: Component
+              spec.type: agent
+
+    - title: Repositorio
+      required: [repoUrl]
+      properties:
+        repoUrl:
+          title: Dónde crear el repo
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+
+  steps:
+    # Trae las fichas de los MCPs para leer el scope que pide cada uno.
+    - id: fichas-mcps
+      name: Leer fichas de los MCPs
+      action: catalog:fetch
+      input:
+        entityRefs: ${{ parameters.mcps }}
+
+    - id: base
+      name: Generar harness y blueprint de accesos
+      action: fetch:template
+      input:
+        url: ./skeleton/base
+        values:
+          nombre: ${{ parameters.nombre }}
+          descripcion: ${{ parameters.descripcion }}
+          owner: ${{ parameters.owner }}
+          tipoAgente: ${{ parameters.tipoAgente }}
+          runtime: ${{ parameters.runtime }}
+          modelo: ${{ parameters.modelo }}
+          mcps: ${{ steps['fichas-mcps'].output.entities }}
+          skills: ${{ parameters.skills or [] }}
+          basesConocimiento: ${{ parameters.basesConocimiento or [] }}
+          agentes: ${{ parameters.agentes or [] }}
+
+    - id: pro-code
+      name: Generar esqueleto pro-code
+      if: ${{ parameters.tipoAgente === 'pro-code' }}
+      action: fetch:template
+      input:
+        url: ./skeleton/pro-code
+        targetPath: ./agente
+        values:
+          nombre: ${{ parameters.nombre }}
+          runtime: ${{ parameters.runtime }}
+
+    - id: low-code
+      name: Generar configuración low-code
+      if: ${{ parameters.tipoAgente === 'low-code' }}
+      action: fetch:template
+      input:
+        url: ./skeleton/low-code
+        targetPath: ./agente
+        values:
+          nombre: ${{ parameters.nombre }}
+          runtime: ${{ parameters.runtime }}
+
+    - id: publish
+      name: Crear repo en GitHub
+      action: publish:github
+      input:
+        description: ${{ parameters.descripcion }}
+        repoUrl: ${{ parameters.repoUrl }}
+        defaultBranch: main
+        repoVisibility: private
+
+    - id: register
+      name: Registrar el agente en el catálogo
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
+        catalogInfoPath: /catalog-info.yaml
+
+  output:
+    links:
+      - title: Repositorio
+        url: ${{ steps['publish'].output.remoteUrl }}
+      - title: Ver en el catálogo
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}

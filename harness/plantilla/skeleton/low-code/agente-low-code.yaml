@@ -1,0 +1,6 @@
+# Configuración del agente ${{ values.nombre }} para la plataforma low-code (${{ values.runtime }}).
+# El modelo y los MCPs se toman de ../harness.yaml; las credenciales salen del blueprint de accesos.
+plataforma: ${{ values.runtime }}
+agente: ${{ values.nombre }}
+harness: ../harness.yaml
+credenciales: ../blueprint-accesos.yaml

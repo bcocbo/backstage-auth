@@ -1,0 +1,23 @@
+# Blueprint de identidad y accesos del agente.
+# Pendiente de validar con el equipo de identidades y accesos.
+apiVersion: harness.poc/v1alpha1
+kind: AccessBlueprint
+metadata:
+  name: ${{ values.nombre }}
+  owner: ${{ values.owner }}
+spec:
+  identidad:
+    nombre: ${{ values.nombre }}
+    modeloTransitorio: app-client      # un App Client por agente, un scope por MCP
+    modeloDestino: service-principal   # identidad por agente en el MCP Gateway
+  accesos:
+{%- for mcp in values.mcps %}
+    - recurso: api:${{ mcp.metadata.namespace }}/${{ mcp.metadata.name }}
+      scope: ${{ mcp.metadata.labels['harness.poc/scope'] }}
+      via: mcp-gateway
+{%- endfor %}
+    - recurso: ${{ values.modelo }}
+      via: llm-gateway
+  aprobacion:
+    estado: pendiente
+    aprueba: equipo dueño del MCP

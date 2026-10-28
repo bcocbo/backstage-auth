@@ -1,0 +1,16 @@
+# Índice del catálogo de ejemplo de la PoC Agent Harness.
+# Registrar esta URL en Backstage ("Register existing component") carga todas las piezas.
+# Datos ficticios: no corresponden a agentes, MCPs ni modelos reales.
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: harness-poc-catalogo
+  description: Piezas ("legos") para armar agentes con la plantilla Agente con Harness
+spec:
+  targets:
+    - ./sistema.yaml
+    - ./modelos.yaml
+    - ./mcps.yaml
+    - ./skills.yaml
+    - ./bases-conocimiento.yaml
+    - ./agentes.yaml

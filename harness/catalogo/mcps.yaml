@@ -1,0 +1,55 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: mcp-consulta-productos
+  title: MCP Consulta de productos
+  description: Tools de solo lectura para consultar el portafolio de productos (ficticio)
+  tags: [mcp, solo-lectura]
+  labels:
+    harness.poc/scope: mcp.consulta-productos.read
+spec:
+  type: mcp
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    tools:
+      - buscar_producto: busca productos por nombre o código
+      - detalle_producto: devuelve las características de un producto
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: mcp-gestion-tickets
+  title: MCP Gestión de tickets
+  description: Tools para consultar y crear tickets de soporte (ficticio)
+  tags: [mcp, escritura]
+  labels:
+    harness.poc/scope: mcp.gestion-tickets.write
+spec:
+  type: mcp
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    tools:
+      - consultar_ticket: devuelve el estado de un ticket
+      - crear_ticket: crea un ticket nuevo (acción que requiere aprobación)
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: mcp-documentos-internos
+  title: MCP Documentos internos
+  description: Tools de búsqueda en documentos internos publicados (ficticio)
+  tags: [mcp, solo-lectura]
+  labels:
+    harness.poc/scope: mcp.documentos-internos.read
+spec:
+  type: mcp
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    tools:
+      - buscar_documento: búsqueda por texto en documentos publicados

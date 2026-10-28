@@ -1,0 +1,23 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: skill-resumen-documentos
+  title: Skill Resumen de documentos
+  description: Instrucciones para resumir documentos largos en puntos clave (ficticio)
+  tags: [skill]
+spec:
+  type: skill
+  owner: group:guests
+  system: harness-poc
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: skill-clasificacion-solicitudes
+  title: Skill Clasificación de solicitudes
+  description: Instrucciones para clasificar solicitudes de soporte por tipo y urgencia (ficticio)
+  tags: [skill]
+spec:
+  type: skill
+  owner: group:guests
+  system: harness-poc
