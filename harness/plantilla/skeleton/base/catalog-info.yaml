@@ -1,27 +1,27 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: ${{ values.nombre }}
+  name: ${{ values.entidad }}
   description: ${{ values.descripcion }}
-  tags: [agente, ${{ values.tipoAgente }}]
+  tags: [agent, ${{ values.tipoAgente }}]
   labels:
     harness.poc/tipo-agente: ${{ values.tipoAgente }}
     harness.poc/runtime: ${{ values.runtime }}
     harness.poc/estado: dentro-del-harness
+    harness.poc/codigo-app: ${{ values.codigoApp }}
   annotations:
     harness.poc/manifest: ./harness.yaml
     harness.poc/blueprint-accesos: ./blueprint-accesos.yaml
 spec:
   type: agent
-  lifecycle: experimental
+  lifecycle: development
   owner: ${{ values.owner }}
   system: harness-poc
-  consumesApis:
-{%- for mcp in values.mcps %}
-    - api:${{ mcp.metadata.namespace }}/${{ mcp.metadata.name }}
-{%- endfor %}
   dependsOn:
     - ${{ values.modelo }}
+{%- for mcp in values.mcps %}
+    - component:${{ mcp.metadata.namespace }}/${{ mcp.metadata.name }}
+{%- endfor %}
 {%- for ref in values.skills %}
     - ${{ ref }}
 {%- endfor %}

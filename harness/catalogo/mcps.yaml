@@ -1,217 +1,205 @@
-# MCPs de ejemplo (ficticios). Cada MCP declara el scope que pide y su sensibilidad;
-# sus tools están en tools.yaml como piezas separadas (permiso de grano fino).
+# Generado por gen-catalogo-kaizen.js (datos ficticios). Forma del Catálogo IA de Kaizen.
+# MCPs (spec.type mcp, sufijo _smcp). Scope con la convención <dominio>-<nombreMcp>.
 apiVersion: backstage.io/v1alpha1
-kind: API
+kind: Component
 metadata:
-  name: mcp-consulta-productos
-  title: MCP Consulta de productos
+  name: consulta-productos_smcp
+  title: Consulta de productos
   description: Consulta del portafolio de productos
-  tags: [mcp, solo-lectura, caso-atencion-cliente]
+  tags: [mcp, caso-atencion-cliente]
   labels:
-    harness.poc/scope: mcp.consulta-productos.read
+    harness.poc/dominio: productos
+    harness.poc/scope: productos-consultaProductos
     harness.poc/sensibilidad: baja
 spec:
   type: mcp
-  lifecycle: experimental
+  lifecycle: development
   owner: group:guests
   system: harness-poc
-  definition: |
-    tools: [buscar_producto, detalle_producto]
 ---
 apiVersion: backstage.io/v1alpha1
-kind: API
+kind: Component
 metadata:
-  name: mcp-clientes
-  title: MCP Clientes
+  name: clientes_smcp
+  title: Clientes
   description: Datos básicos e historial de contacto de clientes
-  tags: [mcp, solo-lectura, datos-sensibles, caso-atencion-cliente]
+  tags: [mcp, caso-atencion-cliente]
   labels:
-    harness.poc/scope: mcp.clientes.read
+    harness.poc/dominio: clientes
+    harness.poc/scope: clientes-consultaClientes
     harness.poc/sensibilidad: alta
 spec:
   type: mcp
-  lifecycle: experimental
+  lifecycle: development
   owner: group:guests
   system: harness-poc
-  definition: |
-    tools: [consultar_cliente, historial_contactos]
 ---
 apiVersion: backstage.io/v1alpha1
-kind: API
+kind: Component
 metadata:
-  name: mcp-pqr
-  title: MCP Peticiones, quejas y reclamos
+  name: pqr_smcp
+  title: Peticiones, quejas y reclamos
   description: Consulta y radicación de PQR
-  tags: [mcp, escritura, caso-atencion-cliente]
+  tags: [mcp, caso-atencion-cliente]
   labels:
-    harness.poc/scope: mcp.pqr.write
+    harness.poc/dominio: servicio
+    harness.poc/scope: servicio-gestionPqr
     harness.poc/sensibilidad: media
 spec:
   type: mcp
-  lifecycle: experimental
+  lifecycle: development
   owner: group:guests
   system: harness-poc
-  definition: |
-    tools: [consultar_pqr, radicar_pqr]
 ---
 apiVersion: backstage.io/v1alpha1
-kind: API
+kind: Component
 metadata:
-  name: mcp-cartera
-  title: MCP Cartera
+  name: cartera_smcp
+  title: Cartera
   description: Obligaciones en mora y acuerdos de pago
-  tags: [mcp, escritura, datos-sensibles, caso-cobranza]
+  tags: [mcp, caso-cobranza]
   labels:
-    harness.poc/scope: mcp.cartera.write
+    harness.poc/dominio: cartera
+    harness.poc/scope: cartera-gestionCartera
     harness.poc/sensibilidad: alta
 spec:
   type: mcp
-  lifecycle: experimental
+  lifecycle: development
   owner: group:guests
   system: harness-poc
-  definition: |
-    tools: [consultar_obligaciones, simular_acuerdo, registrar_acuerdo_pago]
 ---
 apiVersion: backstage.io/v1alpha1
-kind: API
+kind: Component
 metadata:
-  name: mcp-notificaciones
-  title: MCP Notificaciones
+  name: notificaciones_smcp
+  title: Notificaciones
   description: Envío de mensajes a clientes por correo o SMS
-  tags: [mcp, escritura, caso-cobranza, caso-atencion-cliente]
+  tags: [mcp, caso-cobranza, caso-atencion-cliente]
   labels:
-    harness.poc/scope: mcp.notificaciones.write
+    harness.poc/dominio: canales
+    harness.poc/scope: canales-envioNotificaciones
     harness.poc/sensibilidad: media
 spec:
   type: mcp
-  lifecycle: experimental
+  lifecycle: development
   owner: group:guests
   system: harness-poc
-  definition: |
-    tools: [enviar_correo, enviar_sms]
 ---
 apiVersion: backstage.io/v1alpha1
-kind: API
+kind: Component
 metadata:
-  name: mcp-gestion-tickets
-  title: MCP Gestión de tickets
+  name: gestion-tickets_smcp
+  title: Gestión de tickets
   description: Consulta y creación de tickets de soporte
-  tags: [mcp, escritura, caso-soporte-ti]
+  tags: [mcp, caso-soporte-ti]
   labels:
-    harness.poc/scope: mcp.gestion-tickets.write
+    harness.poc/dominio: soporte
+    harness.poc/scope: soporte-gestionTickets
     harness.poc/sensibilidad: baja
 spec:
   type: mcp
-  lifecycle: experimental
+  lifecycle: development
   owner: group:guests
   system: harness-poc
-  definition: |
-    tools: [consultar_ticket, crear_ticket, escalar_ticket]
 ---
 apiVersion: backstage.io/v1alpha1
-kind: API
+kind: Component
 metadata:
-  name: mcp-observabilidad
-  title: MCP Observabilidad
+  name: observabilidad_smcp
+  title: Observabilidad
   description: Alertas, métricas y logs de aplicaciones
-  tags: [mcp, solo-lectura, caso-soporte-ti]
+  tags: [mcp, caso-soporte-ti]
   labels:
-    harness.poc/scope: mcp.observabilidad.read
+    harness.poc/dominio: operacion
+    harness.poc/scope: operacion-consultaObservabilidad
     harness.poc/sensibilidad: media
 spec:
   type: mcp
-  lifecycle: experimental
+  lifecycle: development
   owner: group:guests
   system: harness-poc
-  definition: |
-    tools: [consultar_alertas, consultar_metricas, buscar_logs]
 ---
 apiVersion: backstage.io/v1alpha1
-kind: API
+kind: Component
 metadata:
-  name: mcp-pipelines
-  title: MCP Pipelines
+  name: pipelines_smcp
+  title: Pipelines
   description: Estado y relanzamiento de pipelines de despliegue
-  tags: [mcp, escritura, caso-soporte-ti, caso-desarrollo]
+  tags: [mcp, caso-soporte-ti, caso-desarrollo]
   labels:
-    harness.poc/scope: mcp.pipelines.write
+    harness.poc/dominio: devops
+    harness.poc/scope: devops-gestionPipelines
     harness.poc/sensibilidad: media
 spec:
   type: mcp
-  lifecycle: experimental
+  lifecycle: development
   owner: group:guests
   system: harness-poc
-  definition: |
-    tools: [estado_pipeline, relanzar_pipeline]
 ---
 apiVersion: backstage.io/v1alpha1
-kind: API
+kind: Component
 metadata:
-  name: mcp-repositorios
-  title: MCP Repositorios
+  name: repositorios_smcp
+  title: Repositorios
   description: Lectura de código y creación de pull requests
-  tags: [mcp, escritura, caso-desarrollo]
+  tags: [mcp, caso-desarrollo]
   labels:
-    harness.poc/scope: mcp.repositorios.write
+    harness.poc/dominio: desarrollo
+    harness.poc/scope: desarrollo-gestionRepositorios
     harness.poc/sensibilidad: media
 spec:
   type: mcp
-  lifecycle: experimental
+  lifecycle: development
   owner: group:guests
   system: harness-poc
-  definition: |
-    tools: [listar_repos, leer_archivo, crear_pull_request]
 ---
 apiVersion: backstage.io/v1alpha1
-kind: API
+kind: Component
 metadata:
-  name: mcp-catalogo-kaizen
-  title: MCP Catálogo Kaizen
+  name: catalogo-kaizen_smcp
+  title: Catálogo Kaizen
   description: Búsqueda de componentes, APIs y plantillas en el catálogo
-  tags: [mcp, solo-lectura, caso-desarrollo]
+  tags: [mcp, caso-desarrollo]
   labels:
-    harness.poc/scope: mcp.catalogo-kaizen.read
+    harness.poc/dominio: plataforma
+    harness.poc/scope: plataforma-consultaCatalogo
     harness.poc/sensibilidad: baja
 spec:
   type: mcp
-  lifecycle: experimental
+  lifecycle: development
   owner: group:guests
   system: harness-poc
-  definition: |
-    tools: [buscar_entidad, consultar_plantillas]
 ---
 apiVersion: backstage.io/v1alpha1
-kind: API
+kind: Component
 metadata:
-  name: mcp-listas-restrictivas
-  title: MCP Listas restrictivas
+  name: listas-restrictivas_smcp
+  title: Listas restrictivas
   description: Validación de personas contra listas de control
-  tags: [mcp, solo-lectura, datos-sensibles, caso-cumplimiento]
+  tags: [mcp, caso-cumplimiento]
   labels:
-    harness.poc/scope: mcp.listas-restrictivas.read
+    harness.poc/dominio: cumplimiento
+    harness.poc/scope: cumplimiento-validacionListas
     harness.poc/sensibilidad: alta
 spec:
   type: mcp
-  lifecycle: experimental
+  lifecycle: development
   owner: group:guests
   system: harness-poc
-  definition: |
-    tools: [validar_persona]
 ---
 apiVersion: backstage.io/v1alpha1
-kind: API
+kind: Component
 metadata:
-  name: mcp-documentos-internos
-  title: MCP Documentos internos
+  name: documentos-internos_smcp
+  title: Documentos internos
   description: Búsqueda en documentos internos publicados
-  tags: [mcp, solo-lectura, caso-cumplimiento]
+  tags: [mcp, caso-cumplimiento]
   labels:
-    harness.poc/scope: mcp.documentos-internos.read
+    harness.poc/dominio: conocimiento
+    harness.poc/scope: conocimiento-consultaDocumentos
     harness.poc/sensibilidad: baja
 spec:
   type: mcp
-  lifecycle: experimental
+  lifecycle: development
   owner: group:guests
   system: harness-poc
-  definition: |
-    tools: [buscar_documento, leer_documento]

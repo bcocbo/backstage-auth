@@ -1,27 +1,32 @@
-# Blueprint de identidad y accesos del agente.
+# Blueprint de identidad y accesos del agente, con la convención del Catálogo de MCPs de Kaizen:
+# un App Client por agente (<codigoApp>-<nombre>) y un scope por MCP (<dominio>-<nombreMcp>).
 # Pendiente de validar con el equipo de identidades y accesos.
 apiVersion: harness.poc/v1alpha1
 kind: AccessBlueprint
 metadata:
-  name: ${{ values.nombre }}
+  name: ${{ values.entidad }}
   owner: ${{ values.owner }}
 spec:
   identidad:
-    nombre: ${{ values.nombre }}
-    modeloTransitorio: app-client      # un App Client por agente, un scope por MCP
+    modeloTransitorio:
+      userPool: consumo-mcps
+      appClient: ${{ values.codigoApp }}-${{ values.nombre }}
     modeloDestino: service-principal   # identidad por agente en el MCP Gateway
   accesos:
 {%- for mcp in values.mcps %}
-    - recurso: api:${{ mcp.metadata.namespace }}/${{ mcp.metadata.name }}
+    - recurso: component:${{ mcp.metadata.namespace }}/${{ mcp.metadata.name }}
       scope: ${{ mcp.metadata.labels['harness.poc/scope'] }}
+      scopeEnToken: consumo-mcps/${{ mcp.metadata.labels['harness.poc/scope'] }}
+      sensibilidad: ${{ mcp.metadata.labels['harness.poc/sensibilidad'] }}
       via: mcp-gateway
 {%- endfor %}
     - recurso: ${{ values.modelo }}
       via: llm-gateway
   # Grano fino: si hay tools listadas, el agente solo puede usar esas dentro de cada MCP.
+  # El modelo transitorio (Cognito + Istio) solo controla el MCP completo; esto aplica en el MCP Gateway.
   tools:
 {%- for t in values.tools %}
-    - mcp: api:default/${{ t.metadata.labels['harness.poc/mcp'] }}
+    - mcp: component:default/${{ t.metadata.labels['harness.poc/mcp'] }}
       tool: ${{ t.metadata.labels['harness.poc/tool'] }}
       accion: ${{ t.metadata.labels['harness.poc/accion'] }}
       aprobacionHumana: ${{ 'true' if t.metadata.labels['harness.poc/accion'] == 'escritura-aprobacion' else 'false' }}

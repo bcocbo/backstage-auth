@@ -1,9 +1,11 @@
+# Generado por gen-catalogo-kaizen.js (datos ficticios). Forma del Catálogo IA de Kaizen.
+# Modelos: no están en el Catálogo IA de Kaizen; se dejan como Resource para armar el agente.
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: modelo-razonamiento-general
   title: Modelo de razonamiento general
-  description: Modelo grande para tareas de razonamiento de varios pasos (ficticio)
+  description: Modelo grande para tareas de razonamiento de varios pasos
   tags: [modelo, llm]
   labels:
     harness.poc/proveedor: llm-gateway
@@ -17,7 +19,7 @@ kind: Resource
 metadata:
   name: modelo-ligero-rapido
   title: Modelo ligero y rápido
-  description: Modelo pequeño para clasificación y respuestas cortas (ficticio)
+  description: Modelo pequeño para clasificación y respuestas cortas
   tags: [modelo, llm]
   labels:
     harness.poc/proveedor: llm-gateway
@@ -31,7 +33,7 @@ kind: Resource
 metadata:
   name: modelo-codigo
   title: Modelo especializado en código
-  description: Modelo para leer, explicar y proponer cambios de código (ficticio)
+  description: Modelo para leer, explicar y proponer cambios de código
   tags: [modelo, llm]
   labels:
     harness.poc/proveedor: llm-gateway

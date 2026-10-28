@@ -1,30 +1,35 @@
 # Plantilla "Agente con Harness" (PoC Agent Harness).
-# Arma un agente con piezas del catálogo y genera un repo con su harness.yaml y su blueprint de accesos.
+# Arma un agente con piezas del Catálogo IA y genera un repo con su harness.yaml y su blueprint de accesos.
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: agente-con-harness
   title: Agente con Harness
-  description: Arma un agente pro-code o low-code con modelos, MCPs, skills, bases de conocimiento y agentes del catálogo, y genera su repo con harness y blueprint de accesos
-  tags: [agente, harness, poc]
+  description: Arma un agente pro-code o low-code con modelo, MCPs, tools, skills, bases de conocimiento y agentes del catálogo, y genera su repo con harness y blueprint de accesos
+  tags: [agent, harness, poc]
 spec:
   owner: group:guests
   type: agent
 
   parameters:
     - title: Datos del agente
-      required: [nombre, descripcion, owner]
+      required: [nombre, descripcion, codigoApp, owner]
       properties:
         nombre:
           title: Nombre
           type: string
-          description: Nombre único en minúsculas y guiones (ej. agente-cobranza)
+          description: Minúsculas y guiones (ej. agente-cobranza). En el catálogo queda con el sufijo _aiagent
           pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
           ui:autofocus: true
         descripcion:
           title: Propósito
           type: string
           description: Qué hace el agente, en una frase
+        codigoApp:
+          title: Código de aplicación
+          type: string
+          description: Código del inventario de aplicaciones (ej. POC0000110); nombra el App Client del agente
+          pattern: '^[A-Z]{2,3}[0-9]{7}$'
         owner:
           title: Equipo dueño
           type: string
@@ -82,28 +87,28 @@ spec:
           title: MCPs
           type: array
           minItems: 1
-          description: Herramientas a las que el agente tendrá acceso (a través del MCP Gateway)
+          description: Cada MCP da un scope al App Client del agente (a través del MCP Gateway)
           ui:field: MultiEntityPicker
           ui:options:
             catalogFilter:
-              kind: API
+              kind: Component
               spec.type: mcp
         tools:
           title: Tools específicas (opcional)
           type: array
-          description: Limita el acceso a estas tools. Si no eliges ninguna, el agente recibe todo el scope de cada MCP.
+          description: Limita el acceso a estas tools. Si no eliges ninguna, el agente recibe el MCP completo
           ui:field: MultiEntityPicker
           ui:options:
             catalogFilter:
-              kind: Resource
-              spec.type: mcp-tool
+              kind: Component
+              spec.type: tool
         skills:
           title: Skills
           type: array
           ui:field: MultiEntityPicker
           ui:options:
             catalogFilter:
-              kind: Resource
+              kind: Component
               spec.type: skill
         basesConocimiento:
           title: Bases de conocimiento
@@ -156,7 +161,9 @@ spec:
         url: ./skeleton/base
         values:
           nombre: ${{ parameters.nombre }}
+          entidad: ${{ parameters.nombre }}_aiagent
           descripcion: ${{ parameters.descripcion }}
+          codigoApp: ${{ parameters.codigoApp }}
           owner: ${{ parameters.owner }}
           tipoAgente: ${{ parameters.tipoAgente }}
           runtime: ${{ parameters.runtime }}

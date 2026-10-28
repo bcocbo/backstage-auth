@@ -1,84 +1,120 @@
-# Skills de ejemplo (ficticias): instrucciones empaquetadas para una tarea concreta.
+# Generado por gen-catalogo-kaizen.js (datos ficticios). Forma del Catálogo IA de Kaizen.
+# Skills (spec.type skill) con categoría, complejidad y madurez.
 apiVersion: backstage.io/v1alpha1
-kind: Resource
+kind: Component
 metadata:
-  name: skill-resumen-documentos
-  title: Skill Resumen de documentos
+  name: resumen-documentos
+  title: Resumen de documentos
   description: Resume documentos largos en puntos clave
   tags: [skill, caso-cumplimiento]
+  labels:
+    harness.poc/categoria: productividad
+    harness.poc/complejidad: baja
+    harness.poc/madurez: validada
 spec:
   type: skill
+  lifecycle: development
   owner: group:guests
   system: harness-poc
 ---
 apiVersion: backstage.io/v1alpha1
-kind: Resource
+kind: Component
 metadata:
-  name: skill-clasificacion-solicitudes
-  title: Skill Clasificación de solicitudes
+  name: clasificacion-solicitudes
+  title: Clasificación de solicitudes
   description: Clasifica solicitudes por tipo y urgencia
   tags: [skill, caso-soporte-ti, caso-atencion-cliente]
+  labels:
+    harness.poc/categoria: servicio
+    harness.poc/complejidad: baja
+    harness.poc/madurez: productiva
 spec:
   type: skill
+  lifecycle: development
   owner: group:guests
   system: harness-poc
 ---
 apiVersion: backstage.io/v1alpha1
-kind: Resource
+kind: Component
 metadata:
-  name: skill-respuesta-clientes
-  title: Skill Respuesta a clientes
+  name: respuesta-clientes
+  title: Respuesta a clientes
   description: Redacta respuestas claras y en el tono de la marca
   tags: [skill, caso-atencion-cliente]
+  labels:
+    harness.poc/categoria: servicio
+    harness.poc/complejidad: media
+    harness.poc/madurez: validada
 spec:
   type: skill
+  lifecycle: development
   owner: group:guests
   system: harness-poc
 ---
 apiVersion: backstage.io/v1alpha1
-kind: Resource
+kind: Component
 metadata:
-  name: skill-negociacion-cobranza
-  title: Skill Negociación de cobranza
+  name: negociacion-cobranza
+  title: Negociación de cobranza
   description: Propone acuerdos de pago dentro de las reglas de cobranza
   tags: [skill, caso-cobranza]
+  labels:
+    harness.poc/categoria: negocio
+    harness.poc/complejidad: alta
+    harness.poc/madurez: experimental
 spec:
   type: skill
+  lifecycle: development
   owner: group:guests
   system: harness-poc
 ---
 apiVersion: backstage.io/v1alpha1
-kind: Resource
+kind: Component
 metadata:
-  name: skill-diagnostico-incidentes
-  title: Skill Diagnóstico de incidentes
+  name: diagnostico-incidentes
+  title: Diagnóstico de incidentes
   description: Cruza alertas, métricas y logs para proponer la causa de un incidente
   tags: [skill, caso-soporte-ti]
+  labels:
+    harness.poc/categoria: operacion
+    harness.poc/complejidad: alta
+    harness.poc/madurez: experimental
 spec:
   type: skill
+  lifecycle: development
   owner: group:guests
   system: harness-poc
 ---
 apiVersion: backstage.io/v1alpha1
-kind: Resource
+kind: Component
 metadata:
-  name: skill-revision-codigo
-  title: Skill Revisión de código
+  name: revision-codigo
+  title: Revisión de código
   description: Revisa cambios contra los lineamientos de desarrollo
   tags: [skill, caso-desarrollo]
+  labels:
+    harness.poc/categoria: ingenieria
+    harness.poc/complejidad: media
+    harness.poc/madurez: validada
 spec:
   type: skill
+  lifecycle: development
   owner: group:guests
   system: harness-poc
 ---
 apiVersion: backstage.io/v1alpha1
-kind: Resource
+kind: Component
 metadata:
-  name: skill-verificacion-cumplimiento
-  title: Skill Verificación de cumplimiento
+  name: verificacion-cumplimiento
+  title: Verificación de cumplimiento
   description: Verifica una operación contra normativa y listas de control
   tags: [skill, caso-cumplimiento]
+  labels:
+    harness.poc/categoria: riesgo
+    harness.poc/complejidad: alta
+    harness.poc/madurez: experimental
 spec:
   type: skill
+  lifecycle: development
   owner: group:guests
   system: harness-poc

@@ -3,8 +3,9 @@
 apiVersion: harness.poc/v1alpha1
 kind: AgentHarness
 metadata:
-  name: ${{ values.nombre }}
+  name: ${{ values.entidad }}
   owner: ${{ values.owner }}
+  codigoApp: ${{ values.codigoApp }}
 spec:
   tipoAgente: ${{ values.tipoAgente }}
   runtime: ${{ values.runtime }}
@@ -13,8 +14,8 @@ spec:
     via: llm-gateway
   mcps:
 {%- for mcp in values.mcps %}
-    - ref: api:${{ mcp.metadata.namespace }}/${{ mcp.metadata.name }}
-      scope: ${{ mcp.metadata.labels['harness.poc/scope'] }}
+    - ref: component:${{ mcp.metadata.namespace }}/${{ mcp.metadata.name }}
+      scope: consumo-mcps/${{ mcp.metadata.labels['harness.poc/scope'] }}
       via: mcp-gateway
 {%- endfor %}
   skills:

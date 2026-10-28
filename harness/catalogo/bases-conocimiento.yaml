@@ -1,9 +1,10 @@
-# Bases de conocimiento de ejemplo (ficticias), consultadas por RAG.
+# Generado por gen-catalogo-kaizen.js (datos ficticios). Forma del Catálogo IA de Kaizen.
+# Bases de conocimiento: igual que los modelos, Resource para armar el agente.
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: kb-politicas-internas
-  title: Base de conocimiento Políticas internas
+  title: Políticas internas
   description: Políticas internas indexadas para consulta
   tags: [base-conocimiento, rag, caso-cumplimiento]
 spec:
@@ -15,7 +16,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: kb-portafolio-productos
-  title: Base de conocimiento Portafolio de productos
+  title: Portafolio de productos
   description: Fichas y condiciones de los productos
   tags: [base-conocimiento, rag, caso-atencion-cliente]
 spec:
@@ -27,7 +28,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: kb-runbooks-ti
-  title: Base de conocimiento Runbooks de TI
+  title: Runbooks de TI
   description: Procedimientos de atención de incidentes
   tags: [base-conocimiento, rag, caso-soporte-ti]
 spec:
@@ -39,7 +40,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: kb-normativa-regulatoria
-  title: Base de conocimiento Normativa regulatoria
+  title: Normativa regulatoria
   description: Circulares y normas aplicables, resumidas
   tags: [base-conocimiento, rag, caso-cumplimiento]
 spec:
@@ -51,7 +52,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: kb-lineamientos-desarrollo
-  title: Base de conocimiento Lineamientos de desarrollo
+  title: Lineamientos de desarrollo
   description: Estándares de código, seguridad y arquitectura
   tags: [base-conocimiento, rag, caso-desarrollo]
 spec:
