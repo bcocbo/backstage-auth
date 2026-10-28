@@ -18,6 +18,15 @@ spec:
 {%- endfor %}
     - recurso: ${{ values.modelo }}
       via: llm-gateway
+  # Grano fino: si hay tools listadas, el agente solo puede usar esas dentro de cada MCP.
+  tools:
+{%- for t in values.tools %}
+    - mcp: api:default/${{ t.metadata.labels['harness.poc/mcp'] }}
+      tool: ${{ t.metadata.labels['harness.poc/tool'] }}
+      accion: ${{ t.metadata.labels['harness.poc/accion'] }}
+      aprobacionHumana: ${{ 'true' if t.metadata.labels['harness.poc/accion'] == 'escritura-aprobacion' else 'false' }}
+{%- else %} todas   # sin restricción por tool: aplica el scope completo del MCP
+{%- endfor %}
   aprobacion:
     estado: pendiente
     aprueba: equipo dueño del MCP

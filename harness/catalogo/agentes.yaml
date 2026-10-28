@@ -1,10 +1,12 @@
+# Agentes de ejemplo (ficticios), ya armados con piezas del catálogo.
+# Sirven como legos (un agente puede invocar a otro) y como referencia de cada caso.
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: agente-soporte-tickets
-  title: Agente Soporte de tickets
-  description: Clasifica solicitudes y gestiona tickets de soporte (ficticio)
-  tags: [agente, pro-code]
+  name: agente-atencion-cliente
+  title: Agente Atención al cliente
+  description: Responde consultas de productos y radica PQR
+  tags: [agente, pro-code, caso-atencion-cliente]
   labels:
     harness.poc/tipo-agente: pro-code
     harness.poc/estado: dentro-del-harness
@@ -13,19 +15,19 @@ spec:
   lifecycle: experimental
   owner: group:guests
   system: harness-poc
-  consumesApis:
-    - api:mcp-gestion-tickets
+  consumesApis: [api:mcp-consulta-productos, api:mcp-clientes, api:mcp-pqr]
   dependsOn:
-    - resource:modelo-ligero-rapido
-    - resource:skill-clasificacion-solicitudes
+    - resource:modelo-razonamiento-general
+    - resource:skill-respuesta-clientes
+    - resource:kb-portafolio-productos
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: agente-asistente-documentos
-  title: Agente Asistente de documentos
-  description: Responde preguntas sobre documentos y políticas internas (ficticio)
-  tags: [agente, low-code]
+  name: agente-cobranza
+  title: Agente Cobranza
+  description: Propone acuerdos de pago y notifica al cliente (con aprobación humana)
+  tags: [agente, low-code, caso-cobranza]
   labels:
     harness.poc/tipo-agente: low-code
     harness.poc/estado: dentro-del-harness
@@ -34,9 +36,154 @@ spec:
   lifecycle: experimental
   owner: group:guests
   system: harness-poc
-  consumesApis:
-    - api:mcp-documentos-internos
+  consumesApis: [api:mcp-cartera, api:mcp-notificaciones]
+  dependsOn:
+    - resource:modelo-ligero-rapido
+    - resource:skill-negociacion-cobranza
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: agente-soporte-tickets
+  title: Agente Soporte de tickets
+  description: Clasifica solicitudes y gestiona tickets de soporte
+  tags: [agente, pro-code, caso-soporte-ti]
+  labels:
+    harness.poc/tipo-agente: pro-code
+    harness.poc/estado: dentro-del-harness
+spec:
+  type: agent
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  consumesApis: [api:mcp-gestion-tickets]
+  dependsOn:
+    - resource:modelo-ligero-rapido
+    - resource:skill-clasificacion-solicitudes
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: agente-diagnostico-ti
+  title: Agente Diagnóstico de TI
+  description: Diagnostica incidentes y delega la gestión del ticket al agente de soporte
+  tags: [agente, pro-code, caso-soporte-ti]
+  labels:
+    harness.poc/tipo-agente: pro-code
+    harness.poc/estado: dentro-del-harness
+spec:
+  type: agent
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  consumesApis: [api:mcp-observabilidad, api:mcp-pipelines]
+  dependsOn:
+    - resource:modelo-razonamiento-general
+    - resource:skill-diagnostico-incidentes
+    - resource:kb-runbooks-ti
+    - component:agente-soporte-tickets
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: agente-desarrollo
+  title: Agente Asistente de desarrollo
+  description: Busca componentes reutilizables y abre pull requests revisados
+  tags: [agente, pro-code, caso-desarrollo]
+  labels:
+    harness.poc/tipo-agente: pro-code
+    harness.poc/estado: dentro-del-harness
+spec:
+  type: agent
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  consumesApis: [api:mcp-repositorios, api:mcp-catalogo-kaizen, api:mcp-pipelines]
+  dependsOn:
+    - resource:modelo-codigo
+    - resource:skill-revision-codigo
+    - resource:kb-lineamientos-desarrollo
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: agente-cumplimiento
+  title: Agente Cumplimiento
+  description: Verifica personas y operaciones contra listas y normativa
+  tags: [agente, pro-code, caso-cumplimiento]
+  labels:
+    harness.poc/tipo-agente: pro-code
+    harness.poc/estado: dentro-del-harness
+spec:
+  type: agent
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  consumesApis: [api:mcp-listas-restrictivas, api:mcp-documentos-internos]
+  dependsOn:
+    - resource:modelo-razonamiento-general
+    - resource:skill-verificacion-cumplimiento
+    - resource:kb-normativa-regulatoria
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: agente-asistente-documentos
+  title: Agente Asistente de documentos
+  description: Responde preguntas sobre documentos y políticas internas
+  tags: [agente, low-code, caso-cumplimiento]
+  labels:
+    harness.poc/tipo-agente: low-code
+    harness.poc/estado: dentro-del-harness
+spec:
+  type: agent
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  consumesApis: [api:mcp-documentos-internos]
   dependsOn:
     - resource:modelo-razonamiento-general
     - resource:skill-resumen-documentos
     - resource:kb-politicas-internas
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: agente-orquestador-servicio
+  title: Agente Orquestador de servicio
+  description: Recibe la solicitud del cliente y la reparte entre atención y cobranza
+  tags: [agente, pro-code, multi-agente, caso-atencion-cliente, caso-cobranza]
+  labels:
+    harness.poc/tipo-agente: pro-code
+    harness.poc/estado: dentro-del-harness
+spec:
+  type: agent
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  consumesApis: [api:mcp-clientes]
+  dependsOn:
+    - resource:modelo-razonamiento-general
+    - resource:skill-clasificacion-solicitudes
+    - component:agente-atencion-cliente
+    - component:agente-cobranza
+---
+# Caso negativo: agente creado por fuera de la plantilla, sin identidad propia ni trazas.
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: agente-reportes-legado
+  title: Agente Reportes (legado)
+  description: Agente creado por fuera de la plantilla; usa una credencial compartida
+  tags: [agente, pro-code, fuera-del-harness]
+  labels:
+    harness.poc/tipo-agente: pro-code
+    harness.poc/estado: fuera-del-harness
+spec:
+  type: agent
+  lifecycle: production
+  owner: group:guests
+  system: harness-poc
+  consumesApis: [api:mcp-clientes, api:mcp-cartera]
+  dependsOn:
+    - resource:modelo-ligero-rapido

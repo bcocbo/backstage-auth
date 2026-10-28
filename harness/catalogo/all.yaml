@@ -11,6 +11,7 @@ spec:
     - ./sistema.yaml
     - ./modelos.yaml
     - ./mcps.yaml
+    - ./tools.yaml
     - ./skills.yaml
     - ./bases-conocimiento.yaml
     - ./agentes.yaml

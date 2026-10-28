@@ -1,0 +1,487 @@
+# Tools de los MCPs de ejemplo (ficticias), una por entidad para dar permisos de grano fino.
+# Generado; acción: lectura | escritura | escritura-aprobacion (requiere aprobación humana).
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-consulta-productos-buscar-producto
+  title: buscar_producto (consulta-productos)
+  description: Busca productos por nombre o código
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-consulta-productos
+    harness.poc/tool: buscar_producto
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-consulta-productos
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-consulta-productos-detalle-producto
+  title: detalle_producto (consulta-productos)
+  description: Características y condiciones de un producto
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-consulta-productos
+    harness.poc/tool: detalle_producto
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-consulta-productos
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-clientes-consultar-cliente
+  title: consultar_cliente (clientes)
+  description: Datos básicos de un cliente
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-clientes
+    harness.poc/tool: consultar_cliente
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-clientes
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-clientes-historial-contactos
+  title: historial_contactos (clientes)
+  description: Últimos contactos del cliente con el banco
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-clientes
+    harness.poc/tool: historial_contactos
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-clientes
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-pqr-consultar-pqr
+  title: consultar_pqr (pqr)
+  description: Estado de una PQR
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-pqr
+    harness.poc/tool: consultar_pqr
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-pqr
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-pqr-radicar-pqr
+  title: radicar_pqr (pqr)
+  description: Radica una PQR nueva
+  tags: [tool, escritura]
+  labels:
+    harness.poc/mcp: mcp-pqr
+    harness.poc/tool: radicar_pqr
+    harness.poc/accion: escritura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-pqr
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-cartera-consultar-obligaciones
+  title: consultar_obligaciones (cartera)
+  description: Obligaciones en mora de un cliente
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-cartera
+    harness.poc/tool: consultar_obligaciones
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-cartera
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-cartera-simular-acuerdo
+  title: simular_acuerdo (cartera)
+  description: Simula cuotas de un acuerdo de pago
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-cartera
+    harness.poc/tool: simular_acuerdo
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-cartera
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-cartera-registrar-acuerdo-pago
+  title: registrar_acuerdo_pago (cartera)
+  description: Registra un acuerdo de pago
+  tags: [tool, escritura-aprobacion]
+  labels:
+    harness.poc/mcp: mcp-cartera
+    harness.poc/tool: registrar_acuerdo_pago
+    harness.poc/accion: escritura-aprobacion
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-cartera
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-notificaciones-enviar-correo
+  title: enviar_correo (notificaciones)
+  description: Envía un correo al cliente
+  tags: [tool, escritura-aprobacion]
+  labels:
+    harness.poc/mcp: mcp-notificaciones
+    harness.poc/tool: enviar_correo
+    harness.poc/accion: escritura-aprobacion
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-notificaciones
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-notificaciones-enviar-sms
+  title: enviar_sms (notificaciones)
+  description: Envía un SMS al cliente
+  tags: [tool, escritura-aprobacion]
+  labels:
+    harness.poc/mcp: mcp-notificaciones
+    harness.poc/tool: enviar_sms
+    harness.poc/accion: escritura-aprobacion
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-notificaciones
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-gestion-tickets-consultar-ticket
+  title: consultar_ticket (gestion-tickets)
+  description: Estado de un ticket
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-gestion-tickets
+    harness.poc/tool: consultar_ticket
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-gestion-tickets
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-gestion-tickets-crear-ticket
+  title: crear_ticket (gestion-tickets)
+  description: Crea un ticket de soporte
+  tags: [tool, escritura]
+  labels:
+    harness.poc/mcp: mcp-gestion-tickets
+    harness.poc/tool: crear_ticket
+    harness.poc/accion: escritura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-gestion-tickets
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-gestion-tickets-escalar-ticket
+  title: escalar_ticket (gestion-tickets)
+  description: Escala un ticket al siguiente nivel
+  tags: [tool, escritura]
+  labels:
+    harness.poc/mcp: mcp-gestion-tickets
+    harness.poc/tool: escalar_ticket
+    harness.poc/accion: escritura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-gestion-tickets
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-observabilidad-consultar-alertas
+  title: consultar_alertas (observabilidad)
+  description: Alertas activas de una aplicación
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-observabilidad
+    harness.poc/tool: consultar_alertas
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-observabilidad
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-observabilidad-consultar-metricas
+  title: consultar_metricas (observabilidad)
+  description: Métricas de una aplicación en un rango
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-observabilidad
+    harness.poc/tool: consultar_metricas
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-observabilidad
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-observabilidad-buscar-logs
+  title: buscar_logs (observabilidad)
+  description: Búsqueda en logs de una aplicación
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-observabilidad
+    harness.poc/tool: buscar_logs
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-observabilidad
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-pipelines-estado-pipeline
+  title: estado_pipeline (pipelines)
+  description: Estado de la última ejecución de un pipeline
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-pipelines
+    harness.poc/tool: estado_pipeline
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-pipelines
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-pipelines-relanzar-pipeline
+  title: relanzar_pipeline (pipelines)
+  description: Relanza un pipeline de despliegue
+  tags: [tool, escritura-aprobacion]
+  labels:
+    harness.poc/mcp: mcp-pipelines
+    harness.poc/tool: relanzar_pipeline
+    harness.poc/accion: escritura-aprobacion
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-pipelines
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-repositorios-listar-repos
+  title: listar_repos (repositorios)
+  description: Repositorios de un equipo
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-repositorios
+    harness.poc/tool: listar_repos
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-repositorios
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-repositorios-leer-archivo
+  title: leer_archivo (repositorios)
+  description: Contenido de un archivo del repo
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-repositorios
+    harness.poc/tool: leer_archivo
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-repositorios
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-repositorios-crear-pull-request
+  title: crear_pull_request (repositorios)
+  description: Abre un pull request con cambios
+  tags: [tool, escritura]
+  labels:
+    harness.poc/mcp: mcp-repositorios
+    harness.poc/tool: crear_pull_request
+    harness.poc/accion: escritura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-repositorios
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-catalogo-kaizen-buscar-entidad
+  title: buscar_entidad (catalogo-kaizen)
+  description: Busca componentes y APIs en el catálogo
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-catalogo-kaizen
+    harness.poc/tool: buscar_entidad
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-catalogo-kaizen
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-catalogo-kaizen-consultar-plantillas
+  title: consultar_plantillas (catalogo-kaizen)
+  description: Plantillas disponibles en el portal
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-catalogo-kaizen
+    harness.poc/tool: consultar_plantillas
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-catalogo-kaizen
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-listas-restrictivas-validar-persona
+  title: validar_persona (listas-restrictivas)
+  description: Valida una persona contra listas de control
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-listas-restrictivas
+    harness.poc/tool: validar_persona
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-listas-restrictivas
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-documentos-internos-buscar-documento
+  title: buscar_documento (documentos-internos)
+  description: Búsqueda por texto en documentos
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-documentos-internos
+    harness.poc/tool: buscar_documento
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-documentos-internos
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: tool-documentos-internos-leer-documento
+  title: leer_documento (documentos-internos)
+  description: Contenido de un documento
+  tags: [tool, lectura]
+  labels:
+    harness.poc/mcp: mcp-documentos-internos
+    harness.poc/tool: leer_documento
+    harness.poc/accion: lectura
+spec:
+  type: mcp-tool
+  owner: group:guests
+  system: harness-poc
+  dependencyOf:
+    - api:mcp-documentos-internos

@@ -88,6 +88,15 @@ spec:
             catalogFilter:
               kind: API
               spec.type: mcp
+        tools:
+          title: Tools específicas (opcional)
+          type: array
+          description: Limita el acceso a estas tools. Si no eliges ninguna, el agente recibe todo el scope de cada MCP.
+          ui:field: MultiEntityPicker
+          ui:options:
+            catalogFilter:
+              kind: Resource
+              spec.type: mcp-tool
         skills:
           title: Skills
           type: array
@@ -132,6 +141,14 @@ spec:
       input:
         entityRefs: ${{ parameters.mcps }}
 
+    # Trae las fichas de las tools elegidas para leer su acción (lectura, escritura, con aprobación).
+    - id: fichas-tools
+      name: Leer fichas de las tools
+      if: ${{ parameters.tools and parameters.tools.length > 0 }}
+      action: catalog:fetch
+      input:
+        entityRefs: ${{ parameters.tools }}
+
     - id: base
       name: Generar harness y blueprint de accesos
       action: fetch:template
@@ -145,6 +162,7 @@ spec:
           runtime: ${{ parameters.runtime }}
           modelo: ${{ parameters.modelo }}
           mcps: ${{ steps['fichas-mcps'].output.entities }}
+          tools: ${{ steps['fichas-tools'].output.entities or [] }}
           skills: ${{ parameters.skills or [] }}
           basesConocimiento: ${{ parameters.basesConocimiento or [] }}
           agentes: ${{ parameters.agentes or [] }}

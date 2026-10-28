@@ -1,10 +1,11 @@
+# Skills de ejemplo (ficticias): instrucciones empaquetadas para una tarea concreta.
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: skill-resumen-documentos
   title: Skill Resumen de documentos
-  description: Instrucciones para resumir documentos largos en puntos clave (ficticio)
-  tags: [skill]
+  description: Resume documentos largos en puntos clave
+  tags: [skill, caso-cumplimiento]
 spec:
   type: skill
   owner: group:guests
@@ -15,8 +16,68 @@ kind: Resource
 metadata:
   name: skill-clasificacion-solicitudes
   title: Skill Clasificación de solicitudes
-  description: Instrucciones para clasificar solicitudes de soporte por tipo y urgencia (ficticio)
-  tags: [skill]
+  description: Clasifica solicitudes por tipo y urgencia
+  tags: [skill, caso-soporte-ti, caso-atencion-cliente]
+spec:
+  type: skill
+  owner: group:guests
+  system: harness-poc
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: skill-respuesta-clientes
+  title: Skill Respuesta a clientes
+  description: Redacta respuestas claras y en el tono de la marca
+  tags: [skill, caso-atencion-cliente]
+spec:
+  type: skill
+  owner: group:guests
+  system: harness-poc
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: skill-negociacion-cobranza
+  title: Skill Negociación de cobranza
+  description: Propone acuerdos de pago dentro de las reglas de cobranza
+  tags: [skill, caso-cobranza]
+spec:
+  type: skill
+  owner: group:guests
+  system: harness-poc
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: skill-diagnostico-incidentes
+  title: Skill Diagnóstico de incidentes
+  description: Cruza alertas, métricas y logs para proponer la causa de un incidente
+  tags: [skill, caso-soporte-ti]
+spec:
+  type: skill
+  owner: group:guests
+  system: harness-poc
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: skill-revision-codigo
+  title: Skill Revisión de código
+  description: Revisa cambios contra los lineamientos de desarrollo
+  tags: [skill, caso-desarrollo]
+spec:
+  type: skill
+  owner: group:guests
+  system: harness-poc
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: skill-verificacion-cumplimiento
+  title: Skill Verificación de cumplimiento
+  description: Verifica una operación contra normativa y listas de control
+  tags: [skill, caso-cumplimiento]
 spec:
   type: skill
   owner: group:guests

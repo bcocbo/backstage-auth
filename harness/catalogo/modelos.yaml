@@ -25,3 +25,17 @@ spec:
   type: llm-model
   owner: group:guests
   system: harness-poc
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: modelo-codigo
+  title: Modelo especializado en código
+  description: Modelo para leer, explicar y proponer cambios de código (ficticio)
+  tags: [modelo, llm]
+  labels:
+    harness.poc/proveedor: llm-gateway
+spec:
+  type: llm-model
+  owner: group:guests
+  system: harness-poc
