@@ -1,0 +1,108 @@
+# MCPs del caso real con el control de acceso documentado por Kaizen (Catálogo de MCPs):
+# Istio valida el JWT de Cognito (RequestAuthentication) y exige el scope del MCP (AuthorizationPolicy).
+# El código va en un ConfigMap (mcp-<nombre>-codigo) creado por desplegar.ps1.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consulta-productos-smcp
+  namespace: harness-poc
+  labels: { app: consulta-productos-smcp, harness.poc/tipo: mcp }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: consulta-productos-smcp } }
+  template:
+    metadata:
+      labels: { app: consulta-productos-smcp, pod: consulta-productos-smcp, harness.poc/mcp: "true" }
+      annotations:
+        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+    spec:
+      containers:
+        - name: mcp
+          image: python:3.12-slim
+          command: ["/bin/sh", "-c", "pip install --no-cache-dir -q 'mcp>=1.12,<2' && python /app/server.py"]
+          ports: [{ containerPort: 8080 }]
+          resources: { requests: { cpu: 100m, memory: 256Mi }, limits: { cpu: 500m, memory: 512Mi } }
+          volumeMounts: [{ name: codigo, mountPath: /app }]
+      volumes:
+        - name: codigo
+          configMap: { name: mcp-consulta-productos-codigo }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: consulta-productos-smcp, namespace: harness-poc }
+spec:
+  selector: { app: consulta-productos-smcp }
+  ports: [{ name: http-mcp, port: 80, targetPort: 8080 }]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cartera-smcp
+  namespace: harness-poc
+  labels: { app: cartera-smcp, harness.poc/tipo: mcp }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: cartera-smcp } }
+  template:
+    metadata:
+      labels: { app: cartera-smcp, pod: cartera-smcp, harness.poc/mcp: "true" }
+      annotations:
+        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+    spec:
+      containers:
+        - name: mcp
+          image: python:3.12-slim
+          command: ["/bin/sh", "-c", "pip install --no-cache-dir -q 'mcp>=1.12,<2' && python /app/server.py"]
+          ports: [{ containerPort: 8080 }]
+          resources: { requests: { cpu: 100m, memory: 256Mi }, limits: { cpu: 500m, memory: 512Mi } }
+          volumeMounts: [{ name: codigo, mountPath: /app }]
+      volumes:
+        - name: codigo
+          configMap: { name: mcp-cartera-codigo }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: cartera-smcp, namespace: harness-poc }
+spec:
+  selector: { app: cartera-smcp }
+  ports: [{ name: http-mcp, port: 80, targetPort: 8080 }]
+---
+################## Request Authentication (identidad) ##################
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata: { name: jwt-validator, namespace: harness-poc }
+spec:
+  selector:
+    matchLabels: { harness.poc/mcp: "true" }
+  jwtRules:
+    - issuer: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_q8vSdPFbG
+      jwksUri: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_q8vSdPFbG/.well-known/jwks.json
+---
+################## Authorization Policy (permiso por scope) ##################
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata: { name: consulta-productos-smcp-scope, namespace: harness-poc }
+spec:
+  selector:
+    matchLabels: { pod: consulta-productos-smcp }
+  rules:
+    - from:
+        - source:
+            requestPrincipals: ["https://cognito-idp.us-east-1.amazonaws.com/us-east-1_q8vSdPFbG/*"]
+      when:
+        - key: request.auth.claims[scope]
+          values: ["consumo-mcps/productos-consultaProductos"]
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata: { name: cartera-smcp-scope, namespace: harness-poc }
+spec:
+  selector:
+    matchLabels: { pod: cartera-smcp }
+  rules:
+    - from:
+        - source:
+            requestPrincipals: ["https://cognito-idp.us-east-1.amazonaws.com/us-east-1_q8vSdPFbG/*"]
+      when:
+        - key: request.auth.claims[scope]
+          values: ["consumo-mcps/cartera-gestionCartera"]

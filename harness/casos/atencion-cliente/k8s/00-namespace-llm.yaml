@@ -1,0 +1,70 @@
+# Namespace del caso real y modelo de lenguaje de la PoC.
+# Bedrock está denegado en la cuenta y el LLM Gateway corporativo vive en la cuenta de IA, así que
+# la PoC usa Ollama dentro del clúster: expone una API compatible con OpenAI, igual que el LLM Gateway,
+# y el agente solo cambia LLM_BASE_URL al portarse a Kaizen.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: harness-poc
+  labels:
+    istio-injection: enabled
+    app.bancolombia.com.co/project: harness-poc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llm-gateway-poc
+  namespace: harness-poc
+  labels:
+    app: llm-gateway-poc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: llm-gateway-poc
+  template:
+    metadata:
+      labels:
+        app: llm-gateway-poc
+        pod: llm-gateway-poc
+    spec:
+      containers:
+        - name: ollama
+          image: ollama/ollama:0.12.6
+          ports:
+            - containerPort: 11434
+          env:
+            - name: OLLAMA_HOST
+              value: 0.0.0.0:11434
+            - name: OLLAMA_KEEP_ALIVE
+              value: 24h
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 5; ollama pull qwen2.5:7b"]
+          resources:
+            requests:
+              cpu: "2"
+              memory: 6Gi
+            limits:
+              cpu: "6"
+              memory: 8Gi
+          volumeMounts:
+            - name: modelos
+              mountPath: /root/.ollama
+      volumes:
+        - name: modelos
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: llm-gateway-poc
+  namespace: harness-poc
+spec:
+  selector:
+    app: llm-gateway-poc
+  ports:
+    - name: http
+      port: 80
+      targetPort: 11434

@@ -12,6 +12,8 @@ metadata:
   annotations:
     harness.poc/manifest: ./harness.yaml
     harness.poc/blueprint-accesos: ./blueprint-accesos.yaml
+    backstage.io/kubernetes-id: ${{ values.entidad }}
+    backstage.io/kubernetes-namespace: harness-poc
 spec:
   type: agent
   lifecycle: development
