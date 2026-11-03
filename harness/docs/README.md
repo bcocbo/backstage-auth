@@ -8,6 +8,7 @@ Esta carpeta reúne lo que se ha visto mientras se construye: definiciones, duda
 |---|---|
 | [definiciones.md](definiciones.md) | Qué es cada pieza, en simple |
 | [preguntas-resueltas.md](preguntas-resueltas.md) | Las dudas que han salido y su respuesta |
+| [reunion-2026-10-28-harness-visual.md](reunion-2026-10-28-harness-visual.md) | Resumen de la reunión que definió el alcance de la PoC |
 | [diagramas/recorrido-pregunta.svg](diagramas/recorrido-pregunta.svg) | Cómo viaja una pregunta y dónde el harness bloquea |
 | [diagramas/opciones-coordinacion.svg](diagramas/opciones-coordinacion.svg) | Formas de combinar agentes y MCPs |
 
