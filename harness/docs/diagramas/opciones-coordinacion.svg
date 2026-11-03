@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="360" viewBox="0 0 680 360" font-family="Segoe UI, Arial, sans-serif" role="img">
+  <title>Opciones de coordinación de agentes dentro del harness</title>
+  <desc>Tres patrones: agente con tools, supervisor y cadena. El harness aplica identidad, permisos y trazas a cada llamada.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect width="680" height="360" fill="#ffffff"/>
+  <g fill="none" stroke="#B4B2A9" stroke-dasharray="4 4">
+    <rect x="40" y="40" width="186" height="232" rx="12"/>
+    <rect x="240" y="40" width="186" height="232" rx="12"/>
+    <rect x="440" y="40" width="186" height="232" rx="12"/>
+  </g>
+  <g font-size="14" font-weight="600" fill="#2C2C2A" text-anchor="middle">
+    <text x="133" y="67">Agente con tools</text>
+    <text x="333" y="67">Supervisor</text>
+    <text x="533" y="67">Cadena</text>
+  </g>
+  <g font-size="12" fill="#5F5E5A" text-anchor="middle">
+    <text x="133" y="86">un agente, varios MCPs</text>
+    <text x="333" y="86">reparte y delega</text>
+    <text x="533" y="86">uno tras otro</text>
+    <text x="133" y="261">Así es el agente hoy</text>
+    <text x="333" y="261">Si elige otros agentes</text>
+    <text x="533" y="261">Leer acta → documento</text>
+  </g>
+  <g stroke="#888780" stroke-width="1.5" fill="none" marker-end="url(#arrow)">
+    <line x1="113" y1="144" x2="93" y2="196"/>
+    <line x1="153" y1="144" x2="173" y2="196"/>
+    <line x1="313" y1="144" x2="293" y2="196"/>
+    <line x1="353" y1="144" x2="373" y2="196"/>
+    <line x1="533" y1="134" x2="533" y2="152"/>
+    <line x1="533" y1="188" x2="533" y2="206"/>
+  </g>
+  <g fill="#EEEDFE" stroke="#534AB7">
+    <rect x="73" y="104" width="120" height="40" rx="8"/>
+    <rect x="273" y="104" width="120" height="40" rx="8"/>
+    <rect x="250" y="198" width="80" height="40" rx="8"/>
+    <rect x="336" y="198" width="80" height="40" rx="8"/>
+    <rect x="473" y="100" width="120" height="34" rx="8"/>
+    <rect x="473" y="154" width="120" height="34" rx="8"/>
+    <rect x="473" y="208" width="120" height="34" rx="8"/>
+  </g>
+  <g fill="#E1F5EE" stroke="#0F6E56">
+    <rect x="50" y="198" width="80" height="40" rx="8"/>
+    <rect x="136" y="198" width="80" height="40" rx="8"/>
+  </g>
+  <g font-size="14" font-weight="600" fill="#3C3489" text-anchor="middle">
+    <text x="133" y="129">Agente</text>
+    <text x="333" y="129">Supervisor</text>
+    <text x="290" y="223">Agente A</text>
+    <text x="376" y="223">Agente B</text>
+    <text x="533" y="122">Agente 1</text>
+    <text x="533" y="176">Agente 2</text>
+    <text x="533" y="230">Agente 3</text>
+  </g>
+  <g font-size="14" font-weight="600" fill="#085041" text-anchor="middle">
+    <text x="90" y="223">MCP A</text>
+    <text x="176" y="223">MCP B</text>
+  </g>
+  <rect x="40" y="290" width="586" height="44" rx="8" fill="#F1EFE8" stroke="#5F5E5A"/>
+  <text x="333" y="317" font-size="14" font-weight="600" fill="#444441" text-anchor="middle">Harness: identidad, permisos y trazas en cada flecha</text>
+</svg>
