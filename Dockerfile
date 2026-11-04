@@ -22,10 +22,11 @@ RUN echo "backstage-app" | npx @backstage/create-app@0.7.7 --skip-install
 WORKDIR /app/backstage-app
 # Instalar dependencias
 # RUN yarn add @testing-library/react@^16.0.0 react@^18.0.0 react-dom@^18.0.0
-RUN yarn --cwd ./packages/backend add pg
-RUN yarn --cwd ./packages/app add @backstage/plugin-kubernetes
-RUN yarn --cwd ./packages/backend add @backstage/plugin-kubernetes-backend
-RUN yarn --cwd ./packages/backend add @backstage/plugin-auth-backend-module-github-provider
+# Versiones fijas, copiadas de la imagen main-90ff573 que funciona (Backstage 1.46.0)
+COPY docker/backstage-1.46/package.json ./package.json
+COPY docker/backstage-1.46/yarn.lock ./yarn.lock
+COPY docker/backstage-1.46/packages/app/package.json ./packages/app/package.json
+COPY docker/backstage-1.46/packages/backend/package.json ./packages/backend/package.json
 RUN yarn install --immutable --network-timeout 600000
 
 
@@ -73,7 +74,7 @@ RUN echo "=== RUNTIME FILES ===" && \
 
 
 ENTRYPOINT ["dumb-init", "--"]
-CMD ["sh", "-c", "yarn workspace backend start   2>/dev/null"]
+CMD ["sh", "-c", "yarn workspace backend start"]
  
 #CMD ["sh", "-c", "node packages/backend/dist/index.js --config app-config.yaml & yarn workspace @backstage/app-default start"]
 #CMD ["sh", "-c", "if yarn workspace backend start 2>/dev/null; then exit 0; elif yarn dev 2>/dev/null; then exit 0; elif node packages/backend/dist/index.js 2>/dev/null; then exit 0; else echo 'No suitable start command found' && yarn --help; fi"]

@@ -6,6 +6,7 @@ on:
     - 'app/**'
     - 'packages/**'
     - 'Dockerfile'
+    - 'docker/**'
     - '.github/workflows/build-backstage.yml'
     - 'app-config.yaml'
   pull_request:
