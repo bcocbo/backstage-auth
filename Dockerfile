@@ -12,11 +12,11 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Instalar Backstage CLI globalmente
-RUN npm install -g @backstage/create-app
+RUN npm install -g @backstage/create-app@0.7.7
 
 # Crear una nueva aplicación Backstage
 # (Esto es interactivo, así que necesitamos automatizarlo)
-RUN echo "backstage-app" | npx @backstage/create-app@latest --skip-install
+RUN echo "backstage-app" | npx @backstage/create-app@0.7.7 --skip-install
 
 # Cambiar al directorio de la aplicación
 WORKDIR /app/backstage-app
