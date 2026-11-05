@@ -1,11 +1,11 @@
 app:
-  title: Scaffolded Backstage App
+  title: Backstage PoC
   baseUrl: https://apps.pocarqnube.com
   listen:
     host: 0.0.0.0 # Added line, and now it's working
 
 organization:
-  name: Rockets
+  name: Backstage PoC
 
 backend:
   # Used for enabling authentication, secret is shared by all backend plugins
