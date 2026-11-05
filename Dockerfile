@@ -35,6 +35,9 @@ COPY app-config.yaml ./app-config.yaml
 COPY app-config.production.yaml ./app-config.production.yaml
 COPY catalog-info.yaml ./catalog-info.yaml
 COPY /packages/app/src/App.tsx ./packages/app/src/App.tsx
+COPY /packages/app/src/theme.ts ./packages/app/src/theme.ts
+COPY /packages/app/src/components/Root/Root.tsx ./packages/app/src/components/Root/Root.tsx
+COPY /packages/app/src/components/catalogoIa ./packages/app/src/components/catalogoIa
 COPY /packages/backend/src/index.ts ./packages/backend/src/index.ts
 COPY /examples ./examples
 

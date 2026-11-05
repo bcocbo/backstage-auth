@@ -24,6 +24,8 @@ import { apis } from './apis';
 import { entityPage } from './components/catalog/EntityPage';
 import { searchPage } from './components/search/SearchPage';
 import { Root } from './components/Root';
+import { CatalogoIaPage } from './components/catalogoIa';
+import { temaCatalogoIa } from './theme';
 
 import {
   AlertDisplay,
@@ -41,6 +43,8 @@ import { NotificationsPage } from '@backstage/plugin-notifications';
 import { SignalsDisplay } from '@backstage/plugin-signals';
 
 import { githubAuthApiRef } from '@backstage/core-plugin-api';
+import { UnifiedThemeProvider } from '@backstage/theme';
+import LightIcon from '@material-ui/icons/WbSunny';
 const githubProvider: SignInProviderConfig = {
   id: 'github-auth-provider',
   title: 'GitHub',
@@ -49,6 +53,17 @@ const githubProvider: SignInProviderConfig = {
 };
 const app = createApp({
   apis,
+  themes: [
+    {
+      id: 'catalogo-ia',
+      title: 'Backstage PoC',
+      variant: 'light',
+      icon: <LightIcon />,
+      Provider: ({ children }) => (
+        <UnifiedThemeProvider theme={temaCatalogoIa} children={children} />
+      ),
+    },
+  ],
   bindRoutes({ bind }) {
     bind(catalogPlugin.externalRoutes, {
       createComponent: scaffolderPlugin.routes.root,
@@ -89,7 +104,9 @@ const app = createApp({
 const routes = (
   <FlatRoutes>
     <Route path="/" element={<Navigate to="catalog" />} />
-    <Route path="/catalog" element={<CatalogIndexPage />} />
+    <Route path="/catalog" element={<CatalogoIaPage />} />
+    {/* El catálogo nativo sigue disponible: sus enlaces internos dependen de él. */}
+    <Route path="/catalog-completo" element={<CatalogIndexPage />} />
     <Route
       path="/catalog/:namespace/:kind/:name"
       element={<CatalogEntityPage />}
