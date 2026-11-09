@@ -1,0 +1,8 @@
+# kubectl apply -k harness/mcps-kaizen : despliega el simulador de MCPs (sin tuberías: no daña UTF-8 en PowerShell 5.1).
+# Los 5 MCP reales y su adaptador hacia Backstage se despliegan aparte (ver harness/docs/mcps-kaizen.md).
+namespace: harness-poc
+resources: [k8s/simulador.yaml]
+generatorOptions: { disableNameSuffixHash: true }
+configMapGenerator:
+  - name: mcp-simulador-codigo
+    files: [simulador/servidor.py, simulador/mcps.json]

@@ -9,6 +9,7 @@ Esta carpeta reúne lo que se ha visto mientras se construye: definiciones, duda
 | [definiciones.md](definiciones.md) | Qué es cada pieza, en simple |
 | [preguntas-resueltas.md](preguntas-resueltas.md) | Las dudas que han salido y su respuesta |
 | [reunion-2026-10-28-harness-visual.md](reunion-2026-10-28-harness-visual.md) | Resumen de la reunión que definió el alcance de la PoC |
+| [mcps-kaizen.md](mcps-kaizen.md) | 36 MCPs con la forma de Kaizen: 5 reales y 31 simulados, y cómo se verificaron |
 | [diagramas/recorrido-pregunta.svg](diagramas/recorrido-pregunta.svg) | Cómo viaja una pregunta y dónde el harness bloquea |
 | [diagramas/opciones-coordinacion.svg](diagramas/opciones-coordinacion.svg) | Formas de combinar agentes y MCPs |
 
@@ -19,6 +20,7 @@ Esta carpeta reúne lo que se ha visto mientras se construye: definiciones, duda
 | Catálogo de piezas (MCPs, tools, skills, agentes, modelos) | `harness/catalogo/` |
 | Plantilla "Agente con Harness" | `harness/plantilla/` |
 | Caso real: agente, MCPs, identidad y despliegue | `harness/casos/atencion-cliente/` |
+| MCPs con la forma de Kaizen (5 reales y 31 simulados) | `harness/mcps-kaizen/` |
 | Esta documentación | `harness/docs/` |
 
 Todo vive en la rama `harness-poc`. No está unida a `main`.
@@ -31,6 +33,7 @@ Todo vive en la rama `harness-poc`. No está unida a `main`.
 - Identidad del agente en Cognito, con solo los permisos que eligió.
 - Istio deja pasar el MCP elegido (200) y bloquea el otro (403).
 - Trazas de cada pregunta y de cada acceso.
+- 36 MCPs con la forma de Kaizen: 5 corren con su código real y 31 simulados con datos inventados. Todos verificados con una llamada real.
 
 **Falta:**
 - Que la plantilla genere el agente funcional (despliegue, identidad, permisos de Istio), no solo su declaración.

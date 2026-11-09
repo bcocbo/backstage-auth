@@ -1,0 +1,4930 @@
+{
+ "agenda-ambientes": {
+  "nombre": "agenda-ambientes-mcp-server",
+  "titulo": "Agenda de ambientes",
+  "tools": [
+   {
+    "name": "ambientes_find_window",
+    "description": "Ambientes find window. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "window_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "window_id"
+     ]
+    }
+   },
+   {
+    "name": "ambientes_find_booking",
+    "description": "Ambientes find booking. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "booking_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "booking_id"
+     ]
+    }
+   },
+   {
+    "name": "ambientes_find_analyst_name",
+    "description": "Ambientes find analyst name. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "name"
+     ]
+    }
+   },
+   {
+    "name": "ambientes_find_analyst_email",
+    "description": "Ambientes find analyst email. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "email": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "email"
+     ]
+    }
+   },
+   {
+    "name": "ambientes_create_window",
+    "description": "Ambientes create window. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "payload": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "payload"
+     ]
+    }
+   },
+   {
+    "name": "ambientes_create_booking",
+    "description": "Ambientes create booking. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "payload": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "payload"
+     ]
+    }
+   },
+   {
+    "name": "ambientes_create_clone_window",
+    "description": "Ambientes create clone window. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "payload": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "payload"
+     ]
+    }
+   },
+   {
+    "name": "ambientes_create_clone_booking",
+    "description": "Ambientes create clone booking. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "payload": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "payload"
+     ]
+    }
+   },
+   {
+    "name": "ambientes_find_concurrences",
+    "description": "Ambientes find concurrences. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "window_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "window_id"
+     ]
+    }
+   },
+   {
+    "name": "ambientes_list_window_filter",
+    "description": "Ambientes list window filter. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "payload": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "payload"
+     ]
+    }
+   },
+   {
+    "name": "ambientes_list_booking_filter",
+    "description": "Ambientes list booking filter. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "payload": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "payload"
+     ]
+    }
+   }
+  ]
+ },
+ "automatizacion-infra": {
+  "nombre": "automatizacion-infra-mcp-server",
+  "titulo": "Plataforma de automatización",
+  "tools": [
+   {
+    "name": "automatizacion_get_cluster_status",
+    "description": "Automatizacion get cluster status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {},
+     "required": []
+    }
+   },
+   {
+    "name": "automatizacion_get_teams",
+    "description": "Automatizacion get teams. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "organization__name": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "automatizacion_get_organizations",
+    "description": "Automatizacion get organizations. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "name": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "automatizacion_get_governance_info",
+    "description": "Automatizacion get governance info. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {},
+     "required": []
+    }
+   },
+   {
+    "name": "automatizacion_get_workflow_job_templates",
+    "description": "Automatizacion get workflow job templates. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "organization__name": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "automatizacion_get_job_templates",
+    "description": "Automatizacion get job templates. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "name": {
+       "type": "string"
+      },
+      "organization__name": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "automatizacion_get_jobs",
+    "description": "Automatizacion get jobs. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {},
+     "required": []
+    }
+   },
+   {
+    "name": "automatizacion_create_team",
+    "description": "Automatizacion create team. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "name": {
+       "type": "string"
+      },
+      "organization__name": {
+       "type": "string"
+      },
+      "owner_name": {
+       "type": "string"
+      },
+      "owner_network_user": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "name",
+      "organization__name",
+      "owner_name",
+      "owner_network_user"
+     ]
+    }
+   },
+   {
+    "name": "automatizacion_create_project",
+    "description": "Automatizacion create project. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "name": {
+       "type": "string"
+      },
+      "organization__name": {
+       "type": "string"
+      },
+      "owner_name": {
+       "type": "string"
+      },
+      "owner_network_user": {
+       "type": "string"
+      },
+      "scm_url": {
+       "type": "string"
+      },
+      "scm_type": {
+       "type": "string"
+      },
+      "scm_branch": {
+       "type": "string"
+      },
+      "credential": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "name",
+      "organization__name",
+      "owner_name",
+      "owner_network_user",
+      "scm_url"
+     ]
+    }
+   }
+  ]
+ },
+ "pipelines-operativos": {
+  "nombre": "pipelines-operativos-mcp-server",
+  "titulo": "Pipelines operativos",
+  "tools": [
+   {
+    "name": "pipeline_execute_instancia",
+    "description": "Pipeline execute instancia. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account": {
+       "type": "string"
+      },
+      "idinstance": {
+       "type": "string"
+      },
+      "accion": {
+       "type": "string"
+      },
+      "user_email": {
+       "type": "string"
+      },
+      "prueba": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "account",
+      "idinstance",
+      "accion",
+      "user_email"
+     ]
+    }
+   },
+   {
+    "name": "pipeline_execute_autoescalado",
+    "description": "Pipeline execute autoescalado. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account": {
+       "type": "string"
+      },
+      "name": {
+       "type": "string"
+      },
+      "minsize": {
+       "type": "string"
+      },
+      "maxsize": {
+       "type": "string"
+      },
+      "desirecapacity": {
+       "type": "string"
+      },
+      "user_email": {
+       "type": "string"
+      },
+      "prueba": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "account",
+      "name",
+      "minsize",
+      "maxsize",
+      "desirecapacity",
+      "user_email"
+     ]
+    }
+   },
+   {
+    "name": "pipeline_execute_image_scanner",
+    "description": "Pipeline execute image scanner. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "imagen": {
+       "type": "string"
+      },
+      "email_notificar": {
+       "type": "string"
+      },
+      "prueba": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "imagen",
+      "email_notificar"
+     ]
+    }
+   },
+   {
+    "name": "pipeline_execute_registro_image_scanner",
+    "description": "Pipeline execute registro image scanner. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account": {
+       "type": "string"
+      },
+      "image": {
+       "type": "string"
+      },
+      "repositorio_imagenes": {
+       "type": "string"
+      },
+      "account_id": {
+       "type": "string"
+      },
+      "user_notificar": {
+       "type": "string"
+      },
+      "prueba": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "account",
+      "image",
+      "repositorio_imagenes",
+      "account_id",
+      "user_notificar"
+     ]
+    }
+   },
+   {
+    "name": "pipeline_execute_create_image_base",
+    "description": "Pipeline execute create image base. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "ami_id": {
+       "type": "string"
+      },
+      "os_version": {
+       "type": "string"
+      },
+      "volume_type": {
+       "type": "string"
+      },
+      "volume_size": {
+       "type": "string"
+      },
+      "application_code": {
+       "type": "string"
+      },
+      "project_name": {
+       "type": "string"
+      },
+      "accounts": {
+       "type": "string"
+      },
+      "cost_center": {
+       "type": "string"
+      },
+      "my_script": {
+       "type": "string"
+      },
+      "description": {
+       "type": "string"
+      },
+      "user_email": {
+       "type": "string"
+      },
+      "region_negocio": {
+       "type": "string"
+      },
+      "requester_user": {
+       "type": "string"
+      },
+      "prueba": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "ami_id",
+      "os_version",
+      "volume_type",
+      "volume_size",
+      "application_code",
+      "project_name",
+      "accounts",
+      "cost_center",
+      "my_script",
+      "description",
+      "user_email",
+      "region_negocio",
+      "requester_user"
+     ]
+    }
+   },
+   {
+    "name": "pipeline_execute_create_image_registro",
+    "description": "Pipeline execute create image registro. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "image_name": {
+       "type": "string"
+      },
+      "image_tag": {
+       "type": "string"
+      },
+      "app_tag": {
+       "type": "string"
+      },
+      "email_notificar": {
+       "type": "string"
+      },
+      "account_id": {
+       "type": "string"
+      },
+      "repositorio_imagenes": {
+       "type": "string"
+      },
+      "conexion_registro": {
+       "type": "string"
+      },
+      "prueba": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "image_name",
+      "image_tag",
+      "app_tag",
+      "email_notificar",
+      "account_id",
+      "repositorio_imagenes",
+      "conexion_registro"
+     ]
+    }
+   },
+   {
+    "name": "pipeline_execute_delete_image_registro",
+    "description": "Pipeline execute delete image registro. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account_delete": {
+       "type": "string"
+      },
+      "environment": {
+       "type": "string"
+      },
+      "repositoryname": {
+       "type": "string"
+      },
+      "imagetags": {
+       "type": "string"
+      },
+      "email_notificar": {
+       "type": "string"
+      },
+      "prueba": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "account_delete",
+      "environment",
+      "repositoryname",
+      "imagetags",
+      "email_notificar"
+     ]
+    }
+   }
+  ]
+ },
+ "auditoria-nube": {
+  "nombre": "auditoria-nube-mcp-server",
+  "titulo": "Auditoría de la nube",
+  "tools": [
+   {
+    "name": "auditoria_lookup_events",
+    "description": "Audita lookup events. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account_id": {
+       "type": "string"
+      },
+      "start_time": {
+       "type": "string"
+      },
+      "end_time": {
+       "type": "string"
+      },
+      "attribute_key": {
+       "type": "string"
+      },
+      "attribute_value": {
+       "type": "string"
+      },
+      "max_results": {
+       "type": "integer"
+      },
+      "next_token": {
+       "type": "string"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   }
+  ]
+ },
+ "observabilidad-nube": {
+  "nombre": "observabilidad-nube-mcp-server",
+  "titulo": "Observabilidad de la nube",
+  "tools": [
+   {
+    "name": "observabilidad_get_active_alarms",
+    "description": "Observabilidad get active alarms. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account_id": {
+       "type": "string"
+      },
+      "max_items": {
+       "type": "integer"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "account_id"
+     ]
+    }
+   },
+   {
+    "name": "observabilidad_get_alarm_history",
+    "description": "Observabilidad get alarm history. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account_id": {
+       "type": "string"
+      },
+      "alarm_name": {
+       "type": "string"
+      },
+      "start_time": {
+       "type": "string"
+      },
+      "end_time": {
+       "type": "string"
+      },
+      "history_item_type": {
+       "type": "string"
+      },
+      "max_items": {
+       "type": "integer"
+      },
+      "include_component_alarms": {
+       "type": "boolean"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "account_id"
+     ]
+    }
+   },
+   {
+    "name": "observabilidad_describe_log_groups",
+    "description": "Observabilidad describe log groups. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account_id": {
+       "type": "string"
+      },
+      "account_identifiers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "include_linked_accounts": {
+       "type": "boolean"
+      },
+      "log_group_class": {
+       "type": "string"
+      },
+      "log_group_name_prefix": {
+       "type": "string"
+      },
+      "max_items": {
+       "type": "integer"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "account_id"
+     ]
+    }
+   },
+   {
+    "name": "observabilidad_analyze_log_group",
+    "description": "Observabilidad analyze log group. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account_id": {
+       "type": "string"
+      },
+      "log_group_arn": {
+       "type": "string"
+      },
+      "start_time": {
+       "type": "string"
+      },
+      "end_time": {
+       "type": "string"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "account_id"
+     ]
+    }
+   },
+   {
+    "name": "observabilidad_execute_log_insights_query",
+    "description": "Observabilidad execute log insights query. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account_id": {
+       "type": "string"
+      },
+      "log_group_names": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "log_group_identifiers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "start_time": {
+       "type": "string"
+      },
+      "end_time": {
+       "type": "string"
+      },
+      "query_string": {
+       "type": "string"
+      },
+      "limit": {
+       "type": "integer"
+      },
+      "max_timeout": {
+       "type": "integer"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "account_id"
+     ]
+    }
+   },
+   {
+    "name": "observabilidad_get_logs_insight_query_results",
+    "description": "Observabilidad get logs insight query results. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account_id": {
+       "type": "string"
+      },
+      "query_id": {
+       "type": "string"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "account_id"
+     ]
+    }
+   },
+   {
+    "name": "observabilidad_get_metric_data",
+    "description": "Observabilidad get metric data. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account_id": {
+       "type": "string"
+      },
+      "namespace": {
+       "type": "string"
+      },
+      "metric_name": {
+       "type": "string"
+      },
+      "start_time": {
+       "type": "string"
+      },
+      "dimensions": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "end_time": {
+       "type": "string"
+      },
+      "statistic": {
+       "type": "string"
+      },
+      "target_datapoints": {
+       "type": "integer"
+      },
+      "group_by_dimension": {
+       "type": "string"
+      },
+      "schema_dimension_keys": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "limit": {
+       "type": "integer"
+      },
+      "sort_order": {
+       "type": "string"
+      },
+      "order_by_statistic": {
+       "type": "string"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "account_id",
+      "namespace",
+      "metric_name",
+      "start_time"
+     ]
+    }
+   },
+   {
+    "name": "observabilidad_get_metric_metadata",
+    "description": "Observabilidad get metric metadata. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account_id": {
+       "type": "string"
+      },
+      "namespace": {
+       "type": "string"
+      },
+      "metric_name": {
+       "type": "string"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "account_id"
+     ]
+    }
+   },
+   {
+    "name": "observabilidad_analyze_metric",
+    "description": "Observabilidad analyze metric. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account_id": {
+       "type": "string"
+      },
+      "namespace": {
+       "type": "string"
+      },
+      "metric_name": {
+       "type": "string"
+      },
+      "dimensions": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "region": {
+       "type": "string"
+      },
+      "statistic": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "account_id"
+     ]
+    }
+   }
+  ]
+ },
+ "revision-codigo": {
+  "nombre": "revision-codigo-mcp-server",
+  "titulo": "Revisión de código",
+  "tools": [
+   {
+    "name": "revision_analizar",
+    "description": "Revision analizar. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_name": {
+       "type": "string"
+      },
+      "repo_origin": {
+       "type": "string"
+      },
+      "path": {
+       "type": "string"
+      },
+      "branch": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_name",
+      "repo_origin"
+     ]
+    }
+   },
+   {
+    "name": "revision_estado",
+    "description": "Revision estado. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "execution_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "execution_id"
+     ]
+    }
+   },
+   {
+    "name": "revision_resultado",
+    "description": "Revision resultado. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "execution_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "execution_id"
+     ]
+    }
+   }
+  ]
+ },
+ "pruebas-continuas": {
+  "nombre": "pruebas-continuas-mcp-server",
+  "titulo": "Pruebas continuas",
+  "tools": [
+   {
+    "name": "write-test-file",
+    "description": "Escribe test file. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "path": {
+       "type": "string"
+      },
+      "content": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "path",
+      "content"
+     ]
+    }
+   },
+   {
+    "name": "run-unit-tests",
+    "description": "Ejecuta unit tests. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "project_root": {
+       "type": "string"
+      },
+      "command": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "project_root",
+      "command"
+     ]
+    }
+   },
+   {
+    "name": "run-api-tests",
+    "description": "Ejecuta api tests. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "project_root": {
+       "type": "string"
+      },
+      "command": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "project_root",
+      "command"
+     ]
+    }
+   },
+   {
+    "name": "extract-api-endpoints",
+    "description": "Extract api endpoints. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "source_code": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "source_code"
+     ]
+    }
+   },
+   {
+    "name": "validate-api-syntax",
+    "description": "Valida api syntax. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "feature_content": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "feature_content"
+     ]
+    }
+   },
+   {
+    "name": "analyze-test-coverage",
+    "description": "Analiza test coverage. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "coverage_report": {
+       "type": "string"
+      },
+      "threshold": {
+       "type": "number"
+      }
+     },
+     "required": [
+      "coverage_report"
+     ]
+    }
+   }
+  ]
+ },
+ "turnos-disponibilidad": {
+  "nombre": "turnos-disponibilidad-mcp-server",
+  "titulo": "Turnos de disponibilidad",
+  "tools": [
+   {
+    "name": "consultar_personal_turno",
+    "description": "Consulta personal turno. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "official": {
+       "type": "string"
+      },
+      "it_service": {
+       "type": "string"
+      },
+      "official_company": {
+       "type": "string"
+      },
+      "year": {
+       "type": "string"
+      },
+      "start_date": {
+       "type": "string"
+      },
+      "end_date": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   }
+  ]
+ },
+ "flujo-devops": {
+  "nombre": "flujo-devops-mcp-server",
+  "titulo": "Flujo DevOps",
+  "tools": [
+   {
+    "name": "git-status",
+    "description": "Git: status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path"
+     ]
+    }
+   },
+   {
+    "name": "git-log",
+    "description": "Git: log. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      },
+      "max_count": {
+       "type": "integer"
+      },
+      "branch": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path"
+     ]
+    }
+   },
+   {
+    "name": "git-branches",
+    "description": "Git: branches. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path"
+     ]
+    }
+   },
+   {
+    "name": "git-diff",
+    "description": "Git: diff. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      },
+      "commit": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path"
+     ]
+    }
+   },
+   {
+    "name": "git-commit",
+    "description": "Git: commit. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      },
+      "message": {
+       "type": "string"
+      },
+      "files": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "user_name": {
+       "type": "string"
+      },
+      "user_email": {
+       "type": "string"
+      },
+      "allow_empty": {
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "repository_path",
+      "message"
+     ]
+    }
+   },
+   {
+    "name": "git-checkout-branch",
+    "description": "Git: checkout branch. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      },
+      "branch_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path",
+      "branch_name"
+     ]
+    }
+   },
+   {
+    "name": "git-create-branch",
+    "description": "Git: create branch. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      },
+      "branch_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path",
+      "branch_name"
+     ]
+    }
+   },
+   {
+    "name": "git-stats",
+    "description": "Git: stats. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path"
+     ]
+    }
+   },
+   {
+    "name": "git-clone",
+    "description": "Git: clone. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repo_url": {
+       "type": "string"
+      },
+      "clone_dir": {
+       "type": "string"
+      },
+      "branch": {
+       "type": "string"
+      },
+      "depth": {
+       "type": "integer"
+      },
+      "sparse_checkout_path": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repo_url",
+      "clone_dir"
+     ]
+    }
+   },
+   {
+    "name": "git-pull",
+    "description": "Git: pull. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      },
+      "remote_name": {
+       "type": "string"
+      },
+      "branch_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path"
+     ]
+    }
+   },
+   {
+    "name": "git-push",
+    "description": "Git: push. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      },
+      "remote_name": {
+       "type": "string"
+      },
+      "branch_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path"
+     ]
+    }
+   },
+   {
+    "name": "git-pull-request",
+    "description": "Git: pull request. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_name": {
+       "type": "string"
+      },
+      "source_branch": {
+       "type": "string"
+      },
+      "target_branch": {
+       "type": "string"
+      },
+      "title": {
+       "type": "string"
+      },
+      "description": {
+       "type": "string"
+      },
+      "repo_url": {
+       "type": "string"
+      },
+      "reviewers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "item_ids": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "labels": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     },
+     "required": [
+      "repository_name",
+      "source_branch",
+      "target_branch",
+      "title",
+      "description",
+      "repo_url"
+     ]
+    }
+   }
+  ]
+ },
+ "operaciones-git": {
+  "nombre": "operaciones-git-mcp-server",
+  "titulo": "Operaciones Git",
+  "tools": [
+   {
+    "name": "git-status",
+    "description": "Git: status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path"
+     ]
+    }
+   },
+   {
+    "name": "git-log",
+    "description": "Git: log. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      },
+      "max_count": {
+       "type": "integer"
+      },
+      "branch": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path"
+     ]
+    }
+   },
+   {
+    "name": "git-branches",
+    "description": "Git: branches. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path"
+     ]
+    }
+   },
+   {
+    "name": "git-diff",
+    "description": "Git: diff. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      },
+      "commit": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path"
+     ]
+    }
+   },
+   {
+    "name": "git-commit",
+    "description": "Git: commit. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      },
+      "message": {
+       "type": "string"
+      },
+      "files": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "user_name": {
+       "type": "string"
+      },
+      "user_email": {
+       "type": "string"
+      },
+      "allow_empty": {
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "repository_path",
+      "message"
+     ]
+    }
+   },
+   {
+    "name": "git-checkout-branch",
+    "description": "Git: checkout branch. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      },
+      "branch_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path",
+      "branch_name"
+     ]
+    }
+   },
+   {
+    "name": "git-create-branch",
+    "description": "Git: create branch. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      },
+      "branch_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path",
+      "branch_name"
+     ]
+    }
+   },
+   {
+    "name": "git-stats",
+    "description": "Git: stats. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path"
+     ]
+    }
+   },
+   {
+    "name": "git-clone",
+    "description": "Git: clone. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repo_url": {
+       "type": "string"
+      },
+      "clone_dir": {
+       "type": "string"
+      },
+      "branch": {
+       "type": "string"
+      },
+      "depth": {
+       "type": "integer"
+      },
+      "sparse_checkout_path": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repo_url",
+      "clone_dir"
+     ]
+    }
+   },
+   {
+    "name": "git-pull",
+    "description": "Git: pull. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      },
+      "remote_name": {
+       "type": "string"
+      },
+      "branch_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path"
+     ]
+    }
+   },
+   {
+    "name": "git-push",
+    "description": "Git: push. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_path": {
+       "type": "string"
+      },
+      "remote_name": {
+       "type": "string"
+      },
+      "branch_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "repository_path"
+     ]
+    }
+   },
+   {
+    "name": "git-pull-request",
+    "description": "Git: pull request. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "repository_name": {
+       "type": "string"
+      },
+      "source_branch": {
+       "type": "string"
+      },
+      "target_branch": {
+       "type": "string"
+      },
+      "title": {
+       "type": "string"
+      },
+      "description": {
+       "type": "string"
+      },
+      "repo_url": {
+       "type": "string"
+      },
+      "reviewers": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "item_ids": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "labels": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     },
+     "required": [
+      "repository_name",
+      "source_branch",
+      "target_branch",
+      "title",
+      "description",
+      "repo_url"
+     ]
+    }
+   }
+  ]
+ },
+ "disponibilidad-servicios": {
+  "nombre": "disponibilidad-servicios-mcp-server",
+  "titulo": "Disponibilidad de servicios",
+  "tools": [
+   {
+    "name": "get_afectaciones_reales_servicios",
+    "description": "Consulta afectaciones reales servicios. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "servicio": {
+       "type": "string"
+      },
+      "fecha_inicio": {
+       "type": "string"
+      },
+      "fecha_fin": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "servicio",
+      "fecha_inicio",
+      "fecha_fin"
+     ]
+    }
+   },
+   {
+    "name": "consultar_afectaciones_servicios",
+    "description": "Consulta afectaciones servicios. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "servicio": {
+       "type": "string"
+      },
+      "fecha_inicio": {
+       "type": "string"
+      },
+      "fecha_fin": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "servicio",
+      "fecha_inicio",
+      "fecha_fin"
+     ]
+    }
+   },
+   {
+    "name": "calcular_disponibilidad_real_servicios",
+    "description": "Calcula disponibilidad real servicios. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "servicio": {
+       "type": "string"
+      },
+      "fecha_inicio": {
+       "type": "string"
+      },
+      "fecha_fin": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "servicio",
+      "fecha_inicio",
+      "fecha_fin"
+     ]
+    }
+   },
+   {
+    "name": "calcular_disponibilidad_servicios",
+    "description": "Calcula disponibilidad servicios. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "servicio": {
+       "type": "string"
+      },
+      "fecha_inicio": {
+       "type": "string"
+      },
+      "fecha_fin": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "servicio",
+      "fecha_inicio",
+      "fecha_fin"
+     ]
+    }
+   },
+   {
+    "name": "informacion_servicios",
+    "description": "Consulta servicios. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "servicio": {
+       "type": "string"
+      },
+      "detalle": {
+       "type": "string"
+      },
+      "anio": {
+       "type": "integer"
+      },
+      "filtro": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "afectaciones_recurrentes_servicios",
+    "description": "Afectaciones recurrentes servicios. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "servicio": {
+       "type": "string"
+      },
+      "fecha_inicio": {
+       "type": "string"
+      },
+      "fecha_fin": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "servicio",
+      "fecha_inicio",
+      "fecha_fin"
+     ]
+    }
+   },
+   {
+    "name": "buscar_solucion_servicios",
+    "description": "Consulta solucion servicios. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "servicio": {
+       "type": "string"
+      },
+      "solicitud": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "servicio",
+      "solicitud"
+     ]
+    }
+   },
+   {
+    "name": "consultar_estados_servicios",
+    "description": "Consulta estados servicios. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "servicio": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "consultar_servicios_afectados_intervalo_servicios",
+    "description": "Consulta servicios afectados intervalo servicios. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "fecha_inicio": {
+       "type": "string"
+      },
+      "fecha_fin": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "fecha_inicio",
+      "fecha_fin"
+     ]
+    }
+   },
+   {
+    "name": "informe_quincenal_servicios",
+    "description": "Consulta quincenal servicios. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "fecha_inicio": {
+       "type": "string"
+      },
+      "fecha_fin": {
+       "type": "string"
+      },
+      "optimizado": {
+       "type": "boolean"
+      },
+      "nivel_informe": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "fecha_inicio",
+      "fecha_fin"
+     ]
+    }
+   },
+   {
+    "name": "info_detalle_servicios",
+    "description": "Consulta detalle servicios. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "num_tickets": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     },
+     "required": [
+      "num_tickets"
+     ]
+    }
+   }
+  ]
+ },
+ "gestion-itsm": {
+  "nombre": "gestion-itsm-mcp-server",
+  "titulo": "Gestión de servicios de TI",
+  "tools": [
+   {
+    "name": "get_basic_information_elemento_configuracion",
+    "description": "Consulta basic information elemento configuracion. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "server_name": {
+       "type": "string"
+      },
+      "type_element": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "server_name"
+     ]
+    }
+   },
+   {
+    "name": "search_incidents",
+    "description": "Consulta incidents. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "query": {
+       "type": "string"
+      },
+      "fields": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "count": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "query"
+     ]
+    }
+   },
+   {
+    "name": "search_cambios",
+    "description": "Consulta cambios. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "query": {
+       "type": "string"
+      },
+      "cambio": {
+       "type": "string"
+      },
+      "fields": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "count": {
+       "type": "integer"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "search_work_orders",
+    "description": "Consulta work orders. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "query": {
+       "type": "string"
+      },
+      "fields": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "count": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "query"
+     ]
+    }
+   },
+   {
+    "name": "get_cambio_detail",
+    "description": "Consulta cambio detail. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "request_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "request_id"
+     ]
+    }
+   },
+   {
+    "name": "get_cambio_date_context",
+    "description": "Consulta cambio date context. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "cambio": {
+       "type": "string"
+      },
+      "timezone": {
+       "type": "string"
+      },
+      "reference_date": {
+       "type": "string"
+      },
+      "include_relative_window": {
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "cambio"
+     ]
+    }
+   },
+   {
+    "name": "get_incident_activity",
+    "description": "Consulta incident activity. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "incident_number": {
+       "type": "string"
+      },
+      "count": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "incident_number"
+     ]
+    }
+   },
+   {
+    "name": "get_problem_investigation",
+    "description": "Consulta problem investigation. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "problem_investigation_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "problem_investigation_id"
+     ]
+    }
+   },
+   {
+    "name": "get_problem_worknotes",
+    "description": "Consulta problem worknotes. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "problem_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "problem_id"
+     ]
+    }
+   }
+  ]
+ },
+ "documentacion-legado": {
+  "nombre": "documentacion-legado-mcp-server",
+  "titulo": "Documentación de plataforma legada",
+  "tools": [
+   {
+    "name": "legado_get_repository_info",
+    "description": "Legado get repository info. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "owner": {
+       "type": "string"
+      },
+      "repo": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "owner",
+      "repo"
+     ]
+    }
+   },
+   {
+    "name": "legado_list_repository_files",
+    "description": "Legado list repository files. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "owner": {
+       "type": "string"
+      },
+      "repo": {
+       "type": "string"
+      },
+      "path": {
+       "type": "string"
+      },
+      "branch": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "owner",
+      "repo"
+     ]
+    }
+   },
+   {
+    "name": "legado_read_file",
+    "description": "Legado read file. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "owner": {
+       "type": "string"
+      },
+      "repo": {
+       "type": "string"
+      },
+      "path": {
+       "type": "string"
+      },
+      "branch": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "owner",
+      "repo",
+      "path"
+     ]
+    }
+   },
+   {
+    "name": "legado_search_legado_files",
+    "description": "Legado search legado files. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "owner": {
+       "type": "string"
+      },
+      "repo": {
+       "type": "string"
+      },
+      "branch": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "owner",
+      "repo"
+     ]
+    }
+   },
+   {
+    "name": "legado_get_repository_tree",
+    "description": "Legado get repository tree. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "owner": {
+       "type": "string"
+      },
+      "repo": {
+       "type": "string"
+      },
+      "branch": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "owner",
+      "repo"
+     ]
+    }
+   },
+   {
+    "name": "legado_get_recent_commits",
+    "description": "Legado get recent commits. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "owner": {
+       "type": "string"
+      },
+      "repo": {
+       "type": "string"
+      },
+      "branch": {
+       "type": "string"
+      },
+      "limit": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "owner",
+      "repo"
+     ]
+    }
+   },
+   {
+    "name": "legado_list_branches",
+    "description": "Legado list branches. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "owner": {
+       "type": "string"
+      },
+      "repo": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "owner",
+      "repo"
+     ]
+    }
+   },
+   {
+    "name": "legado_read_multiple_files",
+    "description": "Legado read multiple files. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "owner": {
+       "type": "string"
+      },
+      "repo": {
+       "type": "string"
+      },
+      "paths": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "branch": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "owner",
+      "repo",
+      "paths"
+     ]
+    }
+   },
+   {
+    "name": "legado_get_pull_request_info",
+    "description": "Legado get pull request info. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "owner": {
+       "type": "string"
+      },
+      "repo": {
+       "type": "string"
+      },
+      "pr_number": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "owner",
+      "repo",
+      "pr_number"
+     ]
+    }
+   },
+   {
+    "name": "legado_get_pull_request_files",
+    "description": "Legado get pull request files. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "owner": {
+       "type": "string"
+      },
+      "repo": {
+       "type": "string"
+      },
+      "pr_number": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "owner",
+      "repo",
+      "pr_number"
+     ]
+    }
+   },
+   {
+    "name": "legado_create_or_update_file",
+    "description": "Legado create or update file. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "owner": {
+       "type": "string"
+      },
+      "repo": {
+       "type": "string"
+      },
+      "path": {
+       "type": "string"
+      },
+      "content": {
+       "type": "string"
+      },
+      "message": {
+       "type": "string"
+      },
+      "branch": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "owner",
+      "repo",
+      "path",
+      "content",
+      "message",
+      "branch"
+     ]
+    }
+   },
+   {
+    "name": "repo_detect_type",
+    "description": "Repo detect type. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "owner": {
+       "type": "string"
+      },
+      "repo": {
+       "type": "string"
+      },
+      "branch": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "owner",
+      "repo"
+     ]
+    }
+   },
+   {
+    "name": "repo_search_files",
+    "description": "Repo search files. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "owner": {
+       "type": "string"
+      },
+      "repo": {
+       "type": "string"
+      },
+      "branch": {
+       "type": "string"
+      },
+      "extensions": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     },
+     "required": [
+      "owner",
+      "repo"
+     ]
+    }
+   }
+  ]
+ },
+ "inventario-hosts": {
+  "nombre": "inventario-hosts-mcp-server",
+  "titulo": "Inventario de hosts",
+  "tools": [
+   {
+    "name": "inventario_exist_host",
+    "description": "Inventario exist host. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "fqdn": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "fqdn"
+     ]
+    }
+   },
+   {
+    "name": "inventario_find_host",
+    "description": "Inventario find host. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "fqdn": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "fqdn"
+     ]
+    }
+   },
+   {
+    "name": "inventario_get_fqdn_by_instance_id",
+    "description": "Inventario get fqdn by instance id. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "instance_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "instance_id"
+     ]
+    }
+   }
+  ]
+ },
+ "mensajeria-colas": {
+  "nombre": "mensajeria-colas-mcp-server",
+  "titulo": "Mensajería por colas",
+  "tools": [
+   {
+    "name": "revisar_estado_de_canales",
+    "description": "Consulta estado de canales. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "gestor_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "gestor_name"
+     ]
+    }
+   },
+   {
+    "name": "revisar_encolamiento",
+    "description": "Consulta encolamiento. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "gestor_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "gestor_name"
+     ]
+    }
+   },
+   {
+    "name": "buscar_cola_en_cluster",
+    "description": "Consulta cola en cluster. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "queue_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "queue_name"
+     ]
+    }
+   },
+   {
+    "name": "buscar_cola_en_gateway",
+    "description": "Consulta cola en gateway. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "queue_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "queue_name"
+     ]
+    }
+   },
+   {
+    "name": "dns_verification",
+    "description": "Dns verification. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "gestor_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "gestor_name"
+     ]
+    }
+   },
+   {
+    "name": "ssl_certificate_verification",
+    "description": "Ssl certificate verification. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "gestor_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "gestor_name"
+     ]
+    }
+   },
+   {
+    "name": "obtener_colas_apuntando_a_cola_local",
+    "description": "Consulta colas apuntando a cola local. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "gestor_name": {
+       "type": "string"
+      },
+      "cola_local_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "gestor_name",
+      "cola_local_name"
+     ]
+    }
+   },
+   {
+    "name": "obtener_conexiones",
+    "description": "Consulta conexiones. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "gestor_name": {
+       "type": "string"
+      },
+      "queue_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "gestor_name",
+      "queue_name"
+     ]
+    }
+   },
+   {
+    "name": "get_gestor_report",
+    "description": "Consulta gestor report. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "gestor_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "gestor_name"
+     ]
+    }
+   },
+   {
+    "name": "display_queue",
+    "description": "Consulta queue. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "gestor_name": {
+       "type": "string"
+      },
+      "queue_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "gestor_name",
+      "queue_name"
+     ]
+    }
+   },
+   {
+    "name": "get_gestor_status",
+    "description": "Consulta gestor status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "gestor_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "gestor_name"
+     ]
+    }
+   },
+   {
+    "name": "get_gestor_configuration",
+    "description": "Consulta gestor configuration. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "gestor_name": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   }
+  ]
+ },
+ "base-datos-sql": {
+  "nombre": "base-datos-sql-mcp-server",
+  "titulo": "Bases de datos SQL",
+  "tools": [
+   {
+    "name": "execute-sel-query",
+    "description": "Ejecuta sel query. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "query": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "query"
+     ]
+    }
+   },
+   {
+    "name": "execute-query-table",
+    "description": "Ejecuta query table. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "table": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "table"
+     ]
+    }
+   },
+   {
+    "name": "bd_ventana_servicio",
+    "description": "Bd ventana servicio. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "app_code": {
+       "type": "string"
+      },
+      "nombre_app": {
+       "type": "string"
+      },
+      "env": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "bd_parches_instalados",
+    "description": "Bd parches instalados. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "app_code": {
+       "type": "string"
+      },
+      "nombre_app": {
+       "type": "string"
+      },
+      "env": {
+       "type": "string"
+      },
+      "equipo": {
+       "type": "string"
+      },
+      "Entorno": {
+       "type": "string"
+      },
+      "Instance_id": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "bd_inventario_servidores",
+    "description": "Bd inventario servidores. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "Ambiente": {
+       "type": "string"
+      },
+      "Nombre_aplicacion": {
+       "type": "string"
+      },
+      "CodigoApp": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "bd_informacion_tabla",
+    "description": "Bd informacion tabla. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "tabla": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "bd_informacion_stack",
+    "description": "Bd informacion stack. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "nombre_stack": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "bd_informacion_cuentas",
+    "description": "Bd informacion cuentas. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "id": {
+       "type": "string"
+      },
+      "account_aws": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "bd_escaneo_servidores",
+    "description": "Bd escaneo servidores. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "app_code": {
+       "type": "string"
+      },
+      "instance_id": {
+       "type": "string"
+      },
+      "severity": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "bd_enrolables_vulnerabilidades",
+    "description": "Bd enrolables vulnerabilidades. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "codigo_aplicacion": {
+       "type": "string"
+      },
+      "nombre_aplicacion": {
+       "type": "string"
+      },
+      "equipo": {
+       "type": "string"
+      },
+      "entorno": {
+       "type": "string"
+      },
+      "ambiente": {
+       "type": "string"
+      },
+      "estado_enrolamiento": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "bd_cierre_vulnerabilidades",
+    "description": "Bd cierre vulnerabilidades. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "severity": {
+       "type": "string"
+      },
+      "instance_id": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "bd_anomalias_linux",
+    "description": "Bd anomalias linux. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "severity": {
+       "type": "string"
+      },
+      "instance_id": {
+       "type": "string"
+      },
+      "app_code": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "bd_anomalias_windows",
+    "description": "Bd anomalias windows. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "severity": {
+       "type": "string"
+      },
+      "instance_id": {
+       "type": "string"
+      },
+      "app_code": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   }
+  ]
+ },
+ "monitoreo-incidentes": {
+  "nombre": "monitoreo-incidentes-mcp-server",
+  "titulo": "Monitoreo de incidentes",
+  "tools": [
+   {
+    "name": "get_current_service_status",
+    "description": "Consulta current service status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "servicio": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "get_affected_services",
+    "description": "Consulta affected services. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {},
+     "required": []
+    }
+   },
+   {
+    "name": "search_similar_incidents",
+    "description": "Consulta similar incidents. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "descripcion_error": {
+       "type": "string"
+      },
+      "servicio": {
+       "type": "string"
+      },
+      "componente": {
+       "type": "string"
+      },
+      "grupo": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "descripcion_error"
+     ]
+    }
+   }
+  ]
+ },
+ "rendimiento-linux": {
+  "nombre": "rendimiento-linux-mcp-server",
+  "titulo": "Rendimiento de servidores Linux",
+  "tools": [
+   {
+    "name": "rendimiento_cpu_status",
+    "description": "Rendimiento cpu status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "ip": {
+       "type": "string"
+      },
+      "env": {
+       "type": "string"
+      },
+      "prueba": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "ip",
+      "env"
+     ]
+    }
+   },
+   {
+    "name": "rendimiento_services_status",
+    "description": "Rendimiento services status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "ip": {
+       "type": "string"
+      },
+      "env": {
+       "type": "string"
+      },
+      "prueba": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "ip",
+      "env"
+     ]
+    }
+   },
+   {
+    "name": "rendimiento_process_status",
+    "description": "Rendimiento process status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "ip": {
+       "type": "string"
+      },
+      "env": {
+       "type": "string"
+      },
+      "prueba": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "ip",
+      "env"
+     ]
+    }
+   },
+   {
+    "name": "rendimiento_memory_status",
+    "description": "Rendimiento memory status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "ip": {
+       "type": "string"
+      },
+      "env": {
+       "type": "string"
+      },
+      "prueba": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "ip",
+      "env"
+     ]
+    }
+   },
+   {
+    "name": "rendimiento_system_status",
+    "description": "Rendimiento system status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "ip": {
+       "type": "string"
+      },
+      "env": {
+       "type": "string"
+      },
+      "prueba": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "ip",
+      "env"
+     ]
+    }
+   },
+   {
+    "name": "rendimiento_storage_status",
+    "description": "Rendimiento storage status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "ip": {
+       "type": "string"
+      },
+      "env": {
+       "type": "string"
+      },
+      "prueba": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "ip",
+      "env"
+     ]
+    }
+   },
+   {
+    "name": "rendimiento_logs_status",
+    "description": "Rendimiento logs status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "ip": {
+       "type": "string"
+      },
+      "env": {
+       "type": "string"
+      },
+      "prueba": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "ip",
+      "env"
+     ]
+    }
+   }
+  ]
+ },
+ "optimizador-broker": {
+  "nombre": "optimizador-broker-mcp-server",
+  "titulo": "Optimizador de broker de mensajes",
+  "tools": [
+   {
+    "name": "get_broker_configuration",
+    "description": "Consulta broker configuration. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "broker_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "broker_name"
+     ]
+    }
+   }
+  ]
+ },
+ "broker-mensajes": {
+  "nombre": "broker-mensajes-mcp-server",
+  "titulo": "Broker de mensajes",
+  "tools": [
+   {
+    "name": "list_users",
+    "description": "Consulta users. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "broker_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "broker_name"
+     ]
+    }
+   },
+   {
+    "name": "list_queues",
+    "description": "Consulta queues. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "broker_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "broker_name"
+     ]
+    }
+   },
+   {
+    "name": "list_policies",
+    "description": "Consulta policies. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "broker_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "broker_name"
+     ]
+    }
+   },
+   {
+    "name": "list_queues_by_vhost",
+    "description": "Consulta queues by vhost. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "broker_name": {
+       "type": "string"
+      },
+      "vhost": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "broker_name"
+     ]
+    }
+   },
+   {
+    "name": "list_exchanges",
+    "description": "Consulta exchanges. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "broker_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "broker_name"
+     ]
+    }
+   },
+   {
+    "name": "list_vhosts",
+    "description": "Consulta vhosts. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "broker_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "broker_name"
+     ]
+    }
+   },
+   {
+    "name": "list_exchanges_by_vhost",
+    "description": "Consulta exchanges by vhost. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "broker_name": {
+       "type": "string"
+      },
+      "vhost": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "broker_name"
+     ]
+    }
+   },
+   {
+    "name": "get_queue_info",
+    "description": "Consulta queue info. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "broker_name": {
+       "type": "string"
+      },
+      "queue": {
+       "type": "string"
+      },
+      "vhost": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "broker_name",
+      "queue"
+     ]
+    }
+   },
+   {
+    "name": "get_user_info",
+    "description": "Consulta user info. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "broker_name": {
+       "type": "string"
+      },
+      "username": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "broker_name",
+      "username"
+     ]
+    }
+   },
+   {
+    "name": "get_exchange_info",
+    "description": "Consulta exchange info. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "broker_name": {
+       "type": "string"
+      },
+      "exchange": {
+       "type": "string"
+      },
+      "vhost": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "broker_name",
+      "exchange"
+     ]
+    }
+   },
+   {
+    "name": "get_bindings",
+    "description": "Consulta bindings. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "broker_name": {
+       "type": "string"
+      },
+      "queue": {
+       "type": "string"
+      },
+      "exchange": {
+       "type": "string"
+      },
+      "vhost": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "broker_name"
+     ]
+    }
+   },
+   {
+    "name": "get_user_connections",
+    "description": "Consulta user connections. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "broker_name": {
+       "type": "string"
+      },
+      "username": {
+       "type": "string"
+      },
+      "vhost": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "broker_name",
+      "username"
+     ]
+    }
+   }
+  ]
+ },
+ "bases-datos-nube": {
+  "nombre": "bases-datos-nube-mcp-server",
+  "titulo": "Bases de datos en la nube",
+  "tools": [
+   {
+    "name": "bdnube_describe_db_instances",
+    "description": "Bdnube describe db instances. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account_id": {
+       "type": "string"
+      },
+      "max_records": {
+       "type": "integer"
+      },
+      "marker": {
+       "type": "string"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "bdnube_describe_db_instance_detail",
+    "description": "Bdnube describe db instance detail. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "db_instance_identifier": {
+       "type": "string"
+      },
+      "account_id": {
+       "type": "string"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "db_instance_identifier"
+     ]
+    }
+   },
+   {
+    "name": "bdnube_describe_pending_maintenance_actions",
+    "description": "Bdnube describe pending maintenance actions. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "resource_identifier": {
+       "type": "string"
+      },
+      "account_id": {
+       "type": "string"
+      },
+      "marker": {
+       "type": "string"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "bdnube_describe_db_clusters",
+    "description": "Bdnube describe db clusters. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "account_id": {
+       "type": "string"
+      },
+      "max_records": {
+       "type": "integer"
+      },
+      "marker": {
+       "type": "string"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "bdnube_describe_db_cluster_detail",
+    "description": "Bdnube describe db cluster detail. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "db_cluster_identifier": {
+       "type": "string"
+      },
+      "account_id": {
+       "type": "string"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "db_cluster_identifier"
+     ]
+    }
+   },
+   {
+    "name": "bdnube_describe_db_log_files",
+    "description": "Bdnube describe db log files. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "db_instance_identifier": {
+       "type": "string"
+      },
+      "account_id": {
+       "type": "string"
+      },
+      "filename_contains": {
+       "type": "string"
+      },
+      "marker": {
+       "type": "string"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "db_instance_identifier"
+     ]
+    }
+   },
+   {
+    "name": "bdnube_read_log",
+    "description": "Bdnube read log. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "db_instance_identifier": {
+       "type": "string"
+      },
+      "log_file_name": {
+       "type": "string"
+      },
+      "account_id": {
+       "type": "string"
+      },
+      "number_of_lines": {
+       "type": "integer"
+      },
+      "marker": {
+       "type": "string"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "db_instance_identifier",
+      "log_file_name"
+     ]
+    }
+   },
+   {
+    "name": "bdnube_describe_events",
+    "description": "Bdnube describe events. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "source_identifier": {
+       "type": "string"
+      },
+      "source_type": {
+       "type": "string"
+      },
+      "account_id": {
+       "type": "string"
+      },
+      "event_categories": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "duration": {
+       "type": "integer"
+      },
+      "start_time": {
+       "type": "string"
+      },
+      "end_time": {
+       "type": "string"
+      },
+      "region": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "source_identifier",
+      "source_type"
+     ]
+    }
+   }
+  ]
+ },
+ "generador-proyectos": {
+  "nombre": "generador-proyectos-mcp-server",
+  "titulo": "Generador de proyectos",
+  "tools": [
+   {
+    "name": "create-java-scaffold",
+    "description": "Crea java scaffold. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "component_name": {
+       "type": "string"
+      },
+      "repository_name": {
+       "type": "string"
+      },
+      "java_paradigm": {
+       "type": "string"
+      },
+      "use_lombok": {
+       "type": "boolean"
+      },
+      "java_version": {
+       "type": "string"
+      },
+      "repo_provider": {
+       "type": "string"
+      },
+      "dry_run": {
+       "type": "boolean"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "update-java-scaffold",
+    "description": "Actualiza java scaffold. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "component_name": {
+       "type": "string"
+      },
+      "repository_name": {
+       "type": "string"
+      },
+      "git": {
+       "type": "boolean"
+      },
+      "dependencies": {
+       "type": "string"
+      },
+      "branch_name": {
+       "type": "string"
+      },
+      "update_dependencies": {
+       "type": "boolean"
+      },
+      "update_gradle_plugins": {
+       "type": "boolean"
+      },
+      "update_spring_boot": {
+       "type": "boolean"
+      },
+      "update_gradle_files": {
+       "type": "boolean"
+      },
+      "update_gradle_wrapper": {
+       "type": "boolean"
+      },
+      "dry_run": {
+       "type": "boolean"
+      },
+      "repo_provider": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   }
+  ]
+ },
+ "identidad-aplicaciones": {
+  "nombre": "identidad-aplicaciones-mcp-server",
+  "titulo": "Identidad de aplicaciones",
+  "tools": [
+   {
+    "name": "identidad_list_applications",
+    "description": "Identidad list applications. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "environment": {
+       "type": "string"
+      },
+      "display_name": {
+       "type": "string"
+      },
+      "filter_str": {
+       "type": "string"
+      },
+      "top": {
+       "type": "integer"
+      },
+      "fetch_all": {
+       "type": "boolean"
+      },
+      "limit": {
+       "type": "integer"
+      },
+      "select": {
+       "type": "string"
+      },
+      "orderby": {
+       "type": "string"
+      },
+      "count": {
+       "type": "boolean"
+      },
+      "fields": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "identidad_governance_validate",
+    "description": "Identidad governance validate. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "environment": {
+       "type": "string"
+      },
+      "display_name": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "identidad_governance_request",
+    "description": "Identidad governance request. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "environment": {
+       "type": "string"
+      },
+      "display_name": {
+       "type": "string"
+      },
+      "owner_email": {
+       "type": "string"
+      },
+      "owner_query": {
+       "type": "string"
+      },
+      "app_code": {
+       "type": "string"
+      },
+      "leader_email": {
+       "type": "string"
+      },
+      "leader_query": {
+       "type": "string"
+      },
+      "requested_by": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "identidad_add_application_urls",
+    "description": "Identidad add application urls. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "environment": {
+       "type": "string"
+      },
+      "display_name": {
+       "type": "string"
+      },
+      "web_redirect_uris": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "spa_redirect_uris": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "usuario_red": {
+       "type": "string"
+      },
+      "confirm_write": {
+       "type": "boolean"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "identidad_get_application_signin_logs",
+    "description": "Identidad get application signin logs. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "environment": {
+       "type": "string"
+      },
+      "display_name": {
+       "type": "string"
+      },
+      "top": {
+       "type": "integer"
+      },
+      "hours": {
+       "type": "integer"
+      },
+      "only_errors": {
+       "type": "boolean"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "identidad_get_application_auth_profile",
+    "description": "Identidad get application auth profile. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "environment": {
+       "type": "string"
+      },
+      "display_name": {
+       "type": "string"
+      }
+     },
+     "required": []
+    }
+   }
+  ]
+ },
+ "consultas-analiticas": {
+  "nombre": "consultas-analiticas-mcp-server",
+  "titulo": "Consultas analíticas",
+  "tools": [
+   {
+    "name": "sql-execute",
+    "description": "Ejecuta execute. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "sql": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "sql"
+     ]
+    }
+   },
+   {
+    "name": "sql-schema",
+    "description": "Sql schema. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {},
+     "required": []
+    }
+   }
+  ]
+ },
+ "notificaciones-triage": {
+  "nombre": "notificaciones-triage-mcp-server",
+  "titulo": "Notificaciones de triage",
+  "tools": [
+   {
+    "name": "send_notification",
+    "description": "Envía notification. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "webhook_url": {
+       "type": "string"
+      },
+      "mensaje_chat": {
+       "type": "object"
+      }
+     },
+     "required": [
+      "webhook_url",
+      "mensaje_chat"
+     ]
+    }
+   }
+  ]
+ },
+ "red-sdwan": {
+  "nombre": "red-sdwan-mcp-server",
+  "titulo": "Red SD-WAN",
+  "tools": [
+   {
+    "name": "sdwan_get_edge",
+    "description": "Sdwan get edge. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "edge_id": {
+       "type": "integer"
+      },
+      "enterprise_id": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "edge_id"
+     ]
+    }
+   },
+   {
+    "name": "sdwan_get_enterprise_edge_list",
+    "description": "Sdwan get enterprise edge list. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "enterprise_id": {
+       "type": "integer"
+      },
+      "search_term": {
+       "type": "string"
+      },
+      "limit": {
+       "type": "integer"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "sdwan_get_enterprise_events_list",
+    "description": "Sdwan get enterprise events list. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "start_time_epoch": {
+       "type": "integer"
+      },
+      "end_time_epoch": {
+       "type": "integer"
+      },
+      "enterprise_id": {
+       "type": "integer"
+      },
+      "edge_id": {
+       "type": "integer"
+      },
+      "search_edge_name": {
+       "type": "string"
+      },
+      "limit": {
+       "type": "integer"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "sdwan_get_edge_link_metrics",
+    "description": "Sdwan get edge link metrics. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "edge_id": {
+       "type": "integer"
+      },
+      "enterprise_id": {
+       "type": "integer"
+      },
+      "start_time_epoch": {
+       "type": "integer"
+      },
+      "end_time_epoch": {
+       "type": "integer"
+      },
+      "metrics": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     },
+     "required": [
+      "edge_id"
+     ]
+    }
+   },
+   {
+    "name": "sdwan_get_edge_link_series_anomalies",
+    "description": "Sdwan get edge link series anomalies. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "edge_id": {
+       "type": "integer"
+      },
+      "start_time_epoch": {
+       "type": "integer"
+      },
+      "end_time_epoch": {
+       "type": "integer"
+      },
+      "enterprise_id": {
+       "type": "integer"
+      },
+      "metrics": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     },
+     "required": [
+      "edge_id"
+     ]
+    }
+   },
+   {
+    "name": "sdwan_get_top_consuming_apps",
+    "description": "Sdwan get top consuming apps. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "edge_id": {
+       "type": "integer"
+      },
+      "start_time_epoch": {
+       "type": "integer"
+      },
+      "end_time_epoch": {
+       "type": "integer"
+      },
+      "enterprise_id": {
+       "type": "integer"
+      },
+      "limit": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "edge_id"
+     ]
+    }
+   },
+   {
+    "name": "sdwan_get_top_consuming_categories",
+    "description": "Sdwan get top consuming categories. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "edge_id": {
+       "type": "integer"
+      },
+      "start_time_epoch": {
+       "type": "integer"
+      },
+      "end_time_epoch": {
+       "type": "integer"
+      },
+      "enterprise_id": {
+       "type": "integer"
+      },
+      "limit": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "edge_id"
+     ]
+    }
+   },
+   {
+    "name": "sdwan_get_edge_sdwan_peers",
+    "description": "Sdwan get edge sdwan peers. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "edge_id": {
+       "type": "integer"
+      },
+      "enterprise_id": {
+       "type": "integer"
+      },
+      "start_time_epoch": {
+       "type": "integer"
+      },
+      "end_time_epoch": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "edge_id"
+     ]
+    }
+   },
+   {
+    "name": "sdwan_get_edge_sdwan_peer_path_metrics",
+    "description": "Sdwan get edge sdwan peer path metrics. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "edge_id": {
+       "type": "integer"
+      },
+      "peer_logical_id": {
+       "type": "string"
+      },
+      "enterprise_id": {
+       "type": "integer"
+      },
+      "start_time_epoch": {
+       "type": "integer"
+      },
+      "end_time_epoch": {
+       "type": "integer"
+      },
+      "metrics": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     },
+     "required": [
+      "edge_id",
+      "peer_logical_id"
+     ]
+    }
+   },
+   {
+    "name": "sdwan_get_edge_sdwan_peer_path_series_anomalies",
+    "description": "Sdwan get edge sdwan peer path series anomalies. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "edge_id": {
+       "type": "integer"
+      },
+      "peer_logical_id": {
+       "type": "string"
+      },
+      "paths": {
+       "type": "array",
+       "items": {
+        "type": "object"
+       }
+      },
+      "start_time_epoch": {
+       "type": "integer"
+      },
+      "end_time_epoch": {
+       "type": "integer"
+      },
+      "enterprise_id": {
+       "type": "integer"
+      },
+      "metrics": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     },
+     "required": [
+      "edge_id",
+      "peer_logical_id",
+      "paths"
+     ]
+    }
+   },
+   {
+    "name": "sdwan_get_edge_status_metrics",
+    "description": "Sdwan get edge status metrics. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "edge_id": {
+       "type": "integer"
+      },
+      "enterprise_id": {
+       "type": "integer"
+      },
+      "start_time_epoch": {
+       "type": "integer"
+      },
+      "end_time_epoch": {
+       "type": "integer"
+      },
+      "metrics": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     },
+     "required": [
+      "edge_id"
+     ]
+    }
+   },
+   {
+    "name": "sdwan_get_edge_status_series_anomalies",
+    "description": "Sdwan get edge status series anomalies. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "edge_id": {
+       "type": "integer"
+      },
+      "enterprise_id": {
+       "type": "integer"
+      },
+      "start_time_epoch": {
+       "type": "integer"
+      },
+      "end_time_epoch": {
+       "type": "integer"
+      },
+      "metrics": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     },
+     "required": [
+      "edge_id"
+     ]
+    }
+   }
+  ]
+ },
+ "red-wan": {
+  "nombre": "red-wan-mcp-server",
+  "titulo": "Red WAN",
+  "tools": [
+   {
+    "name": "wan_get_devices",
+    "description": "Wan get devices. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "tenant": {
+       "type": "string"
+      },
+      "device_id": {
+       "type": "string"
+      },
+      "name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "tenant"
+     ]
+    }
+   },
+   {
+    "name": "wan_get_alarms",
+    "description": "Wan get alarms. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "tenant": {
+       "type": "string"
+      },
+      "severity": {
+       "type": "string"
+      },
+      "device_id": {
+       "type": "string"
+      },
+      "limit": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "tenant"
+     ]
+    }
+   },
+   {
+    "name": "wan_get_approute_sla",
+    "description": "Wan get approute sla. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "tenant": {
+       "type": "string"
+      },
+      "device_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "tenant",
+      "device_id"
+     ]
+    }
+   },
+   {
+    "name": "wan_get_approute_statistics",
+    "description": "Wan get approute statistics. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "tenant": {
+       "type": "string"
+      },
+      "device_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "tenant",
+      "device_id"
+     ]
+    }
+   },
+   {
+    "name": "wan_get_bfd_tloc",
+    "description": "Wan get bfd tloc. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "tenant": {
+       "type": "string"
+      },
+      "device_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "tenant",
+      "device_id"
+     ]
+    }
+   },
+   {
+    "name": "wan_get_tloc_status",
+    "description": "Wan get tloc status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "tenant": {
+       "type": "string"
+      },
+      "device_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "tenant",
+      "device_id"
+     ]
+    }
+   },
+   {
+    "name": "wan_get_bfd_history",
+    "description": "Wan get bfd history. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "tenant": {
+       "type": "string"
+      },
+      "device_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "tenant",
+      "device_id"
+     ]
+    }
+   },
+   {
+    "name": "wan_get_bfd_summary",
+    "description": "Wan get bfd summary. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "tenant": {
+       "type": "string"
+      },
+      "device_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "tenant",
+      "device_id"
+     ]
+    }
+   },
+   {
+    "name": "wan_get_bfd_sessions",
+    "description": "Wan get bfd sessions. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "tenant": {
+       "type": "string"
+      },
+      "device_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "tenant",
+      "device_id"
+     ]
+    }
+   },
+   {
+    "name": "wan_get_system_status",
+    "description": "Wan get system status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "tenant": {
+       "type": "string"
+      },
+      "device_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "tenant",
+      "device_id"
+     ]
+    }
+   },
+   {
+    "name": "wan_get_interface_status",
+    "description": "Wan get interface status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "tenant": {
+       "type": "string"
+      },
+      "device_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "tenant",
+      "device_id"
+     ]
+    }
+   }
+  ]
+ },
+ "gestion-vulnerabilidades": {
+  "nombre": "gestion-vulnerabilidades-mcp-server",
+  "titulo": "Gestión de vulnerabilidades",
+  "tools": [
+   {
+    "name": "vulnerability",
+    "description": "Vulnerability. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "vulnerability_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "vulnerability_id"
+     ]
+    }
+   },
+   {
+    "name": "regla-personalizada",
+    "description": "Regla personalizada. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "vuln_id_from_tool": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "vuln_id_from_tool"
+     ]
+    }
+   },
+   {
+    "name": "regla-codigo",
+    "description": "Regla codigo. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "vuln_id_from_tool": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "vuln_id_from_tool"
+     ]
+    }
+   },
+   {
+    "name": "repositorios-evaluados",
+    "description": "Repositorios evaluados. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "app_code": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "app_code"
+     ]
+    }
+   }
+  ]
+ },
+ "servidor-aplicaciones": {
+  "nombre": "servidor-aplicaciones-mcp-server",
+  "titulo": "Servidor de aplicaciones",
+  "tools": [
+   {
+    "name": "get_servidor_status",
+    "description": "Consulta servidor status. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "servidor_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "servidor_name"
+     ]
+    }
+   },
+   {
+    "name": "get_status_service",
+    "description": "Consulta status service. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "servidor_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "servidor_name"
+     ]
+    }
+   },
+   {
+    "name": "get_applications",
+    "description": "Consulta applications. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "servidor_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "servidor_name"
+     ]
+    }
+   },
+   {
+    "name": "get_status_application",
+    "description": "Consulta status application. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "servidor_name": {
+       "type": "string"
+      },
+      "app_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "servidor_name",
+      "app_name"
+     ]
+    }
+   },
+   {
+    "name": "get_logs",
+    "description": "Consulta logs. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "servidor_name": {
+       "type": "string"
+      },
+      "count": {
+       "type": "integer"
+      },
+      "log_file_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "servidor_name",
+      "count",
+      "log_file_name"
+     ]
+    }
+   },
+   {
+    "name": "get_keystore",
+    "description": "Consulta keystore. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "servidor_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "servidor_name"
+     ]
+    }
+   }
+  ]
+ },
+ "busqueda-web": {
+  "nombre": "busqueda-web-mcp-server",
+  "titulo": "Búsqueda web",
+  "tools": [
+   {
+    "name": "web-search",
+    "description": "Web search. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "query": {
+       "type": "string"
+      },
+      "search_profile_id": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "query",
+      "search_profile_id"
+     ]
+    }
+   }
+  ]
+ },
+ "monitoreo-infra": {
+  "nombre": "monitoreo-infra-mcp-server",
+  "titulo": "Monitoreo de infraestructura",
+  "tools": [
+   {
+    "name": "get_metrics",
+    "description": "Consulta metrics. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "server_name": {
+       "type": "string"
+      },
+      "time_from": {
+       "type": "string"
+      },
+      "time_till": {
+       "type": "string"
+      },
+      "item_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "server_name",
+      "time_from",
+      "time_till"
+     ]
+    }
+   },
+   {
+    "name": "get_items_by_server",
+    "description": "Consulta items by server. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "server_name": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "server_name"
+     ]
+    }
+   },
+   {
+    "name": "host_create",
+    "description": "Host create. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "host": {
+       "type": "string"
+      },
+      "groups": {
+       "type": "array",
+       "items": {
+        "type": "object"
+       }
+      },
+      "interfaces": {
+       "type": "array",
+       "items": {
+        "type": "object"
+       }
+      },
+      "templates": {
+       "type": "array",
+       "items": {
+        "type": "object"
+       }
+      },
+      "inventory_mode": {
+       "type": "integer"
+      },
+      "status": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "host",
+      "groups",
+      "interfaces"
+     ]
+    }
+   },
+   {
+    "name": "template_get",
+    "description": "Template get. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "templateids": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "groupids": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "hostids": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "output": {
+       "type": "string"
+      },
+      "search": {
+       "type": "object"
+      },
+      "filter": {
+       "type": "object"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "proxy_get",
+    "description": "Proxy get. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "proxyids": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "output": {
+       "type": "string"
+      },
+      "search": {
+       "type": "object"
+      },
+      "filter": {
+       "type": "object"
+      },
+      "limit": {
+       "type": "integer"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "get_host_alerts",
+    "description": "Consulta host alerts. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "server_name": {
+       "type": "string"
+      },
+      "time_from": {
+       "type": "string"
+      },
+      "time_till": {
+       "type": "string"
+      },
+      "limit": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "server_name"
+     ]
+    }
+   },
+   {
+    "name": "get_alerts",
+    "description": "Consulta alerts. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "alert_ids": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "event_ids": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "time_from": {
+       "type": "string"
+      },
+      "time_till": {
+       "type": "string"
+      },
+      "limit": {
+       "type": "integer"
+      }
+     },
+     "required": []
+    }
+   },
+   {
+    "name": "api_info_version",
+    "description": "Api info version. Simulado.",
+    "inputSchema": {
+     "type": "object",
+     "properties": {},
+     "required": []
+    }
+   }
+  ]
+ }
+}

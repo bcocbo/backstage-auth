@@ -1,0 +1,3136 @@
+# MCPs con la forma del Catálogo IA de Kaizen. harness.poc/origen: real = código real desplegado; simulado = datos inventados.
+# Los simulados tienen nombres y descripciones genéricos; la cantidad de tools y sus parámetros imitan a MCPs reales.
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: kubernetes-mcp-server
+  title: "Kubernetes"
+  description: "REAL: código real desplegado en la PoC. Diagnóstico de cargas en Kubernetes: pods, logs, eventos, recursos e Istio. En la PoC solo lee el namespace harness-poc. Corre en nuestro clúster."
+  tags: [mcp, mcp-kaizen, real]
+  annotations:
+    server-url: http://kubernetes-smcp.harness-poc.svc.cluster.local/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: real
+    harness.poc/dependencia: cluster
+spec:
+  type: mcp
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  providesApis: [kubernetes-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: kubernetes-mcp-server-api
+  title: "API de Kubernetes"
+  description: "Tools del MCP kubernetes-mcp-server (real)."
+  tags: [mcp, real]
+  annotations:
+    server-url: http://kubernetes-smcp.harness-poc.svc.cluster.local/mcp
+spec:
+  type: mcp
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Kubernetes (real)
+    10 tools.
+
+    ### kubernetes_list_pods
+    Kubernetes list pods.
+    **Parámetros**:
+      - `cluster_name` (string)
+      - `namespace` (string)
+      - `label_selector` (string, opcional)
+      - `limit` (integer, opcional)
+
+    ### kubernetes_get_pod
+    Kubernetes get pod.
+    **Parámetros**:
+      - `cluster_name` (string)
+      - `name` (string)
+      - `namespace` (string)
+
+    ### kubernetes_get_pod_logs
+    Kubernetes get pod logs.
+    **Parámetros**:
+      - `cluster_name` (string)
+      - `pod_name` (string)
+      - `namespace` (string)
+      - `container` (string, opcional)
+      - `tail_lines` (integer, opcional)
+      - `since_seconds` (integer, opcional)
+
+    ### kubernetes_list_nodes
+    Kubernetes list nodes.
+    **Parámetros**:
+      - `cluster_name` (string)
+
+    ### kubernetes_list_namespaces
+    Kubernetes list namespaces.
+    **Parámetros**:
+      - `cluster_name` (string)
+
+    ### kubernetes_list_resources
+    Kubernetes list resources.
+    **Parámetros**:
+      - `cluster_name` (string)
+      - `resource_type` (string)
+      - `namespace` (string)
+      - `label_selector` (string, opcional)
+
+    ### kubernetes_get_events
+    Kubernetes get events.
+    **Parámetros**:
+      - `cluster_name` (string)
+      - `namespace` (string)
+
+    ### kubernetes_top_pods
+    Kubernetes top pods.
+    **Parámetros**:
+      - `cluster_name` (string)
+      - `namespace` (string)
+      - `name` (string, opcional)
+      - `label_selector` (string, opcional)
+      - `containers` (boolean, opcional)
+      - `sort_by` (string, opcional)
+
+    ### istio_list_resources
+    Istio list resources.
+    **Parámetros**:
+      - `cluster_name` (string)
+      - `resource_kind` (string)
+      - `namespace` (string)
+      - `name` (string, opcional)
+      - `label_selector` (string, opcional)
+
+    ### kubernetes_list_clusters
+    Kubernetes list clusters.
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: kaizen-mcp-server
+  title: "Kaizen"
+  description: "REAL: código real desplegado en la PoC. Búsqueda de entidades, recursos y plantillas del catálogo de Kaizen/Backstage. En la PoC consulta nuestro Backstage. Corre en nuestro clúster."
+  tags: [mcp, mcp-kaizen, real]
+  annotations:
+    server-url: http://kaizen-smcp.harness-poc.svc.cluster.local/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: real
+    harness.poc/dependencia: cluster
+spec:
+  type: mcp
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  providesApis: [kaizen-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: kaizen-mcp-server-api
+  title: "API de Kaizen"
+  description: "Tools del MCP kaizen-mcp-server (real)."
+  tags: [mcp, real]
+  annotations:
+    server-url: http://kaizen-smcp.harness-poc.svc.cluster.local/mcp
+spec:
+  type: mcp
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Kaizen (real)
+    6 tools.
+
+    ### get_task_status
+    Consulta task status.
+    **Parámetros**:
+      - `task_id` (string)
+
+    ### describe_template
+    Consulta template.
+    **Parámetros**:
+      - `template_ref` (string)
+
+    ### get_resource_fields
+    Consulta resource fields.
+    **Parámetros**:
+      - `resource_type` (string)
+
+    ### search_entity_by_name
+    Consulta entity by name.
+    **Parámetros**:
+      - `entity` (string)
+      - `name` (string)
+
+    ### get_resource_detail
+    Consulta resource detail.
+    **Parámetros**:
+      - `resource_ref` (string)
+
+    ### search_resources
+    Consulta resources.
+    **Parámetros**:
+      - `query` (string, opcional)
+      - `tags` (array, opcional)
+      - `type` (string, opcional)
+      - `limit` (integer, opcional)
+      - `language` (string, opcional)
+      - `pattern` (string, opcional)
+      - `framework` (string, opcional)
+      - `labels` (object, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: kaizen-docs-mcp-server
+  title: "Kaizen Docs"
+  description: "REAL: código real desplegado en la PoC. Búsqueda y lectura de documentación TechDocs de Kaizen/Backstage. En la PoC apunta a nuestro Backstage, que no publica TechDocs. Corre en nuestro clúster."
+  tags: [mcp, mcp-kaizen, real]
+  annotations:
+    server-url: http://kaizen-docs-smcp.harness-poc.svc.cluster.local/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: real
+    harness.poc/dependencia: cluster
+spec:
+  type: mcp
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  providesApis: [kaizen-docs-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: kaizen-docs-mcp-server-api
+  title: "API de Kaizen Docs"
+  description: "Tools del MCP kaizen-docs-mcp-server (real)."
+  tags: [mcp, real]
+  annotations:
+    server-url: http://kaizen-docs-smcp.harness-poc.svc.cluster.local/mcp
+spec:
+  type: mcp
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Kaizen Docs (real)
+    5 tools.
+
+    ### list_techdocs_pages
+    Consulta techdocs pages.
+    **Parámetros**:
+      - `section` (string, opcional)
+      - `title_contains` (string, opcional)
+      - `entity_name` (string, opcional)
+      - `entity_namespace` (string, opcional)
+      - `entity_kind` (string, opcional)
+      - `limit` (integer, opcional)
+      - `offset` (integer, opcional)
+
+    ### search_techdocs
+    Consulta techdocs.
+    **Parámetros**:
+      - `query` (string)
+      - `section` (string, opcional)
+      - `path_prefix` (string, opcional)
+      - `entity_name` (string, opcional)
+      - `entity_namespace` (string, opcional)
+      - `entity_kind` (string, opcional)
+      - `limit` (integer, opcional)
+      - `offset` (integer, opcional)
+
+    ### get_techdocs_content
+    Consulta techdocs content.
+    **Parámetros**:
+      - `page_path` (string)
+      - `anchor` (string, opcional)
+      - `entity_name` (string, opcional)
+      - `entity_namespace` (string, opcional)
+      - `entity_kind` (string, opcional)
+
+    ### get_techdocs_structure
+    Consulta techdocs structure.
+    **Parámetros**:
+      - `entity_name` (string, opcional)
+      - `entity_namespace` (string, opcional)
+      - `entity_kind` (string, opcional)
+      - `include_pages` (boolean, opcional)
+
+    ### get_techdocs_url
+    Consulta techdocs url.
+    **Parámetros**:
+      - `page_path` (string)
+      - `entity_name` (string, opcional)
+      - `entity_namespace` (string, opcional)
+      - `entity_kind` (string, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: file-system-mcp-server
+  title: "Sistema de archivos"
+  description: "REAL: código real desplegado en la PoC. Lectura, búsqueda y edición segura de archivos dentro de una carpeta de trabajo. En la PoC no aplica cambios. Sin dependencias."
+  tags: [mcp, mcp-kaizen, real]
+  annotations:
+    server-url: http://file-system-smcp.harness-poc.svc.cluster.local/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: real
+    harness.poc/dependencia: sin-dependencias
+spec:
+  type: mcp
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  providesApis: [file-system-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: file-system-mcp-server-api
+  title: "API de Sistema de archivos"
+  description: "Tools del MCP file-system-mcp-server (real)."
+  tags: [mcp, real]
+  annotations:
+    server-url: http://file-system-smcp.harness-poc.svc.cluster.local/mcp
+spec:
+  type: mcp
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Sistema de archivos (real)
+    8 tools.
+
+    ### list-dir
+    Consulta dir.
+    **Parámetros**:
+      - `path` (string, opcional)
+
+    ### read-file
+    Lee file.
+    **Parámetros**:
+      - `path` (string)
+
+    ### write-file
+    Escribe file.
+    **Parámetros**:
+      - `path` (string)
+      - `content` (string)
+      - `safety` (string, opcional)
+      - `report` (string, opcional)
+
+    ### edit-file
+    Escribe file.
+    **Parámetros**:
+      - `path` (string)
+      - `original_snippet` (string)
+      - `replaced_snippet` (string)
+      - `safety` (string, opcional)
+
+    ### delete-file
+    Elimina file.
+    **Parámetros**:
+      - `path` (string)
+      - `safety` (string, opcional)
+
+    ### delete-folder
+    Elimina folder.
+    **Parámetros**:
+      - `path` (string)
+      - `safety` (string, opcional)
+      - `recursive` (boolean, opcional)
+
+    ### search-files
+    Consulta files.
+    **Parámetros**:
+      - `pattern` (string)
+      - `path` (string, opcional)
+      - `max_results` (integer, opcional)
+      - `exclude_patterns` (array, opcional)
+
+    ### search-content
+    Consulta content.
+    **Parámetros**:
+      - `query` (string)
+      - `path` (string, opcional)
+      - `file_pattern` (string, opcional)
+      - `case_sensitive` (boolean, opcional)
+      - `use_regex` (boolean, opcional)
+      - `max_results` (integer, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: performance-tests-mcp-server
+  title: "Pruebas de rendimiento"
+  description: "REAL: código real desplegado en la PoC. Genera y audita scripts JMeter (.jmx) para pruebas de rendimiento. Sin dependencias."
+  tags: [mcp, mcp-kaizen, real]
+  annotations:
+    server-url: http://performance-tests-smcp.harness-poc.svc.cluster.local/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: real
+    harness.poc/dependencia: sin-dependencias
+spec:
+  type: mcp
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  providesApis: [performance-tests-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: performance-tests-mcp-server-api
+  title: "API de Pruebas de rendimiento"
+  description: "Tools del MCP performance-tests-mcp-server (real)."
+  tags: [mcp, real]
+  annotations:
+    server-url: http://performance-tests-smcp.harness-poc.svc.cluster.local/mcp
+spec:
+  type: mcp
+  lifecycle: experimental
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Pruebas de rendimiento (real)
+    3 tools.
+
+    ### generate_jmx
+    Genera jmx.
+    **Parámetros**:
+      - `script_name` (string)
+      - `base_url` (string)
+      - `transactions_json` (string)
+      - `protocol` (string, opcional)
+      - `port` (string, opcional)
+      - `common_headers_json` (string, opcional)
+      - `fixed_fields` (string, opcional)
+      - `excluded_fields` (string, opcional)
+      - `testplan_id` (string, opcional)
+
+    ### get_testplan_rnf
+    Consulta testplan rnf.
+    **Parámetros**:
+      - `testplan_id` (string)
+      - `functionality_type` (string)
+
+    ### audit_jmeter_script
+    Audita jmeter script.
+    **Parámetros**:
+      - `jmx_content` (string)
+      - `csv_content` (string, opcional)
+      - `testplan_id` (string, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: agenda-ambientes-mcp-server
+  title: "Agenda de ambientes (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Ventanas y agendamientos de ambientes no productivos para evitar choques entre equipos. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/agenda-ambientes/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [agenda-ambientes-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: agenda-ambientes-mcp-server-api
+  title: "API de Agenda de ambientes"
+  description: "Tools del MCP agenda-ambientes-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/agenda-ambientes/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Agenda de ambientes (simulado)
+    11 tools.
+
+    ### ambientes_find_window
+    Ambientes find window. Simulado.
+    **Parámetros**:
+      - `window_id` (string)
+
+    ### ambientes_find_booking
+    Ambientes find booking. Simulado.
+    **Parámetros**:
+      - `booking_id` (string)
+
+    ### ambientes_find_analyst_name
+    Ambientes find analyst name. Simulado.
+    **Parámetros**:
+      - `name` (string)
+
+    ### ambientes_find_analyst_email
+    Ambientes find analyst email. Simulado.
+    **Parámetros**:
+      - `email` (string)
+
+    ### ambientes_create_window
+    Ambientes create window. Simulado.
+    **Parámetros**:
+      - `payload` (string)
+
+    ### ambientes_create_booking
+    Ambientes create booking. Simulado.
+    **Parámetros**:
+      - `payload` (string)
+
+    ### ambientes_create_clone_window
+    Ambientes create clone window. Simulado.
+    **Parámetros**:
+      - `payload` (string)
+
+    ### ambientes_create_clone_booking
+    Ambientes create clone booking. Simulado.
+    **Parámetros**:
+      - `payload` (string)
+
+    ### ambientes_find_concurrences
+    Ambientes find concurrences. Simulado.
+    **Parámetros**:
+      - `window_id` (string)
+
+    ### ambientes_list_window_filter
+    Ambientes list window filter. Simulado.
+    **Parámetros**:
+      - `payload` (string)
+
+    ### ambientes_list_booking_filter
+    Ambientes list booking filter. Simulado.
+    **Parámetros**:
+      - `payload` (string)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: automatizacion-infra-mcp-server
+  title: "Plataforma de automatización (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Estado, equipos, organizaciones y plantillas de trabajo de una plataforma de automatización de infraestructura. El real necesita un servicio externo con llave."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/automatizacion-infra/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: externo
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [automatizacion-infra-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: automatizacion-infra-mcp-server-api
+  title: "API de Plataforma de automatización"
+  description: "Tools del MCP automatizacion-infra-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/automatizacion-infra/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Plataforma de automatización (simulado)
+    9 tools.
+
+    ### automatizacion_get_cluster_status
+    Automatizacion get cluster status. Simulado.
+
+
+    ### automatizacion_get_teams
+    Automatizacion get teams. Simulado.
+    **Parámetros**:
+      - `organization__name` (string, opcional)
+
+    ### automatizacion_get_organizations
+    Automatizacion get organizations. Simulado.
+    **Parámetros**:
+      - `name` (string, opcional)
+
+    ### automatizacion_get_governance_info
+    Automatizacion get governance info. Simulado.
+
+
+    ### automatizacion_get_workflow_job_templates
+    Automatizacion get workflow job templates. Simulado.
+    **Parámetros**:
+      - `organization__name` (string, opcional)
+
+    ### automatizacion_get_job_templates
+    Automatizacion get job templates. Simulado.
+    **Parámetros**:
+      - `name` (string, opcional)
+      - `organization__name` (string, opcional)
+
+    ### automatizacion_get_jobs
+    Automatizacion get jobs. Simulado.
+
+
+    ### automatizacion_create_team
+    Automatizacion create team. Simulado.
+    **Parámetros**:
+      - `name` (string)
+      - `organization__name` (string)
+      - `owner_name` (string)
+      - `owner_network_user` (string)
+
+    ### automatizacion_create_project
+    Automatizacion create project. Simulado.
+    **Parámetros**:
+      - `name` (string)
+      - `organization__name` (string)
+      - `owner_name` (string)
+      - `owner_network_user` (string)
+      - `scm_url` (string)
+      - `scm_type` (string, opcional)
+      - `scm_branch` (string, opcional)
+      - `credential` (integer, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: pipelines-operativos-mcp-server
+  title: "Pipelines operativos (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Lanza pipelines operativos sobre instancias, autoescalado e imágenes de contenedor. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/pipelines-operativos/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [pipelines-operativos-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: pipelines-operativos-mcp-server-api
+  title: "API de Pipelines operativos"
+  description: "Tools del MCP pipelines-operativos-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/pipelines-operativos/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Pipelines operativos (simulado)
+    7 tools.
+
+    ### pipeline_execute_instancia
+    Pipeline execute instancia. Simulado.
+    **Parámetros**:
+      - `account` (string)
+      - `idinstance` (string)
+      - `accion` (string)
+      - `user_email` (string)
+      - `prueba` (string, opcional)
+
+    ### pipeline_execute_autoescalado
+    Pipeline execute autoescalado. Simulado.
+    **Parámetros**:
+      - `account` (string)
+      - `name` (string)
+      - `minsize` (string)
+      - `maxsize` (string)
+      - `desirecapacity` (string)
+      - `user_email` (string)
+      - `prueba` (string, opcional)
+
+    ### pipeline_execute_image_scanner
+    Pipeline execute image scanner. Simulado.
+    **Parámetros**:
+      - `imagen` (string)
+      - `email_notificar` (string)
+      - `prueba` (string, opcional)
+
+    ### pipeline_execute_registro_image_scanner
+    Pipeline execute registro image scanner. Simulado.
+    **Parámetros**:
+      - `account` (string)
+      - `image` (string)
+      - `repositorio_imagenes` (string)
+      - `account_id` (string)
+      - `user_notificar` (string)
+      - `prueba` (string, opcional)
+
+    ### pipeline_execute_create_image_base
+    Pipeline execute create image base. Simulado.
+    **Parámetros**:
+      - `ami_id` (string)
+      - `os_version` (string)
+      - `volume_type` (string)
+      - `volume_size` (string)
+      - `application_code` (string)
+      - `project_name` (string)
+      - `accounts` (string)
+      - `cost_center` (string)
+      - `my_script` (string)
+      - `description` (string)
+      - `user_email` (string)
+      - `region_negocio` (string)
+      - `requester_user` (string)
+      - `prueba` (string, opcional)
+
+    ### pipeline_execute_create_image_registro
+    Pipeline execute create image registro. Simulado.
+    **Parámetros**:
+      - `image_name` (string)
+      - `image_tag` (string)
+      - `app_tag` (string)
+      - `email_notificar` (string)
+      - `account_id` (string)
+      - `repositorio_imagenes` (string)
+      - `conexion_registro` (string)
+      - `prueba` (string, opcional)
+
+    ### pipeline_execute_delete_image_registro
+    Pipeline execute delete image registro. Simulado.
+    **Parámetros**:
+      - `account_delete` (string)
+      - `environment` (string)
+      - `repositoryname` (string)
+      - `imagetags` (string)
+      - `email_notificar` (string)
+      - `prueba` (string, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: auditoria-nube-mcp-server
+  title: "Auditoría de la nube (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Eventos de auditoría de una cuenta de nube para investigaciones y cumplimiento. El real necesita servicios o permisos de AWS que la sandbox no tiene."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/auditoria-nube/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: aws
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [auditoria-nube-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: auditoria-nube-mcp-server-api
+  title: "API de Auditoría de la nube"
+  description: "Tools del MCP auditoria-nube-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/auditoria-nube/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Auditoría de la nube (simulado)
+    1 tools.
+
+    ### auditoria_lookup_events
+    Audita lookup events. Simulado.
+    **Parámetros**:
+      - `account_id` (string, opcional)
+      - `start_time` (string, opcional)
+      - `end_time` (string, opcional)
+      - `attribute_key` (string, opcional)
+      - `attribute_value` (string, opcional)
+      - `max_results` (integer, opcional)
+      - `next_token` (string, opcional)
+      - `region` (string, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: observabilidad-nube-mcp-server
+  title: "Observabilidad de la nube (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Alarmas, grupos de logs, consultas de logs y métricas de la nube. El real necesita servicios o permisos de AWS que la sandbox no tiene."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/observabilidad-nube/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: aws
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [observabilidad-nube-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: observabilidad-nube-mcp-server-api
+  title: "API de Observabilidad de la nube"
+  description: "Tools del MCP observabilidad-nube-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/observabilidad-nube/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Observabilidad de la nube (simulado)
+    9 tools.
+
+    ### observabilidad_get_active_alarms
+    Observabilidad get active alarms. Simulado.
+    **Parámetros**:
+      - `account_id` (string)
+      - `max_items` (integer, opcional)
+      - `region` (string, opcional)
+
+    ### observabilidad_get_alarm_history
+    Observabilidad get alarm history. Simulado.
+    **Parámetros**:
+      - `account_id` (string)
+      - `alarm_name` (string, opcional)
+      - `start_time` (string, opcional)
+      - `end_time` (string, opcional)
+      - `history_item_type` (string, opcional)
+      - `max_items` (integer, opcional)
+      - `include_component_alarms` (boolean, opcional)
+      - `region` (string, opcional)
+
+    ### observabilidad_describe_log_groups
+    Observabilidad describe log groups. Simulado.
+    **Parámetros**:
+      - `account_id` (string)
+      - `account_identifiers` (array, opcional)
+      - `include_linked_accounts` (boolean, opcional)
+      - `log_group_class` (string, opcional)
+      - `log_group_name_prefix` (string, opcional)
+      - `max_items` (integer, opcional)
+      - `region` (string, opcional)
+
+    ### observabilidad_analyze_log_group
+    Observabilidad analyze log group. Simulado.
+    **Parámetros**:
+      - `account_id` (string)
+      - `log_group_arn` (string, opcional)
+      - `start_time` (string, opcional)
+      - `end_time` (string, opcional)
+      - `region` (string, opcional)
+
+    ### observabilidad_execute_log_insights_query
+    Observabilidad execute log insights query. Simulado.
+    **Parámetros**:
+      - `account_id` (string)
+      - `log_group_names` (array, opcional)
+      - `log_group_identifiers` (array, opcional)
+      - `start_time` (string, opcional)
+      - `end_time` (string, opcional)
+      - `query_string` (string, opcional)
+      - `limit` (integer, opcional)
+      - `max_timeout` (integer, opcional)
+      - `region` (string, opcional)
+
+    ### observabilidad_get_logs_insight_query_results
+    Observabilidad get logs insight query results. Simulado.
+    **Parámetros**:
+      - `account_id` (string)
+      - `query_id` (string, opcional)
+      - `region` (string, opcional)
+
+    ### observabilidad_get_metric_data
+    Observabilidad get metric data. Simulado.
+    **Parámetros**:
+      - `account_id` (string)
+      - `namespace` (string)
+      - `metric_name` (string)
+      - `start_time` (string)
+      - `dimensions` (array, opcional)
+      - `end_time` (string, opcional)
+      - `statistic` (string, opcional)
+      - `target_datapoints` (integer, opcional)
+      - `group_by_dimension` (string, opcional)
+      - `schema_dimension_keys` (array, opcional)
+      - `limit` (integer, opcional)
+      - `sort_order` (string, opcional)
+      - `order_by_statistic` (string, opcional)
+      - `region` (string, opcional)
+
+    ### observabilidad_get_metric_metadata
+    Observabilidad get metric metadata. Simulado.
+    **Parámetros**:
+      - `account_id` (string)
+      - `namespace` (string, opcional)
+      - `metric_name` (string, opcional)
+      - `region` (string, opcional)
+
+    ### observabilidad_analyze_metric
+    Observabilidad analyze metric. Simulado.
+    **Parámetros**:
+      - `account_id` (string)
+      - `namespace` (string, opcional)
+      - `metric_name` (string, opcional)
+      - `dimensions` (array, opcional)
+      - `region` (string, opcional)
+      - `statistic` (string, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: revision-codigo-mcp-server
+  title: "Revisión de código (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Analiza un repositorio completo y entrega hallazgos de calidad y seguridad. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/revision-codigo/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [revision-codigo-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: revision-codigo-mcp-server-api
+  title: "API de Revisión de código"
+  description: "Tools del MCP revision-codigo-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/revision-codigo/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Revisión de código (simulado)
+    3 tools.
+
+    ### revision_analizar
+    Revision analizar. Simulado.
+    **Parámetros**:
+      - `repository_name` (string)
+      - `repo_origin` (string)
+      - `path` (string, opcional)
+      - `branch` (string, opcional)
+
+    ### revision_estado
+    Revision estado. Simulado.
+    **Parámetros**:
+      - `execution_id` (string)
+
+    ### revision_resultado
+    Revision resultado. Simulado.
+    **Parámetros**:
+      - `execution_id` (string)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: pruebas-continuas-mcp-server
+  title: "Pruebas continuas (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Genera y ejecuta pruebas unitarias y de API, y mide su cobertura. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/pruebas-continuas/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [pruebas-continuas-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: pruebas-continuas-mcp-server-api
+  title: "API de Pruebas continuas"
+  description: "Tools del MCP pruebas-continuas-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/pruebas-continuas/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Pruebas continuas (simulado)
+    6 tools.
+
+    ### write-test-file
+    Escribe test file. Simulado.
+    **Parámetros**:
+      - `path` (string)
+      - `content` (string)
+
+    ### run-unit-tests
+    Ejecuta unit tests. Simulado.
+    **Parámetros**:
+      - `project_root` (string)
+      - `command` (string)
+
+    ### run-api-tests
+    Ejecuta api tests. Simulado.
+    **Parámetros**:
+      - `project_root` (string)
+      - `command` (string)
+
+    ### extract-api-endpoints
+    Extract api endpoints. Simulado.
+    **Parámetros**:
+      - `source_code` (string)
+
+    ### validate-api-syntax
+    Valida api syntax. Simulado.
+    **Parámetros**:
+      - `feature_content` (string)
+
+    ### analyze-test-coverage
+    Analiza test coverage. Simulado.
+    **Parámetros**:
+      - `coverage_report` (string)
+      - `threshold` (number, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: turnos-disponibilidad-mcp-server
+  title: "Turnos de disponibilidad (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Personal de turno por servicio. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/turnos-disponibilidad/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [turnos-disponibilidad-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: turnos-disponibilidad-mcp-server-api
+  title: "API de Turnos de disponibilidad"
+  description: "Tools del MCP turnos-disponibilidad-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/turnos-disponibilidad/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Turnos de disponibilidad (simulado)
+    1 tools.
+
+    ### consultar_personal_turno
+    Consulta personal turno. Simulado.
+    **Parámetros**:
+      - `official` (string, opcional)
+      - `it_service` (string, opcional)
+      - `official_company` (string, opcional)
+      - `year` (string, opcional)
+      - `start_date` (string, opcional)
+      - `end_date` (string, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: flujo-devops-mcp-server
+  title: "Flujo DevOps (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Operaciones de repositorio para el flujo de desarrollo: ramas, cambios, sincronización y pull requests. El real necesita un servicio externo con llave."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/flujo-devops/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: externo
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [flujo-devops-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: flujo-devops-mcp-server-api
+  title: "API de Flujo DevOps"
+  description: "Tools del MCP flujo-devops-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/flujo-devops/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Flujo DevOps (simulado)
+    12 tools.
+
+    ### git-status
+    Git: status. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+
+    ### git-log
+    Git: log. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+      - `max_count` (integer, opcional)
+      - `branch` (string, opcional)
+
+    ### git-branches
+    Git: branches. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+
+    ### git-diff
+    Git: diff. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+      - `commit` (string, opcional)
+
+    ### git-commit
+    Git: commit. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+      - `message` (string)
+      - `files` (array, opcional)
+      - `user_name` (string, opcional)
+      - `user_email` (string, opcional)
+      - `allow_empty` (boolean, opcional)
+
+    ### git-checkout-branch
+    Git: checkout branch. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+      - `branch_name` (string)
+
+    ### git-create-branch
+    Git: create branch. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+      - `branch_name` (string)
+
+    ### git-stats
+    Git: stats. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+
+    ### git-clone
+    Git: clone. Simulado.
+    **Parámetros**:
+      - `repo_url` (string)
+      - `clone_dir` (string)
+      - `branch` (string, opcional)
+      - `depth` (integer, opcional)
+      - `sparse_checkout_path` (string, opcional)
+
+    ### git-pull
+    Git: pull. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+      - `remote_name` (string, opcional)
+      - `branch_name` (string, opcional)
+
+    ### git-push
+    Git: push. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+      - `remote_name` (string, opcional)
+      - `branch_name` (string, opcional)
+
+    ### git-pull-request
+    Git: pull request. Simulado.
+    **Parámetros**:
+      - `repository_name` (string)
+      - `source_branch` (string)
+      - `target_branch` (string)
+      - `title` (string)
+      - `description` (string)
+      - `repo_url` (string)
+      - `reviewers` (array, opcional)
+      - `item_ids` (array, opcional)
+      - `labels` (array, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: operaciones-git-mcp-server
+  title: "Operaciones Git (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Operaciones sobre repositorios Git: estado, historial, ramas y pull requests. El real necesita un servicio externo con llave."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/operaciones-git/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: externo
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [operaciones-git-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: operaciones-git-mcp-server-api
+  title: "API de Operaciones Git"
+  description: "Tools del MCP operaciones-git-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/operaciones-git/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Operaciones Git (simulado)
+    12 tools.
+
+    ### git-status
+    Git: status. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+
+    ### git-log
+    Git: log. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+      - `max_count` (integer, opcional)
+      - `branch` (string, opcional)
+
+    ### git-branches
+    Git: branches. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+
+    ### git-diff
+    Git: diff. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+      - `commit` (string, opcional)
+
+    ### git-commit
+    Git: commit. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+      - `message` (string)
+      - `files` (array, opcional)
+      - `user_name` (string, opcional)
+      - `user_email` (string, opcional)
+      - `allow_empty` (boolean, opcional)
+
+    ### git-checkout-branch
+    Git: checkout branch. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+      - `branch_name` (string)
+
+    ### git-create-branch
+    Git: create branch. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+      - `branch_name` (string)
+
+    ### git-stats
+    Git: stats. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+
+    ### git-clone
+    Git: clone. Simulado.
+    **Parámetros**:
+      - `repo_url` (string)
+      - `clone_dir` (string)
+      - `branch` (string, opcional)
+      - `depth` (integer, opcional)
+      - `sparse_checkout_path` (string, opcional)
+
+    ### git-pull
+    Git: pull. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+      - `remote_name` (string, opcional)
+      - `branch_name` (string, opcional)
+
+    ### git-push
+    Git: push. Simulado.
+    **Parámetros**:
+      - `repository_path` (string)
+      - `remote_name` (string, opcional)
+      - `branch_name` (string, opcional)
+
+    ### git-pull-request
+    Git: pull request. Simulado.
+    **Parámetros**:
+      - `repository_name` (string)
+      - `source_branch` (string)
+      - `target_branch` (string)
+      - `title` (string)
+      - `description` (string)
+      - `repo_url` (string)
+      - `reviewers` (array, opcional)
+      - `item_ids` (array, opcional)
+      - `labels` (array, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: disponibilidad-servicios-mcp-server
+  title: "Disponibilidad de servicios (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Afectaciones, disponibilidad e informes de servicios de integración. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/disponibilidad-servicios/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [disponibilidad-servicios-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: disponibilidad-servicios-mcp-server-api
+  title: "API de Disponibilidad de servicios"
+  description: "Tools del MCP disponibilidad-servicios-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/disponibilidad-servicios/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Disponibilidad de servicios (simulado)
+    11 tools.
+
+    ### get_afectaciones_reales_servicios
+    Consulta afectaciones reales servicios. Simulado.
+    **Parámetros**:
+      - `servicio` (string)
+      - `fecha_inicio` (string)
+      - `fecha_fin` (string)
+
+    ### consultar_afectaciones_servicios
+    Consulta afectaciones servicios. Simulado.
+    **Parámetros**:
+      - `servicio` (string)
+      - `fecha_inicio` (string)
+      - `fecha_fin` (string)
+
+    ### calcular_disponibilidad_real_servicios
+    Calcula disponibilidad real servicios. Simulado.
+    **Parámetros**:
+      - `servicio` (string)
+      - `fecha_inicio` (string)
+      - `fecha_fin` (string)
+
+    ### calcular_disponibilidad_servicios
+    Calcula disponibilidad servicios. Simulado.
+    **Parámetros**:
+      - `servicio` (string)
+      - `fecha_inicio` (string)
+      - `fecha_fin` (string)
+
+    ### informacion_servicios
+    Consulta servicios. Simulado.
+    **Parámetros**:
+      - `servicio` (string, opcional)
+      - `detalle` (string, opcional)
+      - `anio` (integer, opcional)
+      - `filtro` (string, opcional)
+
+    ### afectaciones_recurrentes_servicios
+    Afectaciones recurrentes servicios. Simulado.
+    **Parámetros**:
+      - `servicio` (string)
+      - `fecha_inicio` (string)
+      - `fecha_fin` (string)
+
+    ### buscar_solucion_servicios
+    Consulta solucion servicios. Simulado.
+    **Parámetros**:
+      - `servicio` (string)
+      - `solicitud` (string)
+
+    ### consultar_estados_servicios
+    Consulta estados servicios. Simulado.
+    **Parámetros**:
+      - `servicio` (string, opcional)
+
+    ### consultar_servicios_afectados_intervalo_servicios
+    Consulta servicios afectados intervalo servicios. Simulado.
+    **Parámetros**:
+      - `fecha_inicio` (string)
+      - `fecha_fin` (string)
+
+    ### informe_quincenal_servicios
+    Consulta quincenal servicios. Simulado.
+    **Parámetros**:
+      - `fecha_inicio` (string)
+      - `fecha_fin` (string)
+      - `optimizado` (boolean, opcional)
+      - `nivel_informe` (string, opcional)
+
+    ### info_detalle_servicios
+    Consulta detalle servicios. Simulado.
+    **Parámetros**:
+      - `num_tickets` (array)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: gestion-itsm-mcp-server
+  title: "Gestión de servicios de TI (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Incidentes, cambios, órdenes de trabajo, problemas y elementos de configuración. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/gestion-itsm/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [gestion-itsm-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: gestion-itsm-mcp-server-api
+  title: "API de Gestión de servicios de TI"
+  description: "Tools del MCP gestion-itsm-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/gestion-itsm/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Gestión de servicios de TI (simulado)
+    9 tools.
+
+    ### get_basic_information_elemento_configuracion
+    Consulta basic information elemento configuracion. Simulado.
+    **Parámetros**:
+      - `server_name` (string)
+      - `type_element` (string, opcional)
+
+    ### search_incidents
+    Consulta incidents. Simulado.
+    **Parámetros**:
+      - `query` (string)
+      - `fields` (array, opcional)
+      - `count` (integer, opcional)
+
+    ### search_cambios
+    Consulta cambios. Simulado.
+    **Parámetros**:
+      - `query` (string, opcional)
+      - `cambio` (string, opcional)
+      - `fields` (array, opcional)
+      - `count` (integer, opcional)
+
+    ### search_work_orders
+    Consulta work orders. Simulado.
+    **Parámetros**:
+      - `query` (string)
+      - `fields` (array, opcional)
+      - `count` (integer, opcional)
+
+    ### get_cambio_detail
+    Consulta cambio detail. Simulado.
+    **Parámetros**:
+      - `request_id` (string)
+
+    ### get_cambio_date_context
+    Consulta cambio date context. Simulado.
+    **Parámetros**:
+      - `cambio` (string)
+      - `timezone` (string, opcional)
+      - `reference_date` (string, opcional)
+      - `include_relative_window` (boolean, opcional)
+
+    ### get_incident_activity
+    Consulta incident activity. Simulado.
+    **Parámetros**:
+      - `incident_number` (string)
+      - `count` (integer, opcional)
+
+    ### get_problem_investigation
+    Consulta problem investigation. Simulado.
+    **Parámetros**:
+      - `problem_investigation_id` (string)
+
+    ### get_problem_worknotes
+    Consulta problem worknotes. Simulado.
+    **Parámetros**:
+      - `problem_id` (string)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: documentacion-legado-mcp-server
+  title: "Documentación de plataforma legada (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Repositorios, archivos e historial de proyectos de una plataforma legada. El real necesita un servicio externo con llave."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/documentacion-legado/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: externo
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [documentacion-legado-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: documentacion-legado-mcp-server-api
+  title: "API de Documentación de plataforma legada"
+  description: "Tools del MCP documentacion-legado-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/documentacion-legado/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Documentación de plataforma legada (simulado)
+    13 tools.
+
+    ### legado_get_repository_info
+    Legado get repository info. Simulado.
+    **Parámetros**:
+      - `owner` (string)
+      - `repo` (string)
+
+    ### legado_list_repository_files
+    Legado list repository files. Simulado.
+    **Parámetros**:
+      - `owner` (string)
+      - `repo` (string)
+      - `path` (string, opcional)
+      - `branch` (string, opcional)
+
+    ### legado_read_file
+    Legado read file. Simulado.
+    **Parámetros**:
+      - `owner` (string)
+      - `repo` (string)
+      - `path` (string)
+      - `branch` (string, opcional)
+
+    ### legado_search_legado_files
+    Legado search legado files. Simulado.
+    **Parámetros**:
+      - `owner` (string)
+      - `repo` (string)
+      - `branch` (string, opcional)
+
+    ### legado_get_repository_tree
+    Legado get repository tree. Simulado.
+    **Parámetros**:
+      - `owner` (string)
+      - `repo` (string)
+      - `branch` (string, opcional)
+
+    ### legado_get_recent_commits
+    Legado get recent commits. Simulado.
+    **Parámetros**:
+      - `owner` (string)
+      - `repo` (string)
+      - `branch` (string, opcional)
+      - `limit` (integer, opcional)
+
+    ### legado_list_branches
+    Legado list branches. Simulado.
+    **Parámetros**:
+      - `owner` (string)
+      - `repo` (string)
+
+    ### legado_read_multiple_files
+    Legado read multiple files. Simulado.
+    **Parámetros**:
+      - `owner` (string)
+      - `repo` (string)
+      - `paths` (array)
+      - `branch` (string, opcional)
+
+    ### legado_get_pull_request_info
+    Legado get pull request info. Simulado.
+    **Parámetros**:
+      - `owner` (string)
+      - `repo` (string)
+      - `pr_number` (integer)
+
+    ### legado_get_pull_request_files
+    Legado get pull request files. Simulado.
+    **Parámetros**:
+      - `owner` (string)
+      - `repo` (string)
+      - `pr_number` (integer)
+
+    ### legado_create_or_update_file
+    Legado create or update file. Simulado.
+    **Parámetros**:
+      - `owner` (string)
+      - `repo` (string)
+      - `path` (string)
+      - `content` (string)
+      - `message` (string)
+      - `branch` (string)
+
+    ### repo_detect_type
+    Repo detect type. Simulado.
+    **Parámetros**:
+      - `owner` (string)
+      - `repo` (string)
+      - `branch` (string, opcional)
+
+    ### repo_search_files
+    Repo search files. Simulado.
+    **Parámetros**:
+      - `owner` (string)
+      - `repo` (string)
+      - `branch` (string, opcional)
+      - `extensions` (array, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: inventario-hosts-mcp-server
+  title: "Inventario de hosts (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Existencia y nombre completo de hosts en el directorio de servidores. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/inventario-hosts/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [inventario-hosts-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: inventario-hosts-mcp-server-api
+  title: "API de Inventario de hosts"
+  description: "Tools del MCP inventario-hosts-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/inventario-hosts/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Inventario de hosts (simulado)
+    3 tools.
+
+    ### inventario_exist_host
+    Inventario exist host. Simulado.
+    **Parámetros**:
+      - `fqdn` (string)
+
+    ### inventario_find_host
+    Inventario find host. Simulado.
+    **Parámetros**:
+      - `fqdn` (string)
+
+    ### inventario_get_fqdn_by_instance_id
+    Inventario get fqdn by instance id. Simulado.
+    **Parámetros**:
+      - `instance_id` (string)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: mensajeria-colas-mcp-server
+  title: "Mensajería por colas (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Estado de canales, colas, conexiones y gestores de colas. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/mensajeria-colas/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [mensajeria-colas-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: mensajeria-colas-mcp-server-api
+  title: "API de Mensajería por colas"
+  description: "Tools del MCP mensajeria-colas-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/mensajeria-colas/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Mensajería por colas (simulado)
+    12 tools.
+
+    ### revisar_estado_de_canales
+    Consulta estado de canales. Simulado.
+    **Parámetros**:
+      - `gestor_name` (string)
+
+    ### revisar_encolamiento
+    Consulta encolamiento. Simulado.
+    **Parámetros**:
+      - `gestor_name` (string)
+
+    ### buscar_cola_en_cluster
+    Consulta cola en cluster. Simulado.
+    **Parámetros**:
+      - `queue_name` (string)
+
+    ### buscar_cola_en_gateway
+    Consulta cola en gateway. Simulado.
+    **Parámetros**:
+      - `queue_name` (string)
+
+    ### dns_verification
+    Dns verification. Simulado.
+    **Parámetros**:
+      - `gestor_name` (string)
+
+    ### ssl_certificate_verification
+    Ssl certificate verification. Simulado.
+    **Parámetros**:
+      - `gestor_name` (string)
+
+    ### obtener_colas_apuntando_a_cola_local
+    Consulta colas apuntando a cola local. Simulado.
+    **Parámetros**:
+      - `gestor_name` (string)
+      - `cola_local_name` (string)
+
+    ### obtener_conexiones
+    Consulta conexiones. Simulado.
+    **Parámetros**:
+      - `gestor_name` (string)
+      - `queue_name` (string)
+
+    ### get_gestor_report
+    Consulta gestor report. Simulado.
+    **Parámetros**:
+      - `gestor_name` (string)
+
+    ### display_queue
+    Consulta queue. Simulado.
+    **Parámetros**:
+      - `gestor_name` (string)
+      - `queue_name` (string)
+
+    ### get_gestor_status
+    Consulta gestor status. Simulado.
+    **Parámetros**:
+      - `gestor_name` (string)
+
+    ### get_gestor_configuration
+    Consulta gestor configuration. Simulado.
+    **Parámetros**:
+      - `gestor_name` (string, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: base-datos-sql-mcp-server
+  title: "Bases de datos SQL (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Consultas de solo lectura, inventario, parches y hallazgos de servidores de bases de datos. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/base-datos-sql/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [base-datos-sql-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: base-datos-sql-mcp-server-api
+  title: "API de Bases de datos SQL"
+  description: "Tools del MCP base-datos-sql-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/base-datos-sql/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Bases de datos SQL (simulado)
+    13 tools.
+
+    ### execute-sel-query
+    Ejecuta sel query. Simulado.
+    **Parámetros**:
+      - `query` (string)
+
+    ### execute-query-table
+    Ejecuta query table. Simulado.
+    **Parámetros**:
+      - `table` (string)
+
+    ### bd_ventana_servicio
+    Bd ventana servicio. Simulado.
+    **Parámetros**:
+      - `app_code` (string, opcional)
+      - `nombre_app` (string, opcional)
+      - `env` (string, opcional)
+
+    ### bd_parches_instalados
+    Bd parches instalados. Simulado.
+    **Parámetros**:
+      - `app_code` (string, opcional)
+      - `nombre_app` (string, opcional)
+      - `env` (string, opcional)
+      - `equipo` (string, opcional)
+      - `Entorno` (string, opcional)
+      - `Instance_id` (string, opcional)
+
+    ### bd_inventario_servidores
+    Bd inventario servidores. Simulado.
+    **Parámetros**:
+      - `Ambiente` (string, opcional)
+      - `Nombre_aplicacion` (string, opcional)
+      - `CodigoApp` (string, opcional)
+
+    ### bd_informacion_tabla
+    Bd informacion tabla. Simulado.
+    **Parámetros**:
+      - `tabla` (string, opcional)
+
+    ### bd_informacion_stack
+    Bd informacion stack. Simulado.
+    **Parámetros**:
+      - `nombre_stack` (string, opcional)
+
+    ### bd_informacion_cuentas
+    Bd informacion cuentas. Simulado.
+    **Parámetros**:
+      - `id` (string, opcional)
+      - `account_aws` (string, opcional)
+
+    ### bd_escaneo_servidores
+    Bd escaneo servidores. Simulado.
+    **Parámetros**:
+      - `app_code` (string, opcional)
+      - `instance_id` (string, opcional)
+      - `severity` (string, opcional)
+
+    ### bd_enrolables_vulnerabilidades
+    Bd enrolables vulnerabilidades. Simulado.
+    **Parámetros**:
+      - `codigo_aplicacion` (string, opcional)
+      - `nombre_aplicacion` (string, opcional)
+      - `equipo` (string, opcional)
+      - `entorno` (string, opcional)
+      - `ambiente` (string, opcional)
+      - `estado_enrolamiento` (string, opcional)
+
+    ### bd_cierre_vulnerabilidades
+    Bd cierre vulnerabilidades. Simulado.
+    **Parámetros**:
+      - `severity` (string, opcional)
+      - `instance_id` (string, opcional)
+
+    ### bd_anomalias_linux
+    Bd anomalias linux. Simulado.
+    **Parámetros**:
+      - `severity` (string, opcional)
+      - `instance_id` (string, opcional)
+      - `app_code` (string, opcional)
+
+    ### bd_anomalias_windows
+    Bd anomalias windows. Simulado.
+    **Parámetros**:
+      - `severity` (string, opcional)
+      - `instance_id` (string, opcional)
+      - `app_code` (string, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: monitoreo-incidentes-mcp-server
+  title: "Monitoreo de incidentes (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Estado actual de servicios, servicios afectados e incidentes similares. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/monitoreo-incidentes/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [monitoreo-incidentes-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: monitoreo-incidentes-mcp-server-api
+  title: "API de Monitoreo de incidentes"
+  description: "Tools del MCP monitoreo-incidentes-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/monitoreo-incidentes/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Monitoreo de incidentes (simulado)
+    3 tools.
+
+    ### get_current_service_status
+    Consulta current service status. Simulado.
+    **Parámetros**:
+      - `servicio` (string, opcional)
+
+    ### get_affected_services
+    Consulta affected services. Simulado.
+
+
+    ### search_similar_incidents
+    Consulta similar incidents. Simulado.
+    **Parámetros**:
+      - `descripcion_error` (string)
+      - `servicio` (string, opcional)
+      - `componente` (string, opcional)
+      - `grupo` (string, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: rendimiento-linux-mcp-server
+  title: "Rendimiento de servidores Linux (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. CPU, memoria, procesos, servicios, almacenamiento y logs de servidores Linux. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/rendimiento-linux/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [rendimiento-linux-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: rendimiento-linux-mcp-server-api
+  title: "API de Rendimiento de servidores Linux"
+  description: "Tools del MCP rendimiento-linux-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/rendimiento-linux/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Rendimiento de servidores Linux (simulado)
+    7 tools.
+
+    ### rendimiento_cpu_status
+    Rendimiento cpu status. Simulado.
+    **Parámetros**:
+      - `ip` (string)
+      - `env` (string)
+      - `prueba` (string, opcional)
+
+    ### rendimiento_services_status
+    Rendimiento services status. Simulado.
+    **Parámetros**:
+      - `ip` (string)
+      - `env` (string)
+      - `prueba` (string, opcional)
+
+    ### rendimiento_process_status
+    Rendimiento process status. Simulado.
+    **Parámetros**:
+      - `ip` (string)
+      - `env` (string)
+      - `prueba` (string, opcional)
+
+    ### rendimiento_memory_status
+    Rendimiento memory status. Simulado.
+    **Parámetros**:
+      - `ip` (string)
+      - `env` (string)
+      - `prueba` (string, opcional)
+
+    ### rendimiento_system_status
+    Rendimiento system status. Simulado.
+    **Parámetros**:
+      - `ip` (string)
+      - `env` (string)
+      - `prueba` (string, opcional)
+
+    ### rendimiento_storage_status
+    Rendimiento storage status. Simulado.
+    **Parámetros**:
+      - `ip` (string)
+      - `env` (string)
+      - `prueba` (string, opcional)
+
+    ### rendimiento_logs_status
+    Rendimiento logs status. Simulado.
+    **Parámetros**:
+      - `ip` (string)
+      - `env` (string)
+      - `prueba` (string, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: optimizador-broker-mcp-server
+  title: "Optimizador de broker de mensajes (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Configuración y recomendaciones de un broker de mensajes administrado. El real necesita servicios o permisos de AWS que la sandbox no tiene."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/optimizador-broker/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: aws
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [optimizador-broker-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: optimizador-broker-mcp-server-api
+  title: "API de Optimizador de broker de mensajes"
+  description: "Tools del MCP optimizador-broker-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/optimizador-broker/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Optimizador de broker de mensajes (simulado)
+    1 tools.
+
+    ### get_broker_configuration
+    Consulta broker configuration. Simulado.
+    **Parámetros**:
+      - `broker_name` (string)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: broker-mensajes-mcp-server
+  title: "Broker de mensajes (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Usuarios, colas, exchanges, políticas y conexiones de un broker de mensajes. El real necesita servicios o permisos de AWS que la sandbox no tiene."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/broker-mensajes/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: aws
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [broker-mensajes-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: broker-mensajes-mcp-server-api
+  title: "API de Broker de mensajes"
+  description: "Tools del MCP broker-mensajes-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/broker-mensajes/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Broker de mensajes (simulado)
+    12 tools.
+
+    ### list_users
+    Consulta users. Simulado.
+    **Parámetros**:
+      - `broker_name` (string)
+
+    ### list_queues
+    Consulta queues. Simulado.
+    **Parámetros**:
+      - `broker_name` (string)
+
+    ### list_policies
+    Consulta policies. Simulado.
+    **Parámetros**:
+      - `broker_name` (string)
+
+    ### list_queues_by_vhost
+    Consulta queues by vhost. Simulado.
+    **Parámetros**:
+      - `broker_name` (string)
+      - `vhost` (string, opcional)
+
+    ### list_exchanges
+    Consulta exchanges. Simulado.
+    **Parámetros**:
+      - `broker_name` (string)
+
+    ### list_vhosts
+    Consulta vhosts. Simulado.
+    **Parámetros**:
+      - `broker_name` (string)
+
+    ### list_exchanges_by_vhost
+    Consulta exchanges by vhost. Simulado.
+    **Parámetros**:
+      - `broker_name` (string)
+      - `vhost` (string, opcional)
+
+    ### get_queue_info
+    Consulta queue info. Simulado.
+    **Parámetros**:
+      - `broker_name` (string)
+      - `queue` (string)
+      - `vhost` (string, opcional)
+
+    ### get_user_info
+    Consulta user info. Simulado.
+    **Parámetros**:
+      - `broker_name` (string)
+      - `username` (string)
+
+    ### get_exchange_info
+    Consulta exchange info. Simulado.
+    **Parámetros**:
+      - `broker_name` (string)
+      - `exchange` (string)
+      - `vhost` (string, opcional)
+
+    ### get_bindings
+    Consulta bindings. Simulado.
+    **Parámetros**:
+      - `broker_name` (string)
+      - `queue` (string, opcional)
+      - `exchange` (string, opcional)
+      - `vhost` (string, opcional)
+
+    ### get_user_connections
+    Consulta user connections. Simulado.
+    **Parámetros**:
+      - `broker_name` (string)
+      - `username` (string)
+      - `vhost` (string, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: bases-datos-nube-mcp-server
+  title: "Bases de datos en la nube (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Instancias, clústeres, mantenimientos, eventos y logs de bases de datos administradas. El real necesita servicios o permisos de AWS que la sandbox no tiene."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/bases-datos-nube/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: aws
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [bases-datos-nube-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: bases-datos-nube-mcp-server-api
+  title: "API de Bases de datos en la nube"
+  description: "Tools del MCP bases-datos-nube-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/bases-datos-nube/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Bases de datos en la nube (simulado)
+    8 tools.
+
+    ### bdnube_describe_db_instances
+    Bdnube describe db instances. Simulado.
+    **Parámetros**:
+      - `account_id` (string, opcional)
+      - `max_records` (integer, opcional)
+      - `marker` (string, opcional)
+      - `region` (string, opcional)
+
+    ### bdnube_describe_db_instance_detail
+    Bdnube describe db instance detail. Simulado.
+    **Parámetros**:
+      - `db_instance_identifier` (string)
+      - `account_id` (string, opcional)
+      - `region` (string, opcional)
+
+    ### bdnube_describe_pending_maintenance_actions
+    Bdnube describe pending maintenance actions. Simulado.
+    **Parámetros**:
+      - `resource_identifier` (string, opcional)
+      - `account_id` (string, opcional)
+      - `marker` (string, opcional)
+      - `region` (string, opcional)
+
+    ### bdnube_describe_db_clusters
+    Bdnube describe db clusters. Simulado.
+    **Parámetros**:
+      - `account_id` (string, opcional)
+      - `max_records` (integer, opcional)
+      - `marker` (string, opcional)
+      - `region` (string, opcional)
+
+    ### bdnube_describe_db_cluster_detail
+    Bdnube describe db cluster detail. Simulado.
+    **Parámetros**:
+      - `db_cluster_identifier` (string)
+      - `account_id` (string, opcional)
+      - `region` (string, opcional)
+
+    ### bdnube_describe_db_log_files
+    Bdnube describe db log files. Simulado.
+    **Parámetros**:
+      - `db_instance_identifier` (string)
+      - `account_id` (string, opcional)
+      - `filename_contains` (string, opcional)
+      - `marker` (string, opcional)
+      - `region` (string, opcional)
+
+    ### bdnube_read_log
+    Bdnube read log. Simulado.
+    **Parámetros**:
+      - `db_instance_identifier` (string)
+      - `log_file_name` (string)
+      - `account_id` (string, opcional)
+      - `number_of_lines` (integer, opcional)
+      - `marker` (string, opcional)
+      - `region` (string, opcional)
+
+    ### bdnube_describe_events
+    Bdnube describe events. Simulado.
+    **Parámetros**:
+      - `source_identifier` (string)
+      - `source_type` (string)
+      - `account_id` (string, opcional)
+      - `event_categories` (array, opcional)
+      - `duration` (integer, opcional)
+      - `start_time` (string, opcional)
+      - `end_time` (string, opcional)
+      - `region` (string, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: generador-proyectos-mcp-server
+  title: "Generador de proyectos (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Crea y actualiza el esqueleto de un microservicio Java. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/generador-proyectos/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [generador-proyectos-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: generador-proyectos-mcp-server-api
+  title: "API de Generador de proyectos"
+  description: "Tools del MCP generador-proyectos-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/generador-proyectos/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Generador de proyectos (simulado)
+    2 tools.
+
+    ### create-java-scaffold
+    Crea java scaffold. Simulado.
+    **Parámetros**:
+      - `component_name` (string, opcional)
+      - `repository_name` (string, opcional)
+      - `java_paradigm` (string, opcional)
+      - `use_lombok` (boolean, opcional)
+      - `java_version` (string, opcional)
+      - `repo_provider` (string, opcional)
+      - `dry_run` (boolean, opcional)
+
+    ### update-java-scaffold
+    Actualiza java scaffold. Simulado.
+    **Parámetros**:
+      - `component_name` (string, opcional)
+      - `repository_name` (string, opcional)
+      - `git` (boolean, opcional)
+      - `dependencies` (string, opcional)
+      - `branch_name` (string, opcional)
+      - `update_dependencies` (boolean, opcional)
+      - `update_gradle_plugins` (boolean, opcional)
+      - `update_spring_boot` (boolean, opcional)
+      - `update_gradle_files` (boolean, opcional)
+      - `update_gradle_wrapper` (boolean, opcional)
+      - `dry_run` (boolean, opcional)
+      - `repo_provider` (string, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: identidad-aplicaciones-mcp-server
+  title: "Identidad de aplicaciones (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Registro, gobierno, URLs y accesos de aplicaciones en el proveedor de identidad. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/identidad-aplicaciones/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [identidad-aplicaciones-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: identidad-aplicaciones-mcp-server-api
+  title: "API de Identidad de aplicaciones"
+  description: "Tools del MCP identidad-aplicaciones-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/identidad-aplicaciones/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Identidad de aplicaciones (simulado)
+    6 tools.
+
+    ### identidad_list_applications
+    Identidad list applications. Simulado.
+    **Parámetros**:
+      - `environment` (string, opcional)
+      - `display_name` (string, opcional)
+      - `filter_str` (string, opcional)
+      - `top` (integer, opcional)
+      - `fetch_all` (boolean, opcional)
+      - `limit` (integer, opcional)
+      - `select` (string, opcional)
+      - `orderby` (string, opcional)
+      - `count` (boolean, opcional)
+      - `fields` (array, opcional)
+
+    ### identidad_governance_validate
+    Identidad governance validate. Simulado.
+    **Parámetros**:
+      - `environment` (string, opcional)
+      - `display_name` (string, opcional)
+
+    ### identidad_governance_request
+    Identidad governance request. Simulado.
+    **Parámetros**:
+      - `environment` (string, opcional)
+      - `display_name` (string, opcional)
+      - `owner_email` (string, opcional)
+      - `owner_query` (string, opcional)
+      - `app_code` (string, opcional)
+      - `leader_email` (string, opcional)
+      - `leader_query` (string, opcional)
+      - `requested_by` (string, opcional)
+
+    ### identidad_add_application_urls
+    Identidad add application urls. Simulado.
+    **Parámetros**:
+      - `environment` (string, opcional)
+      - `display_name` (string, opcional)
+      - `web_redirect_uris` (array, opcional)
+      - `spa_redirect_uris` (array, opcional)
+      - `usuario_red` (string, opcional)
+      - `confirm_write` (boolean, opcional)
+
+    ### identidad_get_application_signin_logs
+    Identidad get application signin logs. Simulado.
+    **Parámetros**:
+      - `environment` (string, opcional)
+      - `display_name` (string, opcional)
+      - `top` (integer, opcional)
+      - `hours` (integer, opcional)
+      - `only_errors` (boolean, opcional)
+
+    ### identidad_get_application_auth_profile
+    Identidad get application auth profile. Simulado.
+    **Parámetros**:
+      - `environment` (string, opcional)
+      - `display_name` (string, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: consultas-analiticas-mcp-server
+  title: "Consultas analíticas (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Consultas de solo lectura y esquema de datos analíticos. El real necesita servicios o permisos de AWS que la sandbox no tiene."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/consultas-analiticas/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: aws
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [consultas-analiticas-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: consultas-analiticas-mcp-server-api
+  title: "API de Consultas analíticas"
+  description: "Tools del MCP consultas-analiticas-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/consultas-analiticas/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Consultas analíticas (simulado)
+    2 tools.
+
+    ### sql-execute
+    Ejecuta execute. Simulado.
+    **Parámetros**:
+      - `sql` (string)
+
+    ### sql-schema
+    Sql schema. Simulado.
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: notificaciones-triage-mcp-server
+  title: "Notificaciones de triage (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Envía notificaciones de triage a un canal de chat. Simulado: nunca envía nada. El real necesita un servicio externo con llave."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/notificaciones-triage/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: externo
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [notificaciones-triage-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: notificaciones-triage-mcp-server-api
+  title: "API de Notificaciones de triage"
+  description: "Tools del MCP notificaciones-triage-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/notificaciones-triage/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Notificaciones de triage (simulado)
+    1 tools.
+
+    ### send_notification
+    Envía notification. Simulado.
+    **Parámetros**:
+      - `webhook_url` (string)
+      - `mensaje_chat` (object)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: red-sdwan-mcp-server
+  title: "Red SD-WAN (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Estado, métricas, consumo y anomalías de equipos de borde de la red SD-WAN. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/red-sdwan/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [red-sdwan-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: red-sdwan-mcp-server-api
+  title: "API de Red SD-WAN"
+  description: "Tools del MCP red-sdwan-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/red-sdwan/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Red SD-WAN (simulado)
+    12 tools.
+
+    ### sdwan_get_edge
+    Sdwan get edge. Simulado.
+    **Parámetros**:
+      - `edge_id` (integer)
+      - `enterprise_id` (integer, opcional)
+
+    ### sdwan_get_enterprise_edge_list
+    Sdwan get enterprise edge list. Simulado.
+    **Parámetros**:
+      - `enterprise_id` (integer, opcional)
+      - `search_term` (string, opcional)
+      - `limit` (integer, opcional)
+
+    ### sdwan_get_enterprise_events_list
+    Sdwan get enterprise events list. Simulado.
+    **Parámetros**:
+      - `start_time_epoch` (integer, opcional)
+      - `end_time_epoch` (integer, opcional)
+      - `enterprise_id` (integer, opcional)
+      - `edge_id` (integer, opcional)
+      - `search_edge_name` (string, opcional)
+      - `limit` (integer, opcional)
+
+    ### sdwan_get_edge_link_metrics
+    Sdwan get edge link metrics. Simulado.
+    **Parámetros**:
+      - `edge_id` (integer)
+      - `enterprise_id` (integer, opcional)
+      - `start_time_epoch` (integer, opcional)
+      - `end_time_epoch` (integer, opcional)
+      - `metrics` (array, opcional)
+
+    ### sdwan_get_edge_link_series_anomalies
+    Sdwan get edge link series anomalies. Simulado.
+    **Parámetros**:
+      - `edge_id` (integer)
+      - `start_time_epoch` (integer, opcional)
+      - `end_time_epoch` (integer, opcional)
+      - `enterprise_id` (integer, opcional)
+      - `metrics` (array, opcional)
+
+    ### sdwan_get_top_consuming_apps
+    Sdwan get top consuming apps. Simulado.
+    **Parámetros**:
+      - `edge_id` (integer)
+      - `start_time_epoch` (integer, opcional)
+      - `end_time_epoch` (integer, opcional)
+      - `enterprise_id` (integer, opcional)
+      - `limit` (integer, opcional)
+
+    ### sdwan_get_top_consuming_categories
+    Sdwan get top consuming categories. Simulado.
+    **Parámetros**:
+      - `edge_id` (integer)
+      - `start_time_epoch` (integer, opcional)
+      - `end_time_epoch` (integer, opcional)
+      - `enterprise_id` (integer, opcional)
+      - `limit` (integer, opcional)
+
+    ### sdwan_get_edge_sdwan_peers
+    Sdwan get edge sdwan peers. Simulado.
+    **Parámetros**:
+      - `edge_id` (integer)
+      - `enterprise_id` (integer, opcional)
+      - `start_time_epoch` (integer, opcional)
+      - `end_time_epoch` (integer, opcional)
+
+    ### sdwan_get_edge_sdwan_peer_path_metrics
+    Sdwan get edge sdwan peer path metrics. Simulado.
+    **Parámetros**:
+      - `edge_id` (integer)
+      - `peer_logical_id` (string)
+      - `enterprise_id` (integer, opcional)
+      - `start_time_epoch` (integer, opcional)
+      - `end_time_epoch` (integer, opcional)
+      - `metrics` (array, opcional)
+
+    ### sdwan_get_edge_sdwan_peer_path_series_anomalies
+    Sdwan get edge sdwan peer path series anomalies. Simulado.
+    **Parámetros**:
+      - `edge_id` (integer)
+      - `peer_logical_id` (string)
+      - `paths` (array)
+      - `start_time_epoch` (integer, opcional)
+      - `end_time_epoch` (integer, opcional)
+      - `enterprise_id` (integer, opcional)
+      - `metrics` (array, opcional)
+
+    ### sdwan_get_edge_status_metrics
+    Sdwan get edge status metrics. Simulado.
+    **Parámetros**:
+      - `edge_id` (integer)
+      - `enterprise_id` (integer, opcional)
+      - `start_time_epoch` (integer, opcional)
+      - `end_time_epoch` (integer, opcional)
+      - `metrics` (array, opcional)
+
+    ### sdwan_get_edge_status_series_anomalies
+    Sdwan get edge status series anomalies. Simulado.
+    **Parámetros**:
+      - `edge_id` (integer)
+      - `enterprise_id` (integer, opcional)
+      - `start_time_epoch` (integer, opcional)
+      - `end_time_epoch` (integer, opcional)
+      - `metrics` (array, opcional)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: red-wan-mcp-server
+  title: "Red WAN (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Dispositivos, alarmas, túneles, SLA e interfaces de la red WAN. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/red-wan/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [red-wan-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: red-wan-mcp-server-api
+  title: "API de Red WAN"
+  description: "Tools del MCP red-wan-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/red-wan/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Red WAN (simulado)
+    11 tools.
+
+    ### wan_get_devices
+    Wan get devices. Simulado.
+    **Parámetros**:
+      - `tenant` (string)
+      - `device_id` (string, opcional)
+      - `name` (string, opcional)
+
+    ### wan_get_alarms
+    Wan get alarms. Simulado.
+    **Parámetros**:
+      - `tenant` (string)
+      - `severity` (string, opcional)
+      - `device_id` (string, opcional)
+      - `limit` (integer, opcional)
+
+    ### wan_get_approute_sla
+    Wan get approute sla. Simulado.
+    **Parámetros**:
+      - `tenant` (string)
+      - `device_id` (string)
+
+    ### wan_get_approute_statistics
+    Wan get approute statistics. Simulado.
+    **Parámetros**:
+      - `tenant` (string)
+      - `device_id` (string)
+
+    ### wan_get_bfd_tloc
+    Wan get bfd tloc. Simulado.
+    **Parámetros**:
+      - `tenant` (string)
+      - `device_id` (string)
+
+    ### wan_get_tloc_status
+    Wan get tloc status. Simulado.
+    **Parámetros**:
+      - `tenant` (string)
+      - `device_id` (string)
+
+    ### wan_get_bfd_history
+    Wan get bfd history. Simulado.
+    **Parámetros**:
+      - `tenant` (string)
+      - `device_id` (string)
+
+    ### wan_get_bfd_summary
+    Wan get bfd summary. Simulado.
+    **Parámetros**:
+      - `tenant` (string)
+      - `device_id` (string)
+
+    ### wan_get_bfd_sessions
+    Wan get bfd sessions. Simulado.
+    **Parámetros**:
+      - `tenant` (string)
+      - `device_id` (string)
+
+    ### wan_get_system_status
+    Wan get system status. Simulado.
+    **Parámetros**:
+      - `tenant` (string)
+      - `device_id` (string)
+
+    ### wan_get_interface_status
+    Wan get interface status. Simulado.
+    **Parámetros**:
+      - `tenant` (string)
+      - `device_id` (string)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: gestion-vulnerabilidades-mcp-server
+  title: "Gestión de vulnerabilidades (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Vulnerabilidades, reglas de análisis y repositorios evaluados. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/gestion-vulnerabilidades/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [gestion-vulnerabilidades-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: gestion-vulnerabilidades-mcp-server-api
+  title: "API de Gestión de vulnerabilidades"
+  description: "Tools del MCP gestion-vulnerabilidades-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/gestion-vulnerabilidades/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Gestión de vulnerabilidades (simulado)
+    4 tools.
+
+    ### vulnerability
+    Vulnerability. Simulado.
+    **Parámetros**:
+      - `vulnerability_id` (string)
+
+    ### regla-personalizada
+    Regla personalizada. Simulado.
+    **Parámetros**:
+      - `vuln_id_from_tool` (string)
+
+    ### regla-codigo
+    Regla codigo. Simulado.
+    **Parámetros**:
+      - `vuln_id_from_tool` (string)
+
+    ### repositorios-evaluados
+    Repositorios evaluados. Simulado.
+    **Parámetros**:
+      - `app_code` (string)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: servidor-aplicaciones-mcp-server
+  title: "Servidor de aplicaciones (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Estado, aplicaciones, logs y almacenes de certificados de servidores de aplicaciones. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/servidor-aplicaciones/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [servidor-aplicaciones-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: servidor-aplicaciones-mcp-server-api
+  title: "API de Servidor de aplicaciones"
+  description: "Tools del MCP servidor-aplicaciones-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/servidor-aplicaciones/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Servidor de aplicaciones (simulado)
+    6 tools.
+
+    ### get_servidor_status
+    Consulta servidor status. Simulado.
+    **Parámetros**:
+      - `servidor_name` (string)
+
+    ### get_status_service
+    Consulta status service. Simulado.
+    **Parámetros**:
+      - `servidor_name` (string)
+
+    ### get_applications
+    Consulta applications. Simulado.
+    **Parámetros**:
+      - `servidor_name` (string)
+
+    ### get_status_application
+    Consulta status application. Simulado.
+    **Parámetros**:
+      - `servidor_name` (string)
+      - `app_name` (string)
+
+    ### get_logs
+    Consulta logs. Simulado.
+    **Parámetros**:
+      - `servidor_name` (string)
+      - `count` (integer)
+      - `log_file_name` (string)
+
+    ### get_keystore
+    Consulta keystore. Simulado.
+    **Parámetros**:
+      - `servidor_name` (string)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: busqueda-web-mcp-server
+  title: "Búsqueda web (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Búsqueda en internet con perfiles de búsqueda. El real necesita un servicio externo con llave."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/busqueda-web/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: externo
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [busqueda-web-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: busqueda-web-mcp-server-api
+  title: "API de Búsqueda web"
+  description: "Tools del MCP busqueda-web-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/busqueda-web/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Búsqueda web (simulado)
+    1 tools.
+
+    ### web-search
+    Web search. Simulado.
+    **Parámetros**:
+      - `query` (string)
+      - `search_profile_id` (string)
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: monitoreo-infra-mcp-server
+  title: "Monitoreo de infraestructura (simulado)"
+  description: "SIMULADO: datos inventados, sin conexión a ningún sistema. Métricas, alertas, hosts, plantillas y proxies del sistema de monitoreo. El real se conecta a sistemas internos."
+  tags: [mcp, mcp-kaizen, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/monitoreo-infra/mcp
+    mcp.io/server-type: streamable-http
+  labels:
+    harness.poc/origen: simulado
+    harness.poc/dependencia: interno
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  providesApis: [monitoreo-infra-mcp-server-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: monitoreo-infra-mcp-server-api
+  title: "API de Monitoreo de infraestructura"
+  description: "Tools del MCP monitoreo-infra-mcp-server (simulado)."
+  tags: [mcp, simulado]
+  annotations:
+    server-url: http://mcp-simulador.harness-poc.svc.cluster.local/monitoreo-infra/mcp
+spec:
+  type: mcp
+  lifecycle: simulado
+  owner: group:guests
+  system: harness-poc
+  definition: |
+    # Monitoreo de infraestructura (simulado)
+    8 tools.
+
+    ### get_metrics
+    Consulta metrics. Simulado.
+    **Parámetros**:
+      - `server_name` (string)
+      - `time_from` (string)
+      - `time_till` (string)
+      - `item_name` (string, opcional)
+
+    ### get_items_by_server
+    Consulta items by server. Simulado.
+    **Parámetros**:
+      - `server_name` (string)
+
+    ### host_create
+    Host create. Simulado.
+    **Parámetros**:
+      - `host` (string)
+      - `groups` (array)
+      - `interfaces` (array)
+      - `templates` (array, opcional)
+      - `inventory_mode` (integer, opcional)
+      - `status` (integer, opcional)
+
+    ### template_get
+    Template get. Simulado.
+    **Parámetros**:
+      - `templateids` (array, opcional)
+      - `groupids` (array, opcional)
+      - `hostids` (array, opcional)
+      - `output` (string, opcional)
+      - `search` (object, opcional)
+      - `filter` (object, opcional)
+
+    ### proxy_get
+    Proxy get. Simulado.
+    **Parámetros**:
+      - `proxyids` (array, opcional)
+      - `output` (string, opcional)
+      - `search` (object, opcional)
+      - `filter` (object, opcional)
+      - `limit` (integer, opcional)
+
+    ### get_host_alerts
+    Consulta host alerts. Simulado.
+    **Parámetros**:
+      - `server_name` (string)
+      - `time_from` (string, opcional)
+      - `time_till` (string, opcional)
+      - `limit` (integer, opcional)
+
+    ### get_alerts
+    Consulta alerts. Simulado.
+    **Parámetros**:
+      - `alert_ids` (array, opcional)
+      - `event_ids` (array, opcional)
+      - `time_from` (string, opcional)
+      - `time_till` (string, opcional)
+      - `limit` (integer, opcional)
+
+    ### api_info_version
+    Api info version. Simulado.
+

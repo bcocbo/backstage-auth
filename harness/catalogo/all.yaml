@@ -11,6 +11,7 @@ spec:
     - ./sistema.yaml
     - ./modelos.yaml
     - ./mcps.yaml
+    - ./mcps-kaizen.yaml
     - ./tools.yaml
     - ./skills.yaml
     - ./bases-conocimiento.yaml
