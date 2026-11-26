@@ -1,0 +1,465 @@
+# Paso 2 del harness externo: gateway de MCPs con OPA en harness-poc.
+# - Un agentgateway (gw-<mcp>) delante de cada MCP. Todos usan la cuenta mcp-gateway, la única que los MCPs aceptan (paso 1).
+# - Un servicio de decisión compartido (decision + OPA) que decide cada tools/call: permitir, negar o pedir aprobación.
+# - Istio valida el token de Cognito del agente en el sidecar de cada gateway; sin token válido, 403.
+# El código (decision/) y las reglas (politicas/) van en ConfigMaps que crea desplegar.ps1.
+
+# Identidad: el token de Cognito se valida en el sidecar de cada gateway.
+apiVersion: security.istio.io/v1
+kind: RequestAuthentication
+metadata: { name: jwt-gateway, namespace: harness-poc }
+spec:
+  selector: { matchLabels: { harness.poc/rol: gateway } }
+  jwtRules:
+    - issuer: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_q8vSdPFbG
+      jwksUri: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_q8vSdPFbG/.well-known/jwks.json
+      forwardOriginalToken: true
+---
+# A los gateways solo entran pods de harness-poc con un token válido de Cognito.
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata: { name: gateways-con-token, namespace: harness-poc }
+spec:
+  selector: { matchLabels: { harness.poc/rol: gateway } }
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            namespaces: [harness-poc]
+            requestPrincipals: ["https://cognito-idp.us-east-1.amazonaws.com/us-east-1_q8vSdPFbG/*"]
+      to: [{ operation: { ports: ["3000"] } }]
+---
+# Al servicio de decisión solo entran los gateways, y solo por gRPC. El 8080 (aprobaciones) queda cerrado a la red.
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata: { name: decision-desde-gateways, namespace: harness-poc }
+spec:
+  selector: { matchLabels: { app: mcp-decision } }
+  action: ALLOW
+  rules:
+    - from: [{ source: { principals: ["cluster.local/ns/harness-poc/sa/mcp-gateway"] } }]
+      to: [{ operation: { ports: ["9001"] } }]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata: { name: mcp-decision, namespace: harness-poc }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: mcp-decision, namespace: harness-poc, labels: { app: mcp-decision } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: mcp-decision } }
+  template:
+    metadata:
+      labels: { app: mcp-decision }
+      annotations:
+        # Espera al sidecar: sin red, pip install falla al arrancar.
+        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+    spec:
+      serviceAccountName: mcp-decision
+      containers:
+        - name: decision
+          image: python:3.12-slim
+          command:
+            - sh
+            - -c
+            - pip install -q grpcio==1.74.0 grpcio-tools==1.74.0 && mkdir -p /tmp/gen && python -m grpc_tools.protoc -I/app --python_out=/tmp/gen --grpc_python_out=/tmp/gen /app/ext_mcp.proto && python -u /app/decision.py
+          ports: [{ containerPort: 9001 }, { containerPort: 8080 }]
+          volumeMounts: [{ name: codigo, mountPath: /app }]
+          # Listo solo cuando gRPC escucha y OPA tiene las reglas: antes, el gateway cortaría todo.
+          readinessProbe:
+            exec:
+              command: ["python", "-c", "import socket,urllib.request;socket.create_connection(('127.0.0.1',9001),1);urllib.request.urlopen('http://127.0.0.1:8181/health',timeout=1)"]
+            periodSeconds: 5
+          resources: { requests: { cpu: 50m, memory: 128Mi }, limits: { cpu: 500m, memory: 384Mi } }
+        - name: opa
+          image: openpolicyagent/opa:1.22.2
+          args: ["run", "--server", "--addr=localhost:8181", "--skip-version-check", "/politicas/politica.rego", "/politicas/data.json"]
+          volumeMounts: [{ name: politicas, mountPath: /politicas }]
+          resources: { requests: { cpu: 20m, memory: 64Mi }, limits: { cpu: 300m, memory: 256Mi } }
+      volumes:
+        - name: codigo
+          configMap: { name: mcp-decision-codigo }
+        - name: politicas
+          configMap: { name: mcp-gateway-politicas }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: mcp-decision, namespace: harness-poc }
+spec:
+  selector: { app: mcp-decision }
+  ports:
+    - { name: grpc, port: 9001, appProtocol: kubernetes.io/h2c }
+    - { name: http-aprobar, port: 8080 }
+---
+# Configuración de cada gateway: un solo destino, así las tools conservan su nombre.
+# El nombre del destino llega a OPA como input.mcp: debe coincidir con data.json.
+apiVersion: v1
+kind: ConfigMap
+metadata: { name: mcp-gateway-config, namespace: harness-poc }
+data:
+  consulta-productos-smcp.yaml: |
+    # 15000, 15020 y 15021 son del sidecar de Istio: el gateway usa los suyos en 160xx.
+    config:
+      adminAddr: "localhost:16000"
+      statsAddr: "0.0.0.0:16020"
+      readinessAddr: "0.0.0.0:16021"
+    mcp:
+      port: 3000
+      policies:
+        mcpGuardrails:
+          processors:
+          - kind: remote
+            host: "mcp-decision:9001"
+            failureMode: failClosed
+            methods:
+              tools/call: full
+      targets:
+      - name: consulta-productos-smcp
+        mcp:
+          host: "http://consulta-productos-smcp.harness-poc.svc.cluster.local/mcp"
+  cartera-smcp.yaml: |
+    # 15000, 15020 y 15021 son del sidecar de Istio: el gateway usa los suyos en 160xx.
+    config:
+      adminAddr: "localhost:16000"
+      statsAddr: "0.0.0.0:16020"
+      readinessAddr: "0.0.0.0:16021"
+    mcp:
+      port: 3000
+      policies:
+        mcpGuardrails:
+          processors:
+          - kind: remote
+            host: "mcp-decision:9001"
+            failureMode: failClosed
+            methods:
+              tools/call: full
+      targets:
+      - name: cartera-smcp
+        mcp:
+          host: "http://cartera-smcp.harness-poc.svc.cluster.local/mcp"
+  kubernetes-smcp.yaml: |
+    # 15000, 15020 y 15021 son del sidecar de Istio: el gateway usa los suyos en 160xx.
+    config:
+      adminAddr: "localhost:16000"
+      statsAddr: "0.0.0.0:16020"
+      readinessAddr: "0.0.0.0:16021"
+    mcp:
+      port: 3000
+      policies:
+        mcpGuardrails:
+          processors:
+          - kind: remote
+            host: "mcp-decision:9001"
+            failureMode: failClosed
+            methods:
+              tools/call: full
+      targets:
+      - name: kubernetes-smcp
+        mcp:
+          host: "http://kubernetes-smcp.harness-poc.svc.cluster.local/mcp"
+  kaizen-smcp.yaml: |
+    # 15000, 15020 y 15021 son del sidecar de Istio: el gateway usa los suyos en 160xx.
+    config:
+      adminAddr: "localhost:16000"
+      statsAddr: "0.0.0.0:16020"
+      readinessAddr: "0.0.0.0:16021"
+    mcp:
+      port: 3000
+      policies:
+        mcpGuardrails:
+          processors:
+          - kind: remote
+            host: "mcp-decision:9001"
+            failureMode: failClosed
+            methods:
+              tools/call: full
+      targets:
+      - name: kaizen-smcp
+        mcp:
+          host: "http://kaizen-smcp.harness-poc.svc.cluster.local/mcp"
+  kaizen-docs-smcp.yaml: |
+    # 15000, 15020 y 15021 son del sidecar de Istio: el gateway usa los suyos en 160xx.
+    config:
+      adminAddr: "localhost:16000"
+      statsAddr: "0.0.0.0:16020"
+      readinessAddr: "0.0.0.0:16021"
+    mcp:
+      port: 3000
+      policies:
+        mcpGuardrails:
+          processors:
+          - kind: remote
+            host: "mcp-decision:9001"
+            failureMode: failClosed
+            methods:
+              tools/call: full
+      targets:
+      - name: kaizen-docs-smcp
+        mcp:
+          host: "http://kaizen-docs-smcp.harness-poc.svc.cluster.local/mcp"
+  file-system-smcp.yaml: |
+    # 15000, 15020 y 15021 son del sidecar de Istio: el gateway usa los suyos en 160xx.
+    config:
+      adminAddr: "localhost:16000"
+      statsAddr: "0.0.0.0:16020"
+      readinessAddr: "0.0.0.0:16021"
+    mcp:
+      port: 3000
+      policies:
+        mcpGuardrails:
+          processors:
+          - kind: remote
+            host: "mcp-decision:9001"
+            failureMode: failClosed
+            methods:
+              tools/call: full
+      targets:
+      - name: file-system-smcp
+        mcp:
+          host: "http://file-system-smcp.harness-poc.svc.cluster.local/mcp"
+  performance-tests-smcp.yaml: |
+    # 15000, 15020 y 15021 son del sidecar de Istio: el gateway usa los suyos en 160xx.
+    config:
+      adminAddr: "localhost:16000"
+      statsAddr: "0.0.0.0:16020"
+      readinessAddr: "0.0.0.0:16021"
+    mcp:
+      port: 3000
+      policies:
+        mcpGuardrails:
+          processors:
+          - kind: remote
+            host: "mcp-decision:9001"
+            failureMode: failClosed
+            methods:
+              tools/call: full
+      targets:
+      - name: performance-tests-smcp
+        mcp:
+          host: "http://performance-tests-smcp.harness-poc.svc.cluster.local/mcp"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: gw-consulta-productos-smcp, namespace: harness-poc, labels: { app: gw-consulta-productos-smcp, harness.poc/rol: gateway } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: gw-consulta-productos-smcp } }
+  template:
+    metadata:
+      labels: { app: gw-consulta-productos-smcp, harness.poc/rol: gateway }
+      annotations:
+        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+    spec:
+      serviceAccountName: mcp-gateway
+      containers:
+        - name: agentgateway
+          image: cr.agentgateway.dev/agentgateway:v1.7.0
+          args: ["-f", "/config/consulta-productos-smcp.yaml"]
+          env: [{ name: HOME, value: /tmp }]
+          ports: [{ containerPort: 3000 }]
+          resources: { requests: { cpu: 20m, memory: 32Mi }, limits: { cpu: 300m, memory: 128Mi } }
+          volumeMounts: [{ name: config, mountPath: /config }]
+      volumes:
+        - name: config
+          configMap: { name: mcp-gateway-config }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: gw-consulta-productos-smcp, namespace: harness-poc }
+spec:
+  selector: { app: gw-consulta-productos-smcp }
+  ports: [{ name: http, port: 80, targetPort: 3000, appProtocol: http }]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: gw-cartera-smcp, namespace: harness-poc, labels: { app: gw-cartera-smcp, harness.poc/rol: gateway } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: gw-cartera-smcp } }
+  template:
+    metadata:
+      labels: { app: gw-cartera-smcp, harness.poc/rol: gateway }
+      annotations:
+        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+    spec:
+      serviceAccountName: mcp-gateway
+      containers:
+        - name: agentgateway
+          image: cr.agentgateway.dev/agentgateway:v1.7.0
+          args: ["-f", "/config/cartera-smcp.yaml"]
+          env: [{ name: HOME, value: /tmp }]
+          ports: [{ containerPort: 3000 }]
+          resources: { requests: { cpu: 20m, memory: 32Mi }, limits: { cpu: 300m, memory: 128Mi } }
+          volumeMounts: [{ name: config, mountPath: /config }]
+      volumes:
+        - name: config
+          configMap: { name: mcp-gateway-config }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: gw-cartera-smcp, namespace: harness-poc }
+spec:
+  selector: { app: gw-cartera-smcp }
+  ports: [{ name: http, port: 80, targetPort: 3000, appProtocol: http }]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: gw-kubernetes-smcp, namespace: harness-poc, labels: { app: gw-kubernetes-smcp, harness.poc/rol: gateway } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: gw-kubernetes-smcp } }
+  template:
+    metadata:
+      labels: { app: gw-kubernetes-smcp, harness.poc/rol: gateway }
+      annotations:
+        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+    spec:
+      serviceAccountName: mcp-gateway
+      containers:
+        - name: agentgateway
+          image: cr.agentgateway.dev/agentgateway:v1.7.0
+          args: ["-f", "/config/kubernetes-smcp.yaml"]
+          env: [{ name: HOME, value: /tmp }]
+          ports: [{ containerPort: 3000 }]
+          resources: { requests: { cpu: 20m, memory: 32Mi }, limits: { cpu: 300m, memory: 128Mi } }
+          volumeMounts: [{ name: config, mountPath: /config }]
+      volumes:
+        - name: config
+          configMap: { name: mcp-gateway-config }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: gw-kubernetes-smcp, namespace: harness-poc }
+spec:
+  selector: { app: gw-kubernetes-smcp }
+  ports: [{ name: http, port: 80, targetPort: 3000, appProtocol: http }]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: gw-kaizen-smcp, namespace: harness-poc, labels: { app: gw-kaizen-smcp, harness.poc/rol: gateway } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: gw-kaizen-smcp } }
+  template:
+    metadata:
+      labels: { app: gw-kaizen-smcp, harness.poc/rol: gateway }
+      annotations:
+        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+    spec:
+      serviceAccountName: mcp-gateway
+      containers:
+        - name: agentgateway
+          image: cr.agentgateway.dev/agentgateway:v1.7.0
+          args: ["-f", "/config/kaizen-smcp.yaml"]
+          env: [{ name: HOME, value: /tmp }]
+          ports: [{ containerPort: 3000 }]
+          resources: { requests: { cpu: 20m, memory: 32Mi }, limits: { cpu: 300m, memory: 128Mi } }
+          volumeMounts: [{ name: config, mountPath: /config }]
+      volumes:
+        - name: config
+          configMap: { name: mcp-gateway-config }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: gw-kaizen-smcp, namespace: harness-poc }
+spec:
+  selector: { app: gw-kaizen-smcp }
+  ports: [{ name: http, port: 80, targetPort: 3000, appProtocol: http }]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: gw-kaizen-docs-smcp, namespace: harness-poc, labels: { app: gw-kaizen-docs-smcp, harness.poc/rol: gateway } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: gw-kaizen-docs-smcp } }
+  template:
+    metadata:
+      labels: { app: gw-kaizen-docs-smcp, harness.poc/rol: gateway }
+      annotations:
+        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+    spec:
+      serviceAccountName: mcp-gateway
+      containers:
+        - name: agentgateway
+          image: cr.agentgateway.dev/agentgateway:v1.7.0
+          args: ["-f", "/config/kaizen-docs-smcp.yaml"]
+          env: [{ name: HOME, value: /tmp }]
+          ports: [{ containerPort: 3000 }]
+          resources: { requests: { cpu: 20m, memory: 32Mi }, limits: { cpu: 300m, memory: 128Mi } }
+          volumeMounts: [{ name: config, mountPath: /config }]
+      volumes:
+        - name: config
+          configMap: { name: mcp-gateway-config }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: gw-kaizen-docs-smcp, namespace: harness-poc }
+spec:
+  selector: { app: gw-kaizen-docs-smcp }
+  ports: [{ name: http, port: 80, targetPort: 3000, appProtocol: http }]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: gw-file-system-smcp, namespace: harness-poc, labels: { app: gw-file-system-smcp, harness.poc/rol: gateway } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: gw-file-system-smcp } }
+  template:
+    metadata:
+      labels: { app: gw-file-system-smcp, harness.poc/rol: gateway }
+      annotations:
+        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+    spec:
+      serviceAccountName: mcp-gateway
+      containers:
+        - name: agentgateway
+          image: cr.agentgateway.dev/agentgateway:v1.7.0
+          args: ["-f", "/config/file-system-smcp.yaml"]
+          env: [{ name: HOME, value: /tmp }]
+          ports: [{ containerPort: 3000 }]
+          resources: { requests: { cpu: 20m, memory: 32Mi }, limits: { cpu: 300m, memory: 128Mi } }
+          volumeMounts: [{ name: config, mountPath: /config }]
+      volumes:
+        - name: config
+          configMap: { name: mcp-gateway-config }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: gw-file-system-smcp, namespace: harness-poc }
+spec:
+  selector: { app: gw-file-system-smcp }
+  ports: [{ name: http, port: 80, targetPort: 3000, appProtocol: http }]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: gw-performance-tests-smcp, namespace: harness-poc, labels: { app: gw-performance-tests-smcp, harness.poc/rol: gateway } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: gw-performance-tests-smcp } }
+  template:
+    metadata:
+      labels: { app: gw-performance-tests-smcp, harness.poc/rol: gateway }
+      annotations:
+        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+    spec:
+      serviceAccountName: mcp-gateway
+      containers:
+        - name: agentgateway
+          image: cr.agentgateway.dev/agentgateway:v1.7.0
+          args: ["-f", "/config/performance-tests-smcp.yaml"]
+          env: [{ name: HOME, value: /tmp }]
+          ports: [{ containerPort: 3000 }]
+          resources: { requests: { cpu: 20m, memory: 32Mi }, limits: { cpu: 300m, memory: 128Mi } }
+          volumeMounts: [{ name: config, mountPath: /config }]
+      volumes:
+        - name: config
+          configMap: { name: mcp-gateway-config }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: gw-performance-tests-smcp, namespace: harness-poc }
+spec:
+  selector: { app: gw-performance-tests-smcp }
+  ports: [{ name: http, port: 80, targetPort: 3000, appProtocol: http }]

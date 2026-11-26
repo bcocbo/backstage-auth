@@ -88,6 +88,8 @@ spec:
   rules:
     - from:
         - source:
+            # Solo a través del gateway de MCPs (harness/gateway/) y con el token del agente.
+            principals: ["cluster.local/ns/harness-poc/sa/mcp-gateway"]
             requestPrincipals: ["https://cognito-idp.us-east-1.amazonaws.com/us-east-1_q8vSdPFbG/*"]
       when:
         - key: request.auth.claims[scope]
@@ -102,6 +104,8 @@ spec:
   rules:
     - from:
         - source:
+            # Solo a través del gateway de MCPs (harness/gateway/) y con el token del agente.
+            principals: ["cluster.local/ns/harness-poc/sa/mcp-gateway"]
             requestPrincipals: ["https://cognito-idp.us-east-1.amazonaws.com/us-east-1_q8vSdPFbG/*"]
       when:
         - key: request.auth.claims[scope]

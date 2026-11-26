@@ -8,7 +8,8 @@ data:
   LLM_BASE_URL: http://llm-gateway-poc/v1
   LLM_MODEL: qwen2.5:7b
   SCOPES: consumo-mcps/productos-consultaProductos consumo-mcps/clientes-consultaClientes consumo-mcps/servicio-gestionPqr
-  MCP_URLS: '{"consulta-productos_smcp": "http://consulta-productos-smcp/mcp"}'
+  # Los MCPs se llaman por su gateway (gw-<mcp>): Istio y OPA deciden cada llamada (harness/gateway/).
+  MCP_URLS: '{"consulta-productos_smcp": "http://gw-consulta-productos-smcp/mcp"}'
 ---
 apiVersion: apps/v1
 kind: Deployment

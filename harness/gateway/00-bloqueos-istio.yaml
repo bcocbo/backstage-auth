@@ -1,0 +1,100 @@
+# Paso 1 del harness externo: bloqueos de Istio en el namespace harness-poc.
+# Regla de fondo: todo cerrado por defecto. Cada AuthorizationPolicy ALLOW abre solo un camino.
+# Los MCPs solo aceptan al gateway de MCPs (cuenta de servicio mcp-gateway), que llega en el paso 2.
+# cartera-smcp y consulta-productos-smcp ya tienen su regla por scope de Cognito (../casos/atencion-cliente/k8s/10-mcps.yaml);
+# en el paso 2 esa regla exigirá además venir del gateway.
+
+# Todo el tráfico dentro del namespace va cifrado y con identidad (mTLS). Sin sidecar no se entra.
+apiVersion: security.istio.io/v1
+kind: PeerAuthentication
+metadata: { name: default, namespace: harness-poc }
+spec:
+  mtls: { mode: STRICT }
+---
+# Sin reglas: niega todo lo que no abra otra AuthorizationPolicy de este namespace.
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata: { name: deny-por-defecto, namespace: harness-poc }
+spec: {}
+---
+# Identidad propia del gateway de MCPs. Es la única que los MCPs aceptan.
+apiVersion: v1
+kind: ServiceAccount
+metadata: { name: mcp-gateway, namespace: harness-poc }
+---
+# El modelo (LLM) solo atiende pods del mismo namespace.
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata: { name: llm-desde-harness-poc, namespace: harness-poc }
+spec:
+  selector: { matchLabels: { app: llm-gateway-poc } }
+  action: ALLOW
+  rules:
+    - from: [{ source: { namespaces: [harness-poc] } }]
+      to: [{ operation: { ports: ["11434"] } }]
+---
+# El adaptador de Backstage solo atiende a los MCPs de Kaizen que lo usan.
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata: { name: adaptador-desde-mcps-kaizen, namespace: harness-poc }
+spec:
+  selector: { matchLabels: { app: backstage-adaptador } }
+  action: ALLOW
+  rules:
+    - from: [{ source: { namespaces: [harness-poc] } }]
+      to: [{ operation: { ports: ["8080"] } }]
+---
+# Cada MCP sin regla de scope solo acepta al gateway. Un agente que llame directo recibe 403.
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata: { name: kubernetes-smcp-desde-gateway, namespace: harness-poc }
+spec:
+  selector: { matchLabels: { app: kubernetes-smcp } }
+  action: ALLOW
+  rules:
+    - from: [{ source: { principals: ["cluster.local/ns/harness-poc/sa/mcp-gateway"] } }]
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata: { name: kaizen-smcp-desde-gateway, namespace: harness-poc }
+spec:
+  selector: { matchLabels: { app: kaizen-smcp } }
+  action: ALLOW
+  rules:
+    - from: [{ source: { principals: ["cluster.local/ns/harness-poc/sa/mcp-gateway"] } }]
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata: { name: kaizen-docs-smcp-desde-gateway, namespace: harness-poc }
+spec:
+  selector: { matchLabels: { app: kaizen-docs-smcp } }
+  action: ALLOW
+  rules:
+    - from: [{ source: { principals: ["cluster.local/ns/harness-poc/sa/mcp-gateway"] } }]
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata: { name: file-system-smcp-desde-gateway, namespace: harness-poc }
+spec:
+  selector: { matchLabels: { app: file-system-smcp } }
+  action: ALLOW
+  rules:
+    - from: [{ source: { principals: ["cluster.local/ns/harness-poc/sa/mcp-gateway"] } }]
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata: { name: performance-tests-smcp-desde-gateway, namespace: harness-poc }
+spec:
+  selector: { matchLabels: { app: performance-tests-smcp } }
+  action: ALLOW
+  rules:
+    - from: [{ source: { principals: ["cluster.local/ns/harness-poc/sa/mcp-gateway"] } }]
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata: { name: mcp-simulador-desde-gateway, namespace: harness-poc }
+spec:
+  selector: { matchLabels: { app: mcp-simulador } }
+  action: ALLOW
+  rules:
+    - from: [{ source: { principals: ["cluster.local/ns/harness-poc/sa/mcp-gateway"] } }]

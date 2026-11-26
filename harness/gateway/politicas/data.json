@@ -1,0 +1,50 @@
+{
+  "gateway": {
+    "version": "2026-11-26.1",
+    "suspendidos": { "agentes": [], "mcps": [] },
+    "mcps": {
+      "consulta-productos-smcp": {
+        "scope": "consumo-mcps/productos-consultaProductos",
+        "lectura": ["buscar_producto", "detalle_producto"],
+        "prohibidas": [],
+        "valores_prohibidos": []
+      },
+      "cartera-smcp": {
+        "scope": "consumo-mcps/cartera-gestionCartera",
+        "lectura": ["consultar_obligaciones"],
+        "prohibidas": [],
+        "valores_prohibidos": []
+      },
+      "kubernetes-smcp": {
+        "scope": "consumo-mcps/plataforma-kubernetes",
+        "lectura": ["kubernetes_list_pods", "kubernetes_get_pod", "kubernetes_list_deployments", "kubernetes_get_logs", "kubernetes_list_events"],
+        "prohibidas": [],
+        "valores_prohibidos": ["secret", "secrets"]
+      },
+      "kaizen-smcp": {
+        "scope": "consumo-mcps/plataforma-kaizen",
+        "lectura": ["search_entity_by_name"],
+        "prohibidas": [],
+        "valores_prohibidos": []
+      },
+      "kaizen-docs-smcp": {
+        "scope": "consumo-mcps/plataforma-kaizenDocs",
+        "lectura": ["get_techdocs_url"],
+        "prohibidas": [],
+        "valores_prohibidos": []
+      },
+      "file-system-smcp": {
+        "scope": "consumo-mcps/plataforma-fileSystem",
+        "lectura": ["list-dir", "read-file"],
+        "prohibidas": [],
+        "valores_prohibidos": []
+      },
+      "performance-tests-smcp": {
+        "scope": "consumo-mcps/plataforma-performanceTests",
+        "lectura": [],
+        "prohibidas": [],
+        "valores_prohibidos": []
+      }
+    }
+  }
+}
